@@ -6,8 +6,6 @@ import IA.Red.CentrosDatos;
 
 import java.util.*;
 
-import static java.lang.Math.sqrt;
-
 /**
  * Clase State que representa un DAG de conexiones
  */
@@ -180,6 +178,68 @@ public class State {
     }
 
 
+    /**
+     * Devuelve el centro más cercano al sensor con id i
+     * @param i id del sensor
+     * @return Centro más cercano
+     */
+    private int getCentroMasCercano(int i) {
+        int m = centros.size();
+        int mejorCentro = -1;   // Lo pongo a -1 para evitar errores de Segmentación en otras funciones
+        double minDistancia = Double.MAX_VALUE;
+
+        for (int j = -1; j >= -m; j--) {   // Por cada centro    (Tienen ids negativas)
+            double dist = calcularDistancia(i, j);
+            if (dist < minDistancia) {
+                minDistancia = dist;
+                mejorCentro = j;
+            }
+        }
+
+        return mejorCentro;
+    }
+
+    /** todo Esta función la he hecho muy rápido así que no he comprobado muy bien si está correctamente implementada
+     * Conecta los sensores de la lista origen con los de la lista destino y devuelve aquellos que no ha podido conectar
+     * @param origen ids de sensores origen
+     * @param destino ids de sensores destino
+     *
+     *          todo: Se puede mejorar al juntar minimizando distancias, la versión actual es más sencilla
+     */
+    private List<Integer> conectarSensores(List<Integer> origen, List<Integer> destino) {
+        List<Integer> sensoresNoConectados = new ArrayList<>();
+
+        // Cuidado porque puede ser que origen y destino compartan índices lo que podría hacer que un sensor apunte a sí mismo
+        boolean quedanAsignaciones = true;
+        for (int s1 : origen) {
+            if (quedanAsignaciones) {   // Si aún es posible asignar sensores a otros sensores se sigue
+                boolean asignado = false;
+                for (int s2 : destino) {
+                    if (s1 != s2 && sensorApuntable(s2)) {
+                        conexiones[s2].entrantes.add(s1);
+                        conexiones[s1].destino = s2;
+                        asignado = true;
+                        break;
+                    }
+                }
+                if (!asignado) quedanAsignaciones = false;
+            }
+            else {  // En caso contrario, añadimos todos los sensores no asignados a sensoresNoConectados para posteriormente devolverlos
+                sensoresNoConectados.add(s1);
+            }
+        }
+        return sensoresNoConectados;
+    }
+
+
+    /**
+     * todo: Función para calcular el tráfico de datos de cada sensor y asignarselo recorriendo el grafo
+     */
+    public void calculateTraffic() {
+
+    }
+
+
     /* ------------------ CREADORAS DE ESTADOS INICIALES -------------------- */
 
 
@@ -189,6 +249,14 @@ public class State {
      *      - Cada sensor es mapeado al centro que se encuentre más cercano
      *      - Asigna sensores a su centro sin llegar a sobrepasar el máximo de conexiones
      *      - El resto de sensores son asignados a sensores que estén conectados al centro al que estaban mapeados
+     *
+     * Pros:
+     *  - Al conectar cercanos se minimizan las distancias en el cálculo del coste (estas se elevan al cuadrado lo que hace que minimizarlas sea aún más importante
+     *  - Al organizarlo como clusters la probabilidad de que al final los elementos conectados sean los mismos que al inicio pero con un orden distinto es bastante elevada
+     *  ...
+     * Contras:
+     *  - Al no tener en cuenta el volumen puede que los enchufes (sensores que conectan toda una estructura con un centro) formen un cuello de botella importante
+     *  ...
      */
     public void generadorGreedyMinDist() {
         int n = sensores.size();
@@ -196,17 +264,9 @@ public class State {
 
         // Mapeo de cada sensor al centro más cercano
         int[] centroAsignado = new int[n];      // Guarda el centro más cercano
-        double[] minDistancia = new double[n];  // Guarda la distancia mínima a su centro
-        Arrays.fill(minDistancia, Double.MAX_VALUE);    // Asignamos distancia infinita al principio
 
         for (int i = 0; i < n; i++) {   // Por cada sensor
-            for (int j = -1; j >= -m; j--) {   // Por cada centro    (Tienen ids negativas)
-                double dist = calcularDistancia(i, j);
-                if (dist < minDistancia[j]) {
-                    minDistancia[i] = dist;
-                    centroAsignado[i] = j;
-                }
-            }
+            centroAsignado[i] = getCentroMasCercano(i);
         }
 
         // Asignación de sensores a su centro más cercano respetando el máximo de conexiones
@@ -240,6 +300,75 @@ public class State {
                 }
             }
         }
+
+        //todo llamar a una función que recorra el DAG calculando los volúmenes de datos que acaba enviando cada sensor
+    }
+
+
+    /**
+     * Este generador de estado inicial funciona de la siguiente forma: (Objetivo reducir la pérdida de volumen por cuello de botella)
+     * La idea es crear una estructura jerárquica donde los sensores con más capacidad de transmisión se encuentren en lo más bajo de la jerarquia mientras que al ir subiendo se disminuya el tráfico.
+     *     - Separamos los sensores según la capacidad de transmisión que tengan (1/2/5 Mbps)
+     *     - Los que tengan menos capacidad apuntan a los siguientes con menos capacidad y así hasta llega al final
+     *     - Los sensores con mayor capacidad apuntan a los centros más cercanos minimizando así la distancia
+     *
+     * Pros:
+     *  - Menos cuello de botella
+     *  - Más ancho de banda
+     *  ...
+     * Contras:
+     *  - Posibilidad de tener sensores de 5Mbps lejos de los centros generando rutas largas
+     *  ...
+     */
+    public void generadorGreedyHierarchy() {
+        int n = sensores.size();
+        int m = centros.size();
+
+        // Agrupamos los sensores por capacidad de transmisión
+        List<Integer> sensores1 = new ArrayList<>();
+        List<Integer> sensores2 = new ArrayList<>();
+        List<Integer> sensores5 = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            double capacidad = sensores.get(i).getCapacidad();
+
+            if (capacidad == 1.0) {
+                sensores1.add(i);
+            }
+            else if (capacidad == 2.0) {
+                sensores2.add(i);
+            }
+            else {
+                sensores5.add(i);
+            }
+        }
+
+        // Primero conectamos los de 5Mbps
+        List<Integer> sensoresConectados5 = new ArrayList<>();
+        List<Integer> sensoresNoConectados5 = new ArrayList<>();
+        for (int sensor : sensores5) {
+            int centroCercano = getCentroMasCercano(sensor);
+
+            if (centroApuntable(centroCercano)) {
+                conexiones[sensor].destino = centroCercano;
+                incrementaContadorCentros(centroCercano);
+                sensoresConectados5.add(sensor);
+            }
+            else sensoresNoConectados5.add(sensor);
+        }
+
+        // Conecto los distintos niveles de la jerarquia
+        List<Integer> restantes = conectarSensores(sensoresNoConectados5, sensoresConectados5);
+        // Intento conectar los sensores2 y los restantes a los sensores5
+        sensores2.addAll(restantes);
+        restantes = conectarSensores(sensores2, sensores5);
+        // Intento conectar los sensores1 y los restantes a los sensores2
+        sensores1.addAll(restantes);
+        conectarSensores(sensores1, sensores2);
+        // Conecto los sensores restantes a los sensores1
+        conectarSensores(restantes, sensores1);
+
+        //todo llamar a una función que recorra el DAG calculando los volúmenes de datos que acaba enviando cada sensor
     }
 
     /* --------------------------- OPERADORES ------------------------------- */
@@ -247,10 +376,6 @@ public class State {
 
 
     /* --------------------------- HEURÍSTICAS ------------------------------ */
-
-
-
-    /* --------------------------- OPERADORES ------------------------------- */
 
 
 
