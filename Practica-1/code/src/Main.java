@@ -1,7 +1,8 @@
-import IA.ProbIA5.ProbIA5Board;
-import IA.ProbIA5.ProbIA5GoalTest;
-import IA.ProbIA5.ProbIA5HeuristicFunction;
-import IA.ProbIA5.ProbIA5SuccesorFunction;
+import clasesAIMA.State;
+import clasesAIMA.GoalTestFunc;
+import clasesAIMA.HeuristicFunc;
+import clasesAIMA.SuccesorFunctionHC;
+import clasesAIMA.SuccesorFunctionSA;
 import aima.search.framework.GraphSearch;
 import aima.search.framework.Problem;
 import aima.search.framework.Search;

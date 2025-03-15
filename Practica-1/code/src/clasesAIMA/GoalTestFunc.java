@@ -1,14 +1,11 @@
-package IA.ProbIA5;
+package clasesAIMA;
 
 import aima.search.framework.GoalTest;
 
-/**
- * Created by bejar on 17/01/17.
- */
-public class ProbIA5GoalTest implements GoalTest {
+public class GoalTestFunc implements GoalTest {
 
     public boolean isGoalState(Object state){
 
-        return((ProbIA5Board) state).is_goal();
+        return((State) state).is_goal();
     }
 }
