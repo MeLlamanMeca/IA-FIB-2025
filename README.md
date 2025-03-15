@@ -1,1 +1,4 @@
 # IA-FIB-2025
+
+# CÓMO SE EJECUTA EL CÓDIGO??
+# ...
