@@ -41,6 +41,8 @@ public class State {
 
     // Vector de las conexiones de cada sensor
     private ConexionSensor[] conexiones;
+    // Vector de número de conexiones entrantes a cada centro
+    private int[] contadorInputCentros;
 
     /**
      * Constructor de un estado
@@ -48,7 +50,9 @@ public class State {
      */
     public State() {
         int n = sensores.size();
+        int m = centros.size();
         conexiones = new ConexionSensor[n];
+        contadorInputCentros = new int[m];  // Se inicializa a 0
         for (int i = 0; i < n; i++) {
             conexiones[i] = new ConexionSensor(i);
         }
@@ -70,14 +74,7 @@ public class State {
 
 
 
-    /* ------------------------------ OTROS --------------------------------- */
-
-    /**
-     * La función de Goal en HC y SA siempre devuelve falso para seguir analizando
-     */
-    public boolean is_goal() {
-        return false;
-    }
+    /* ----------------- COMPROBACIÓN DE RESTRICCIONES ---------------------- */
 
     /**
      * Algoritmo DFS que devuelve si desde el nodo inicio se puede encontrar algún ciclo
@@ -117,5 +114,29 @@ public class State {
             }
         }
         return false;   // No hay ciclo en ninguna iteración
+    }
+
+
+    /**
+     *  Comprueba si al sensor i se le puede añadir una conexión
+     */
+    public boolean sensorApuntable(int i) {
+        return conexiones[i].entrantes.size() < 3;
+    }
+
+    /**
+     *  Comprueba si al centro i se le puede añadir una conexión
+     */
+    public boolean scentroApuntable(int i) {
+        return contadorInputCentros[i] < 25;
+    }
+
+    /* ------------------------------ OTROS --------------------------------- */
+
+    /**
+     * La función de Goal en HC y SA siempre devuelve falso para seguir analizando
+     */
+    public boolean is_goal() {
+        return false;
     }
 }
