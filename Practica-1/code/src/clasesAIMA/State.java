@@ -67,6 +67,20 @@ public class State {
     /* ---------------------------- ÚTILES ---------------------------------- */
 
     /**
+     * Añado la conexion de i a j
+     */
+    private void añadirConexion(i, j) {
+        if (j >= 0) {
+            conexion[j].entrantes.add(i);
+            conexion[j].volumen = Math.max(conexion[i].volumen + conexion[j].volumen, sensores.get(i).getCapacidad()*3); // Su nuevo volumen es el que tendria o la capacidad suya x3
+        }
+        else incrementaContadorCentros(j);
+        conexion[i].destino = j;
+
+    }
+
+
+    /**
      * Accede al centro a través de su índice negativo
      * @param i identificador negativo del centro
      * @return Centro con identificador i
@@ -87,7 +101,7 @@ public class State {
     /**
      * Calcula la distancia entre i y j
      * @param i apunta a j
-     * @param j es apuntado por j
+     * @param j es apuntado por i
      * @return Distancia euclídea entre i y j
      */
     private double calcularDistancia(int i, int j) {
@@ -147,6 +161,8 @@ public class State {
 
     /**
      * Encuentra si para la configuración actual existe algún ciclo en el grafo
+     *              
+     *              NOTA: No le veo el sentido a llamar a esta función. Mejor solo verificar los vertices que se han modificado con el dfs
      */
     public boolean encontrarCiclos() {
         int n = conexiones.length;
@@ -371,11 +387,160 @@ public class State {
         //todo llamar a una función que recorra el DAG calculando los volúmenes de datos que acaba enviando cada sensor
     }
 
+
+    /**
+     * Este generador de estado inicial funciona de la siguiente forma:
+     *      - Para cada elemento del conjunto de sensores generamos una permutación aleatoria P
+     *      - Tenemos una lista con el conjunto de sensores unión centros
+     *      - Asignamos a cada elemento de P un indice aleatorio de la lista del conjunto de sensores y centros
+     *      - Si dicho sensor o centro llega a su maximo grado de entrada, lo eliminamos de la lista
+     *
+     * Pros:
+     *  - Coste lineal
+     *  - Gran aleatoriedad
+     *  - Nos permite ejecutarlo varias veces para no atascarnos en un minimo/maximo local
+     *  ...
+     * Contras:
+     *  - No tiene en cuenta distancias
+     *  - No tiene en cuenta velocidades
+     *  - Puede generar cuellos de botella
+     *  ...
+     * Observación:
+     *  - Es una solución inicial mala
+     */
+    public void generadorGreedyRandom() {
+        int n = sensores.size();
+        int m = centros.size();
+        Random rand = new Random();
+
+        // Crear un array con índices de sensores
+        int[] sensoresArray = new int[n];
+        for (int i = 0; i < n; i++) {
+            sensoresArray[i] = i;
+        }
+
+        // Permutar sensoresArray usando Fisher-Yates
+        for (int i = n - 1; i > 0; i--) {
+            int j = rand.nextInt(i + 1);  // Número aleatorio entre 0 e i (inclusive)
+            int temp = sensoresArray[i];
+            sensoresArray[i] = sensoresArray[j];
+            sensoresArray[j] = temp;
+        }
+
+        // Crear la lista SuC que contenga centros y sensores.
+        ArrayList<Integer> SuC = new ArrayList<>();
+        // Agregar centros (los representamos con números negativos: -1, -2, ..., -m)
+        for (int i = 0; i < m; i++) {
+            SuC.add(-(i + 1));
+        }
+        // Agregar sensores (números 0 a n-1)
+        for (int i = 0; i < n; i++) {
+            SuC.add(i);
+        }
+
+        // Para cada sensor se asigna un elemento aleatorio de SuC
+        for (int i = 0; i < n; i++) {
+            int randomIndex = rand.nextInt(SuC.size());
+            int elegido = SuC.get(randomIndex); // Selecciona un elemento aleatorio de de SuC
+
+            añadirConexion(sensoresArray[i], elegido);
+
+            if (elegido < 0) { // Es un centro
+                if (!centroApuntable(elegido)) { // El centro ya no es apuntable
+                    // Reemplazar el elemento en randomIndex con el último y eliminar el último (pop en tiempo constante)
+                    int last = SuC.get(SuC.size() - 1);
+                    SuC.set(randomIndex, last);
+                    SuC.remove(SuC.size() - 1);
+                }
+            } else { // Es un sensor
+                if (conexiones[elegido].entrantes.size() == 3) { // El sensor ya tiene 3 conexiones entrantes
+                    int last = SuC.get(SuC.size() - 1);
+                    SuC.set(randomIndex, last);
+                    SuC.remove(SuC.size() - 1);
+                }
+            }
+        }
+    }
+
+
     /* --------------------------- OPERADORES ------------------------------- */
 
 
 
     /* --------------------------- HEURÍSTICAS ------------------------------ */
+
+    // No se muy bien como se conecta con el AIMA, pero hago unos ejemplos de un par de euristicas sencillas
+    /**
+     * Mientras mas datos se transmitan en las conexiones, la heuristica retorna un valor menor
+     */
+    public double heuristicaMaximizarDatos() {
+        double volumenTotal = 0.0;
+        for (int i = 0; i < conexiones.length; i++) {
+            volumenTotal += conexiones[i].volumen;
+        }
+        return -volumenTotal; // Negativo para buscar los minimos con el hill climbing
+    }
+
+    /**
+     * La heuristica retorna la distancia de todas las conexiones
+     *
+     *      Nota: esta heuristica parece muy mala. Si solo tenemos en cuenta las distancias, se eviatarà añadir nuevas aristas.
+     */
+    public double heuristicaMinimizarDistancias() {
+        double distanciasTotales = 0.0;
+        for (int i = 0; i < conexiones.length; i++) {
+            distanciasTotales += calcularDistancia(i, conexiones[i].destino)
+        }
+        return distanciasTotales;
+    }
+
+
+    /**
+     * Busca sacar el mayor partido posible a cada Mb/distancia
+     */
+    public double heuristicaDatosEntreDistancia() {
+        double datosTotales = heuristicaMaximizarDatos();
+        double distanciasTotales = heuristicaMinimizarDistancias();
+
+        return datosTotales/distanciasTotales;
+    }
+
+
+
+    /**
+     * Busca combinar la heuristica de datos y de distancias dandole un peso a cada una
+     * - Alpha es el peso de las datos
+     * - Beta es el peso de los distancias
+     *
+     *      Nota: Dejo como parametros alpha y beta porque podemos experimentar con estos valores.
+     *      A priori, parece mas importante maximizar los datos por lo que: alpha > beta
+     */
+    public double heuristicaMaximizarDatosMinimizarDistancias(double alpha, double beta) {
+        double heuristicaDatos = heuristicaMaximizarDatos();
+        double heuristicaDistancias = heuristicaMinimizarDistancias();
+
+        return alpha*heuristicaDatos + beta*heuristicaDistancias;
+    }
+
+    /**
+     * Busca balancear la carga de datos para que se acerquen a la optima.
+     * Asi evitamos cuellos de botella y no aprovechar la transferencia al maximo.
+     * - Si no llega a la carga máxima, le sumamos lo que falte para llegar
+     * - Si se pasa, sumamos lo que se pasa
+     */
+    public double heuristicaSobrecarga() {
+        double diferencia = 0.0;
+
+        for (int i = 0; i < conexiones.length; i++) {
+            double capacidad = sensores.get(i).getCapacidad();  // Asegurar que getCapacidad() retorna double
+            double volumenTransmitido = conexiones[i].volumen; // Asegurar que volumen también es double
+            diferencia += Math.abs(capacidad - volumenTransmitido);
+        }
+
+        return diferencia;
+    }
+
+
 
 
 
