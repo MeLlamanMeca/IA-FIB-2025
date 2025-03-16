@@ -1,3 +1,7 @@
+import IA.Red.CentrosDatos;
+import IA.Red.Sensores;
+import aima.search.informed.HillClimbingSearch;
+import aima.search.informed.SimulatedAnnealingSearch;
 import clasesAIMA.State;
 import clasesAIMA.GoalTestFunc;
 import clasesAIMA.HeuristicFunc;
@@ -15,37 +19,75 @@ import java.util.Properties;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception{
-        /**
-         *  For a problem to be solvable:
-         *    count(0,prob) % 2 == count(0,sol) %2
-         */
-        int [] prob = new int []{0 ,1, 0, 1, 0};
-        int [] sol = new int[]{1, 1, 1, 0, 1};
+    private static void ejecutarHillClimbing(State state) throws Exception {
+        long startTime = System.currentTimeMillis();
 
-        ProbIA5Board board = new ProbIA5Board(prob, sol );
+        // Creamos problema para Hill Climbing
+        Problem p = new Problem(
+                state,                      // Estado inicial
+                new SuccesorFunctionHC(),   // Función de sucesores
+                new GoalTestFunc(),         // Condición de parada
+                new HeuristicFunc()         // Heurística de evaluación
+        );
 
-        // Create the Problem object
-        Problem p = new  Problem(board,
-                                new ProbIA5SuccesorFunction(),
-                                new ProbIA5GoalTest(),
-                                new ProbIA5HeuristicFunction());
-
-        // Instantiate the search algorithm
-	// AStarSearch(new GraphSearch()) or IterativeDeepeningAStarSearch()
-        Search alg = new AStarSearch(new GraphSearch());
-
-        // Instantiate the SearchAgent object
+        Search alg = new HillClimbingSearch();
         SearchAgent agent = new SearchAgent(p, alg);
 
-	// We print the results of the search
-        System.out.println();
-        printActions(agent.getActions());
+        // Imprimir todas las estadísticas
+        System.out.println("\nResultado Hill Climbing:");
         printInstrumentation(agent.getInstrumentation());
+        System.out.println(alg.getGoalState());
 
-        // You can access also to the goal state using the
-	// method getGoalState of class Search
+        long estimatedTime = System.currentTimeMillis() - startTime;
+        System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
+    }
 
+    private static void ejecutarSimulatedAnnealing(State state) throws Exception {
+        long startTime = System.currentTimeMillis();
+
+        // Establecer parámetros Simulated Annealing
+        int steps = 100000;         // Número total de iteraciones del algoritmo
+        int stiter = 100;           // Número de iteraciones por cada nivel de temperatura
+        int k = 125;                // Factor de ajuste para la función de probabilidad de aceptación (cuanto mayor sea más tiempo aceptara soluciones peores)
+        double lambda = 0.0001;     // Parámetro de enfriamiente
+
+        // Creamos problema para Simulated Annealing
+        Problem p = new Problem(
+                state,                      // Estado inicial
+                new SuccesorFunctionSA(),   // Función de sucesores
+                new GoalTestFunc(),         // Condición de parada
+                new HeuristicFunc()         // Heurística de evaluación
+        );
+
+        Search alg = new SimulatedAnnealingSearch(steps, stiter, k, lambda);
+        SearchAgent agent = new SearchAgent(p, alg);
+
+        // Imprimir todas las estadísticas
+        System.out.println("\nResultado Simulated Annealing:");
+        printInstrumentation(agent.getInstrumentation());
+        System.out.println(alg.getGoalState());
+
+        long estimatedTime = System.currentTimeMillis() - startTime;
+        System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
+    }
+
+    public static void main(String[] args) throws Exception{
+
+        // Inicializamos el contexto del problema
+        Sensores s = new Sensores(100, 1234);       // número de sensores, semilla
+        CentrosDatos c = new CentrosDatos(4, 4321); // número de centros de datos, semilla
+
+        // Establecemos el contexto en el estado
+        State state = new State(s, c);
+
+        // Seleccionamos estado inicial
+        // state.generadorGreedyMinDist();
+        // state.generadorGreedyHierarchy();
+        // state.generadorGreedyRandom();
+
+        // Ejecutamos los dos algoritmos con el mismo estado inicial para poder comparar sus ejecuciones
+        ejecutarHillClimbing(state);
+        ejecutarSimulatedAnnealing(state);
     }
 
         private static void printInstrumentation(Properties properties) {

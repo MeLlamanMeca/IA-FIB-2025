@@ -14,13 +14,6 @@ public class State {
     private static Sensores sensores;
     private static CentrosDatos centros;
 
-    /**
-     * Configura es escenario de la ejecución
-     */
-    public static void setStatic(Sensores s, CentrosDatos c) {
-        sensores = s;
-        centros = c;
-    }
 
     /**
      * Clase interna que representa la información de conexiones de un sensor en el estado
@@ -53,7 +46,10 @@ public class State {
      * Constructor de un estado
      * Se inicializan todas las conexiones vacías
      */
-    public State() {
+    public State(Sensores s, CentrosDatos c) {
+        sensores = s;
+        centros = c;
+
         int n = sensores.size();
         int m = centros.size();
         conexiones = new ConexionSensor[n];
@@ -248,10 +244,49 @@ public class State {
 
 
     /**
-     * todo: Función para calcular el tráfico de datos de cada sensor y asignarselo recorriendo el grafo
+     * Función para calcular el tráfico de datos de cada sensor y asignarselo recorriendo el grafo desde las hojas hasta los centros por niveles
      */
     public void calculateTraffic() {
+        int n = conexiones.length;
 
+        // Obtenemos las hojas del grafo original
+        Queue<Integer> hojas = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            if (conexiones[i].entrantes.isEmpty()) {
+                hojas.add(i);
+            }
+        }
+
+        boolean[] visitado = new boolean[n];    // Uso un vector de visitados para evitar recalcular los costes de un mismo sensor al ser añadido dos veces por distintos sensores entrantes
+
+        // Procesamos todas los sensores por niveles empezando desde las hojas (nivel 0)
+        while(!hojas.isEmpty()) {
+            int sensor = hojas.poll();
+
+            if (!visitado[sensor]) {
+                visitado[sensor] = true;
+
+                double coste = 0.0;
+
+                // Acumulamos la suma de volúmenes de todos los sensores entrantes al sensor actual
+                for (int input : conexiones[sensor].entrantes) {
+                    coste += conexiones[input].volumen;
+                }
+
+                // El nuevo volumen es el mínimo entre 3 veces su capacidad de transmisión y la suma de la transimisión de los sensores entrantes y su propia transmisión
+                conexiones[sensor].volumen = Math.min(sensores.get(sensor).getCapacidad() + coste, sensores.get(sensor).getCapacidad()*3);
+
+                int output = conexiones[sensor].destino;
+                if (output >= 0) {  // Si el destino es un sensor
+                    // Añado el sensor a la cola
+                    hojas.add(output);
+                }
+                else {  // Si el destino es un centro
+                    // Podríamos guardar en algún lado el volumen que recibe cada centro ya que tiene un máximo de 150
+                    // todo (si alguien lo ve una opción útil que lo implemente
+                }
+            }
+        }
     }
 
 
@@ -316,7 +351,8 @@ public class State {
             }
         }
 
-        //todo llamar a una función que recorra el DAG calculando los volúmenes de datos que acaba enviando cada sensor
+        // Recorremos al grafo para calcular los costes de cada sensor
+        calculateTraffic();
     }
 
 
@@ -383,7 +419,8 @@ public class State {
         // Conecto los sensores restantes a los sensores1
         conectarSensores(restantes, sensores1);
 
-        //todo llamar a una función que recorra el DAG calculando los volúmenes de datos que acaba enviando cada sensor
+        // Recorremos al grafo para calcular los costes de cada sensor
+        calculateTraffic();
     }
 
 
@@ -459,6 +496,9 @@ public class State {
                 }
             }
         }
+
+        // Recorremos al grafo para calcular los costes de cada sensor
+        calculateTraffic();
     }
 
 
