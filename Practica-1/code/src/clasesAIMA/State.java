@@ -72,7 +72,7 @@ public class State {
     private void añadirConexion(i, j) {
         if (j >= 0) {
             conexion[j].entrantes.add(i);
-            conexion[j].volumen = Math.max(conexion[i].volumen + conexion[j].volumen, sensores.get(i).getCapacidad()*3); // Su nuevo volumen es el que tendria o la capacidad suya x3
+            conexion[j].volumen = Math.max(conexion[i].volumen + conexion[j].volumen, sensores.get(j).getCapacidad()*3); // Su nuevo volumen es el que tendria o la capacidad suya x3
         }
         else incrementaContadorCentros(j);
         conexion[i].destino = j;
