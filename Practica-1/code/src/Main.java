@@ -20,7 +20,6 @@ import java.util.Properties;
 public class Main {
 
     private static void ejecutarHillClimbing(State state) throws Exception {
-        long startTime = System.currentTimeMillis();
 
         // Creamos problema para Hill Climbing
         Problem p = new Problem(
@@ -30,26 +29,29 @@ public class Main {
                 new HeuristicFunc()         // Heurística de evaluación
         );
 
+        long startTime = System.currentTimeMillis();
+
         Search alg = new HillClimbingSearch();
         SearchAgent agent = new SearchAgent(p, alg);
 
         // Imprimir todas las estadísticas
+        long estimatedTime = System.currentTimeMillis() - startTime;
+        System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
+
         System.out.println("\nResultado Hill Climbing:");
         printInstrumentation(agent.getInstrumentation());
         System.out.println(alg.getGoalState());
-
-        long estimatedTime = System.currentTimeMillis() - startTime;
-        System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
     }
 
     private static void ejecutarSimulatedAnnealing(State state) throws Exception {
-        long startTime = System.currentTimeMillis();
 
         // Establecer parámetros Simulated Annealing
         int steps = 100000;         // Número total de iteraciones del algoritmo
         int stiter = 100;           // Número de iteraciones por cada nivel de temperatura
         int k = 125;                // Factor de ajuste para la función de probabilidad de aceptación (cuanto mayor sea más tiempo aceptara soluciones peores)
-        double lambda = 0.0001;     // Parámetro de enfriamiente
+        double lambda = 0.0001;     // Parámetro de enfriamiento
+
+        long startTime = System.currentTimeMillis();
 
         // Creamos problema para Simulated Annealing
         Problem p = new Problem(
@@ -63,12 +65,12 @@ public class Main {
         SearchAgent agent = new SearchAgent(p, alg);
 
         // Imprimir todas las estadísticas
+        long estimatedTime = System.currentTimeMillis() - startTime;
+        System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
+
         System.out.println("\nResultado Simulated Annealing:");
         printInstrumentation(agent.getInstrumentation());
         System.out.println(alg.getGoalState());
-
-        long estimatedTime = System.currentTimeMillis() - startTime;
-        System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
     }
 
     public static void main(String[] args) throws Exception{
@@ -76,9 +78,10 @@ public class Main {
         // Inicializamos el contexto del problema
         Sensores s = new Sensores(100, 1234);       // número de sensores, semilla
         CentrosDatos c = new CentrosDatos(4, 4321); // número de centros de datos, semilla
+        State.setEnvironment(s, c);
 
         // Establecemos el contexto en el estado
-        State state = new State(s, c);
+        State state = new State();
 
         // Seleccionamos estado inicial
         // state.generadorGreedyMinDist();
@@ -90,14 +93,13 @@ public class Main {
         ejecutarSimulatedAnnealing(state);
     }
 
-        private static void printInstrumentation(Properties properties) {
+    private static void printInstrumentation(Properties properties) {
         Iterator keys = properties.keySet().iterator();
         while (keys.hasNext()) {
             String key = (String) keys.next();
             String property = properties.getProperty(key);
             System.out.println(key + " : " + property);
         }
-        
     }
     
     private static void printActions(List actions) {
@@ -106,5 +108,4 @@ public class Main {
             System.out.println(action);
         }
     }
-    
 }

@@ -46,18 +46,20 @@ public class State {
      * Constructor de un estado
      * Se inicializan todas las conexiones vacías
      */
-    public State(Sensores s, CentrosDatos c) {
-        sensores = s;
-        centros = c;
-
+    public State() {
         int n = sensores.size();
         int m = centros.size();
         conexiones = new ConexionSensor[n];
         // El índice 0 en centros corresponde al índice 1 en contadorInputCentros (necesario para diferenciar el índice 0 de los sensores y de los centros
-        contadorInputCentros = new int[m+1];  // Se inicializa a 0
+        contadorInputCentros = new int[m];  // Se inicializa a 0
         for (int i = 0; i < n; i++) {
             conexiones[i] = new ConexionSensor(i);
         }
+    }
+
+    public static void setEnvironment(Sensores s, CentrosDatos c) {
+        sensores = s;
+        centros = c;
     }
 
     /* ---------------------------- ÚTILES ---------------------------------- */
@@ -71,6 +73,7 @@ public class State {
             conexiones[j].volumen = Math.min(conexiones[i].volumen + conexiones[j].volumen, sensores.get(j).getCapacidad()*3); // Su nuevo volumen es el que tendria o la capacidad suya x3
         }
         else incrementaContadorCentros(j);
+
         conexiones[i].destino = j;
     }
 
@@ -84,12 +87,22 @@ public class State {
         return centros.get(-i - 1);
     }
 
+
     /**
      * Incrementa en 1 el número de conexiones que tiene el centro con índice i
      * @param i identificador negativo del centro
      */
     private void incrementaContadorCentros(int i) {
         contadorInputCentros[-i - 1]++;
+    }
+
+
+    /**
+     * Decrementa en 1 el número de conexiones que tiene el centro con índice i
+     * @param i identificador negativo del centro
+     */
+    private void decrementaContadorCentros(int i) {
+        contadorInputCentros[-i - 1]--;
     }
 
 
@@ -226,7 +239,7 @@ public class State {
             if (quedanAsignaciones) {   // Si aún es posible asignar sensores a otros sensores se sigue
                 boolean asignado = false;
                 for (int s2 : destino) {
-                    if (s1 != s2 && sensorApuntable(s2)) {
+                    if (s1 != s2 && sensorApuntable(s2) && conexiones[s2].destino != Integer.MAX_VALUE) {
                         conexiones[s2].entrantes.add(s1);
                         conexiones[s1].destino = s2;
                         asignado = true;
@@ -246,7 +259,7 @@ public class State {
     /**
      * Función para calcular el tráfico de datos de cada sensor y asignarselo recorriendo el grafo desde las hojas hasta los centros por niveles
      */
-    public void calculateTraffic() {
+    private void calculateTraffic() {
         int n = conexiones.length;
 
         // Obtenemos las hojas del grafo original
@@ -283,7 +296,7 @@ public class State {
                 }
                 else {  // Si el destino es un centro
                     // Podríamos guardar en algún lado el volumen que recibe cada centro ya que tiene un máximo de 150
-                    // todo (si alguien lo ve una opción útil que lo implemente
+                    // todo (si alguien lo ve una opción útil que lo implemente)
                 }
             }
         }
@@ -291,7 +304,6 @@ public class State {
 
 
     /* ------------------ CREADORAS DE ESTADOS INICIALES -------------------- */
-
 
     /**
      * Este generador de estado inicial funciona de la siguiente forma: (Objetivo minimizar distancias, no tiene en cuenta costes ni tampoco apura en conseguir las mínimas distancias siempre)
@@ -306,6 +318,8 @@ public class State {
      *  ...
      * Contras:
      *  - Al no tener en cuenta el volumen puede que los enchufes (sensores que conectan toda una estructura con un centro) formen un cuello de botella importante
+     *  - Puede que sea asigne un sensor a un cluster cuando en realidad podría minimizar distancia uniendose a otro
+     *  - Es posible que al asignar los sensores restantes dentro de un cluster apunten a sensores lejanos dentro del propio cluster
      *  ...
      */
     public void generadorGreedyMinDist() {
@@ -331,7 +345,7 @@ public class State {
             if (centroApuntable(idCentro)) {
                 conexiones[i].destino = idCentro;
                 incrementaContadorCentros(idCentro);
-                sensoresPorCentro[idCentro].add(i);
+                sensoresPorCentro[-idCentro - 1].add(i);
             }
         }
 
@@ -345,6 +359,7 @@ public class State {
                     if (sensorApuntable(sensor)) {
                         conexiones[i].destino = sensor;
                         conexiones[sensor].entrantes.add(i);
+                        sensoresPorCentro[-idCentro - 1].add(i);
                         break;
                     }
                 }
@@ -408,6 +423,7 @@ public class State {
             else sensoresNoConectados5.add(sensor);
         }
 
+        // todo ir restando conjuntos
         // Conecto los distintos niveles de la jerarquia
         List<Integer> restantes = conectarSensores(sensoresNoConectados5, sensoresConectados5);
         // Intento conectar los sensores2 y los restantes a los sensores5
@@ -415,9 +431,13 @@ public class State {
         restantes = conectarSensores(sensores2, sensores5);
         // Intento conectar los sensores1 y los restantes a los sensores2
         sensores1.addAll(restantes);
-        conectarSensores(sensores1, sensores2);
+        restantes = conectarSensores(sensores1, sensores2);
         // Conecto los sensores restantes a los sensores1
-        conectarSensores(restantes, sensores1);
+        restantes = conectarSensores(restantes, sensores1);
+
+        while (!restantes.isEmpty()) {
+            restantes = conectarSensores(restantes, sensores1);
+        }
 
         // Recorremos al grafo para calcular los costes de cada sensor
         calculateTraffic();
