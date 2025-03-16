@@ -69,14 +69,13 @@ public class State {
     /**
      * Añado la conexion de i a j
      */
-    private void añadirConexion(i, j) {
+    private void añadirConexion(int i, int j) {
         if (j >= 0) {
-            conexion[j].entrantes.add(i);
-            conexion[j].volumen = Math.max(conexion[i].volumen + conexion[j].volumen, sensores.get(j).getCapacidad()*3); // Su nuevo volumen es el que tendria o la capacidad suya x3
+            conexiones[j].entrantes.add(i);
+            conexiones[j].volumen = Math.min(conexiones[i].volumen + conexiones[j].volumen, sensores.get(j).getCapacidad()*3); // Su nuevo volumen es el que tendria o la capacidad suya x3
         }
         else incrementaContadorCentros(j);
-        conexion[i].destino = j;
-
+        conexiones[i].destino = j;
     }
 
 
@@ -481,6 +480,7 @@ public class State {
         return -volumenTotal; // Negativo para buscar los minimos con el hill climbing
     }
 
+
     /**
      * La heuristica retorna la distancia de todas las conexiones
      *
@@ -489,7 +489,7 @@ public class State {
     public double heuristicaMinimizarDistancias() {
         double distanciasTotales = 0.0;
         for (int i = 0; i < conexiones.length; i++) {
-            distanciasTotales += calcularDistancia(i, conexiones[i].destino)
+            distanciasTotales += calcularDistancia(i, conexiones[i].destino);
         }
         return distanciasTotales;
     }
@@ -504,7 +504,6 @@ public class State {
 
         return datosTotales/distanciasTotales;
     }
-
 
 
     /**
@@ -539,9 +538,6 @@ public class State {
 
         return diferencia;
     }
-
-
-
 
 
     /* ------------------------------ OTROS --------------------------------- */
