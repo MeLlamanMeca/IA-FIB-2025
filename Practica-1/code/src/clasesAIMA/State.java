@@ -13,6 +13,9 @@ public class State {
     // Todos los estados almacenan un estático de los sensores y laos centros para evitar información duplicada
     private static Sensores sensores;
     private static CentrosDatos centros;
+    public static final int UNDEFINED = Integer.MAX_VALUE;
+
+
 
 
     /**
@@ -24,7 +27,7 @@ public class State {
         public List<Integer> entrantes;
         // Destino al que envía: Si es un sensor es su ID, si es un centro es su ID negativa
         public int destino;
-        // Volumen de datos transmitido por el sensor (máximo 3 * volumen de datos que él envía)
+        // Volumen de datos que tiene el sensor en total, no tiene limite
         public double volumen;
 
         /**
@@ -32,7 +35,7 @@ public class State {
          */
         public ConexionSensor(int i) {
             entrantes = new ArrayList<>();
-            destino = Integer.MAX_VALUE;    // Sin asignar
+            destino = UNDEFINED;    // Sin asignar
             volumen = sensores.get(i).getCapacidad();   // Inicialmente transmite solo su propio tráfico de datos
         }
     }
@@ -70,11 +73,23 @@ public class State {
     private void añadirConexion(int i, int j) {
         if (j >= 0) {
             conexiones[j].entrantes.add(i);
-            conexiones[j].volumen = Math.min(conexiones[i].volumen + conexiones[j].volumen, sensores.get(j).getCapacidad()*3); // Su nuevo volumen es el que tendria o la capacidad suya x3
+            conexiones[j].volumen += conexiones[i].volumen; // Su nuevo volumen es el que tendria o la capacidad suya x3
         }
         else incrementaContadorCentros(j);
 
         conexiones[i].destino = j;
+    }
+
+    private void eliminarConexion(int i) {
+        int j = conexiones[i].destino;
+
+        if (j >= 0) {
+            conexiones[j].entrantes.remove(Integer.valueOf(i));
+            conexiones[j].volumen -= conexiones[i].volumen;
+        }
+        else decrementaContadorCentros(j);
+
+        conexiones[i].destino = UNDEFINED;
     }
 
 
@@ -239,7 +254,7 @@ public class State {
             if (quedanAsignaciones) {   // Si aún es posible asignar sensores a otros sensores se sigue
                 boolean asignado = false;
                 for (int s2 : destino) {
-                    if (s1 != s2 && sensorApuntable(s2) && conexiones[s2].destino != Integer.MAX_VALUE) {
+                    if (s1 != s2 && sensorApuntable(s2) && conexiones[s2].destino != UNDEFINED) {
                         conexiones[s2].entrantes.add(s1);
                         conexiones[s1].destino = s2;
                         asignado = true;
@@ -283,11 +298,11 @@ public class State {
 
                 // Acumulamos la suma de volúmenes de todos los sensores entrantes al sensor actual
                 for (int input : conexiones[sensor].entrantes) {
-                    coste += conexiones[input].volumen;
+                    coste += datosTransmitidos(input);
                 }
 
                 // El nuevo volumen es el mínimo entre 3 veces su capacidad de transmisión y la suma de la transimisión de los sensores entrantes y su propia transmisión
-                conexiones[sensor].volumen = Math.min(sensores.get(sensor).getCapacidad() + coste, sensores.get(sensor).getCapacidad()*3);
+                conexiones[sensor].volumen = sensores.get(sensor).getCapacidad() + coste;
 
                 int output = conexiones[sensor].destino;
                 if (output >= 0) {  // Si el destino es un sensor
@@ -351,7 +366,7 @@ public class State {
 
         // Reasignamos los sensores que no han podido conectarse a su centro
         for (int i = 0; i < n; i++) {
-            if (conexiones[i].destino == Integer.MAX_VALUE) {
+            if (conexiones[i].destino == UNDEFINED) {
                 int idCentro = centroAsignado[i];
 
                 // Buscamos a qué sensor conectarlo
@@ -524,6 +539,32 @@ public class State {
 
     /* --------------------------- OPERADORES ------------------------------- */
 
+    public void swap(int i, int j) {
+        int jDestino = conexiones[j].destino;
+        int iDestino = conexiones[i].destino;
+        eliminarConexion(i);
+        eliminarConexion(j);
+        añadirConexion(i, jDestino);
+        añadirConexion(j, iDestino);
+    }
+
+    public void move(int i, int j) {
+        eliminarConexion(i);
+        añadirConexion(i, j);
+    }
+
+    public void circularSwap(List<Integer> lista) {
+        int n = lista.size();
+        for (int i = 0; i < n-1; i++) {
+            swap(lista.get(i), lista.get((i + 1)));
+        }
+    }
+    public void linearMove(List<Integer> lista) {
+        int n = lista.size();
+        for (int i = 0; i < n-1; i++) {
+            move(lista.get(i), lista.get((i + 1)));
+        }
+    }
 
 
     /* --------------------------- HEURÍSTICAS ------------------------------ */
@@ -535,7 +576,7 @@ public class State {
     public double heuristicaMaximizarDatos() {
         double volumenTotal = 0.0;
         for (int i = 0; i < conexiones.length; i++) {
-            volumenTotal += conexiones[i].volumen;
+            volumenTotal += datosTransmitidos(i);
         }
         return -volumenTotal; // Negativo para buscar los minimos con el hill climbing
     }
@@ -592,7 +633,7 @@ public class State {
 
         for (int i = 0; i < conexiones.length; i++) {
             double capacidad = sensores.get(i).getCapacidad();  // Asegurar que getCapacidad() retorna double
-            double volumenTransmitido = conexiones[i].volumen; // Asegurar que volumen también es double
+            double volumenTransmitido = datosTransmitidos(i); // Asegurar que volumen también es double
             diferencia += Math.abs(capacidad - volumenTransmitido);
         }
 
@@ -622,8 +663,62 @@ public class State {
             } else {
                 sb.append("Centro ").append(-conexiones[i].destino - 1);
             }
-            sb.append(" (").append(conexiones[i].volumen).append(" Mw)\n");
+            sb.append(" (").append(datosTransmitidos(i)).append(" Mb)\n");
         }
         return sb.toString();
+    }
+
+    public double datosTransmitidos(int i) {
+        return Math.min(conexiones[i].volumen,sensores.get(i).getCapacidad()*3);
+    }
+
+    public int numSensores() {
+        return sensores.size();
+    }
+    public int numCentros() {
+        return centros.size();
+    }
+
+    public State copy() { //TODO checkear que sea correcto, generado automaticamente.
+        State nuevo = new State();
+        for (int i = 0; i < conexiones.length; i++) {
+            nuevo.conexiones[i].destino = conexiones[i].destino;
+            nuevo.conexiones[i].volumen = conexiones[i].volumen;
+            for (int j = 0; j < conexiones[i].entrantes.size(); j++) {
+                nuevo.conexiones[i].entrantes.add(conexiones[i].entrantes.get(j));
+            }
+        }
+        for (int i = 0; i < contadorInputCentros.length; i++) {
+            nuevo.contadorInputCentros[i] = contadorInputCentros[i];
+        }
+        return nuevo;
+    }
+
+    public boolean confirmarCambios(List<Integer> s) {
+        int n = s.size();
+        boolean[] finalizado = new boolean[n]; //se inicializa a false por defecto
+        int[] posicion_actual = new int[n];
+        for (int i = 0; i < n; i++) {posicion_actual[i] = s.get(i);}
+        while (n > 0) {
+            for (int i = 0; i < s.size(); ++i) {
+                //mientras no sepamos que un sensor llega a un centro, continuamos mirando.
+                if (!finalizado[i]) {
+                    posicion_actual[i] = conexiones[posicion_actual[i]].destino;
+
+                    //CICLO EN EL GRAFO
+                    if (posicion_actual[i] == s.get(i)) {
+                        return false;
+                    }
+
+                    //EL SENSOR APUNTA DIRECTAMENTE O INDIRECTAMENTE A UN CENTRO
+                    if (posicion_actual[i] < 0) {
+                        finalizado[i] = true;
+                        --n;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 }

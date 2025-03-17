@@ -85,7 +85,7 @@ public class Main {
 
         // Seleccionamos estado inicial
         // state.generadorGreedyMinDist();
-        // state.generadorGreedyHierarchy();
+        state.generadorGreedyHierarchy();
         // state.generadorGreedyRandom();
 
         // Ejecutamos los dos algoritmos con el mismo estado inicial para poder comparar sus ejecuciones
