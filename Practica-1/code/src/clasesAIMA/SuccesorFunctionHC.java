@@ -17,6 +17,9 @@ public class SuccesorFunctionHC implements SuccessorFunction {
     private static final Logger logger = Logger.getLogger(SuccesorFunctionHC.class.getName());
 
     public List getSuccessors(Object state) {
+        int a,b,c,d,av,bv,cv,dv;
+        a = b = c = d = av = bv = cv = dv = 0;
+
         ArrayList retval = new ArrayList();
         State board = (State) state;
 
@@ -26,33 +29,33 @@ public class SuccesorFunctionHC implements SuccessorFunction {
 
             // Moves hacia centros
             for (int j = 1; j <= board.numCentros(); ++j) {
-                if (board.centroApuntable(-j)) {
-                    State newBoard = board.copy();
-                    newBoard.move(i, -j);
-                    // Log cuando se mueve un sensor a un centro
-                    logger.fine("Moviendo el puntero del sensor " + i + " al centro " + j);
-                    String action = "Move sensor pointer " + i + " to center " + j;
+                State newBoard = board.copy();
+                logger.fine("Moviendo el puntero del sensor " + i + " al centro " + -j);
+                ++a;
+                if (newBoard.move(i, -j)) {
+                    ++av;
+                    String action = "Move sensor pointer " + i + " to center " + -j;
                     retval.add(new Successor(action, newBoard));
                 }
             }
 
             // Moves y swaps hacia sensores
             for (int j = 0; j < board.numSensores(); ++j) {
-                if (board.sensorApuntable(j) && i != j) {
-                    State newBoard = board.copy();
-                    newBoard.move(i, j);
-                    if (newBoard.confirmarCambios(Collections.singletonList(i))) {
-                        logger.fine("Moviendo el puntero del sensor " + i + " al sensor " + j);
-                        String action = "Move sensor pointer " + i + " to sensor " + j;
-                        retval.add(new Successor(action, newBoard));
-                    }
+                State newBoard = board.copy();
+                logger.fine("Moviendo el puntero del sensor " + i + " al sensor " + j);
+                ++a;
+                if (i != j && newBoard.move(i, j)) {
+                    ++av;
+                    String action = "Move sensor pointer " + i + " to sensor " + j;
+                    retval.add(new Successor(action, newBoard));
                 }
 
                 if (j > i) {
-                    State newBoard = board.copy();
-                    newBoard.swap(i, j);
-                    if (newBoard.confirmarCambios(List.of(i, j))) {
-                        logger.fine("Intercambiando los punteros de los sensores " + i + " y " + j);
+                    newBoard = board.copy();
+                    logger.fine("Intercambiando los punteros de los sensores " + i + " y " + j);
+                    ++b;
+                    if (newBoard.swap(i, j)) {
+                        ++bv;
                         String action = "Swap sensors pointers " + i + " and " + j;
                         retval.add(new Successor(action, newBoard));
                     }
@@ -65,22 +68,22 @@ public class SuccesorFunctionHC implements SuccessorFunction {
                     if (i != j && i != k && j != k) {
                         // Circular swap
                         State newBoard = board.copy();
-                        newBoard.circularSwap(List.of(i, j, k));
-                        if (newBoard.confirmarCambios(List.of(i, j, k))) {
-                            logger.fine("Intercambio circular de punteros de sensores " + i + ", " + j + " y " + k);
+                        logger.fine("Intercambio circular de punteros de sensores " + i + ", " + j + " y " + k);
+                        ++c;
+                        if (newBoard.circularSwap(List.of(i, j, k))) {
+                            ++cv;
                             String action = "Circular swap sensors pointers " + i + ", " + j + " and " + k;
                             retval.add(new Successor(action, newBoard));
                         }
 
                         // Linear move
-                        if (board.sensorApuntable(j) && board.sensorApuntable(k)) {
-                            newBoard = board.copy();
-                            newBoard.linearMove(List.of(i, j, k));
-                            if (newBoard.confirmarCambios(List.of(i, j))) {
-                                logger.fine("Movimiento lineal del puntero del sensor " + i + " hacia los sensores " + j + " y " + k);
-                                String action = "Linear move sensor pointer " + i + " to sensors " + j + " and " + k;
-                                retval.add(new Successor(action, newBoard));
-                            }
+                        newBoard = board.copy();
+                        logger.fine("Movimiento lineal del puntero del sensor " + i + " hacia los sensores " + j + " y " + k);
+                        ++d;
+                        if (newBoard.linearMove(List.of(i, j, k))) {
+                            ++dv;
+                            String action = "Linear move sensor pointer " + i + " to sensors " + j + " and " + k;
+                            retval.add(new Successor(action, newBoard));
                         }
                     }
                 }
@@ -88,6 +91,10 @@ public class SuccesorFunctionHC implements SuccessorFunction {
         }
 
         logger.info("Se han obtenido " + retval.size() + " sucesores.");
+        logger.info("Se han obtenido " + av + ":" + a + " movimientos de sensores.");
+        logger.info("Se han obtenido " + bv + ":" + b + " intercambios de punteros de sensores.");
+        logger.info("Se han obtenido " + cv + ":" + c + " intercambios circulares de punteros de sensores.");
+        logger.info("Se han obtenido " + dv + ":" + d + " movimientos lineales de punteros de sensores.");
         return retval;
     }
 }

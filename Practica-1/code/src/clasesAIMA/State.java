@@ -68,28 +68,50 @@ public class State {
     /* ---------------------------- ÚTILES ---------------------------------- */
 
     /**
-     * Añado la conexion de i a j
+     * Añade la conexión i -> j
+     * @param i sensor origen
+     * @param j sensor destino
      */
     private void añadirConexion(int i, int j) {
-        if (j >= 0) {
-            conexiones[j].entrantes.add(i);
-            conexiones[j].volumen += conexiones[i].volumen; // Su nuevo volumen es el que tendria o la capacidad suya x3
-        }
+        if (j >= 0) conexiones[j].entrantes.add(i);
         else incrementaContadorCentros(j);
 
         conexiones[i].destino = j;
     }
 
+    /**
+     * Elimina la conexión del sensor i
+     *
+     * @param i sensor origen
+     */
     private void eliminarConexion(int i) {
         int j = conexiones[i].destino;
 
-        if (j >= 0) {
-            conexiones[j].entrantes.remove(Integer.valueOf(i));
-            conexiones[j].volumen -= conexiones[i].volumen;
-        }
+        if (j >= 0) conexiones[j].entrantes.remove(Integer.valueOf(i));
         else decrementaContadorCentros(j);
 
         conexiones[i].destino = UNDEFINED;
+    }
+
+    /**
+     * Añade el volumen volumen al sensor destino de forma recursiva
+     * @param destino sensor destino
+     * @param volumen volumen a añadir
+     */
+    private void añadirVolumen(int destino, double volumen) {
+        if(destino >= 0) {
+            conexiones[destino].volumen += volumen;
+            añadirVolumen(conexiones[destino].destino, volumen);
+        }
+        //todo: si queremos guardar el volumen en los centros hacerlo aquí
+    }
+
+    private void eliminarVolumen(int destino, double jvolumen) {
+        if(destino >= 0) {
+            conexiones[destino].volumen -= jvolumen;
+            eliminarVolumen(conexiones[destino].destino, jvolumen);
+        }
+        //todo: si queremos guardar el volumen en los centros hacerlo aquí
     }
 
 
@@ -183,38 +205,15 @@ public class State {
 
 
     /**
-     * Encuentra si para la configuración actual existe algún ciclo en el grafo
-     *              
-     *              NOTA: No le veo el sentido a llamar a esta función. Mejor solo verificar los vertices que se han modificado con el dfs
-     */
-    public boolean encontrarCiclos() {
-        int n = conexiones.length;
-
-        boolean[] visitado = new boolean[n];    // Se inicializa en false
-
-        for (int nodo = 0; nodo < n; nodo++) {
-            if (!visitado[nodo] && dfs(nodo, visitado)) {
-                return true;    // Ciclo encontrado
-            }
-        }
-        return false;   // No hay ciclo en ninguna iteración
-    }
-
-
-    /**
      *  Comprueba si al sensor i se le puede añadir una conexión
      */
-    public boolean sensorApuntable(int i) {
-        return conexiones[i].entrantes.size() < 3;
-    }
+    public boolean sensorApuntable(int i) {return conexiones[i].entrantes.size() < 3;}
 
 
     /**
      *  Comprueba si al centro i se le puede añadir una conexión (i es un índice negativo)
      */
-    public boolean centroApuntable(int i) {
-        return contadorInputCentros[-i - 1] < 25;
-    }
+    public boolean centroApuntable(int i) {return contadorInputCentros[-i - 1] < 25;}
 
 
     /**
@@ -514,7 +513,7 @@ public class State {
             int randomIndex = rand.nextInt(SuC.size());
             int elegido = SuC.get(randomIndex); // Selecciona un elemento aleatorio de de SuC
 
-            añadirConexion(sensoresArray[i], elegido);
+            añadirConexion(sensoresArray[i], elegido); //TODO: funcion modificada, posible error AQUI. solucionar. La funcion ya no añade volumen al apuntado.
 
             if (elegido < 0) { // Es un centro
                 if (!centroApuntable(elegido)) { // El centro ya no es apuntable
@@ -539,31 +538,69 @@ public class State {
 
     /* --------------------------- OPERADORES ------------------------------- */
 
-    public void swap(int i, int j) {
+    public boolean swap(int i, int j) {
+
         int jDestino = conexiones[j].destino;
         int iDestino = conexiones[i].destino;
+        double jVolumen = conexiones[j].volumen;
+        double iVolumen = conexiones[i].volumen;
+
         eliminarConexion(i);
         eliminarConexion(j);
         añadirConexion(i, jDestino);
         añadirConexion(j, iDestino);
+
+        if(!confirmarCambios(List.of(i,j))) return false;
+
+        eliminarVolumen(jDestino,jVolumen);
+        eliminarVolumen(iDestino,iVolumen);
+        añadirVolumen(jDestino, iVolumen);
+        añadirVolumen(iDestino, jVolumen);
+
+        return true;
     }
 
-    public void move(int i, int j) {
+
+
+    public boolean move(int i, int j) {
+
+        if(j >= 0){if(!sensorApuntable(j)) return false;}
+        else if(!centroApuntable(j)) return false;
+
+        int iDestino = conexiones[i].destino;
+        double iVolumen = conexiones[i].volumen;
+
         eliminarConexion(i);
         añadirConexion(i, j);
+
+        if(!confirmarCambios(Collections.singletonList(i))) return false;
+
+        eliminarVolumen(iDestino,iVolumen);
+        añadirVolumen(j, iVolumen);
+
+        return true;
     }
 
-    public void circularSwap(List<Integer> lista) {
+    public boolean circularSwap(List<Integer> lista) {
+
         int n = lista.size();
-        for (int i = 0; i < n-1; i++) {
-            swap(lista.get(i), lista.get((i + 1)));
-        }
+
+        int i1Destino = conexiones[lista.get(0)].destino;
+        for (int i = 0; i < n-1; i++) {if (!move(lista.get(i), conexiones[lista.get(i+1)].destino)) return false;}
+        if (!move(lista.get(n-1), i1Destino)) return false;
+
+        return true;
     }
-    public void linearMove(List<Integer> lista) {
+
+    public boolean linearMove(List<Integer> lista) {
         int n = lista.size();
+
         for (int i = 0; i < n-1; i++) {
-            move(lista.get(i), lista.get((i + 1)));
+            if(!sensorApuntable(lista.get(i+1))) return false;
+            if(!move(lista.get(i), lista.get((i + 1)))) return false;
         }
+
+        return true;
     }
 
 
@@ -634,10 +671,40 @@ public class State {
         for (int i = 0; i < conexiones.length; i++) {
             double capacidad = sensores.get(i).getCapacidad();  // Asegurar que getCapacidad() retorna double
             double volumenTransmitido = datosTransmitidos(i); // Asegurar que volumen también es double
-            diferencia += Math.abs(capacidad - volumenTransmitido);
+            diferencia += Math.abs(capacidad*3 - volumenTransmitido);
         }
 
         return diferencia;
+    }
+
+    double[] mejorDistancia = new double[sensores.size()]; //variable global que solo utiliza mi funcion. En caso de no usar esta heuristica, no se inicializa.
+    public double mecaHeuristica() {
+        if (mejorDistancia[1] == 0.0) Arrays.fill(mejorDistancia, UNDEFINED);
+        double load = 0.0;
+        double distancia = 0.0;
+        for (int i = 0; i < conexiones.length; i++) {
+
+            if(mejorDistancia[i] == UNDEFINED) {
+                for (int j = 0; j < sensores.size(); j++) {
+                    if(j != i) mejorDistancia[i] = Math.min(mejorDistancia[i],calcularDistancia(i, j));
+                }
+                for(int j = 1; j <= centros.size(); j++) {
+                    mejorDistancia[i] = Math.min(mejorDistancia[i],calcularDistancia(i, -j));
+                }
+            }
+
+            if(sensores.get(i).getCapacidad()*3 >= conexiones[i].volumen) {
+                load += sensores.get(i).getCapacidad();
+                distancia += calcularDistancia(i, conexiones[i].destino) - mejorDistancia[i];
+            }
+            else {
+                double penalizacion = (conexiones[i].volumen - sensores.get(i).getCapacidad()*3);
+                load -= penalizacion * penalizacion;
+                distancia += calcularDistancia(i, conexiones[i].destino) - mejorDistancia[i];
+            }
+        }
+
+        return -load/distancia;
     }
 
 
@@ -663,7 +730,7 @@ public class State {
             } else {
                 sb.append("Centro ").append(-conexiones[i].destino - 1);
             }
-            sb.append(" (").append(datosTransmitidos(i)).append(" Mb)\n");
+            sb.append(" (").append(datosTransmitidos(i) + ":" + conexiones[i].volumen).append(" Mb)\n");
         }
         return sb.toString();
     }

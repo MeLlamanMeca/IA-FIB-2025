@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="IA-FIB-2025:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/IA_FIB_2025_jar</output-path>
+    <root id="archive" name="IA-FIB-2025.jar">
+      <element id="module-output" name="IA-FIB-2025" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Practica-1/code/AIMA.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Practica-1/code/RedSensores.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
