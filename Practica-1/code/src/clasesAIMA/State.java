@@ -581,28 +581,6 @@ public class State {
         return true;
     }
 
-    public boolean circularSwap(List<Integer> lista) {
-
-        int n = lista.size();
-
-        int i1Destino = conexiones[lista.get(0)].destino;
-        for (int i = 0; i < n-1; i++) {if (!move(lista.get(i), conexiones[lista.get(i+1)].destino)) return false;}
-        if (!move(lista.get(n-1), i1Destino)) return false;
-
-        return true;
-    }
-
-    public boolean linearMove(List<Integer> lista) {
-        int n = lista.size();
-
-        for (int i = 0; i < n-1; i++) {
-            if(!sensorApuntable(lista.get(i+1))) return false;
-            if(!move(lista.get(i), lista.get((i + 1)))) return false;
-        }
-
-        return true;
-    }
-
 
     /* --------------------------- HEURÍSTICAS ------------------------------ */
 
@@ -679,12 +657,10 @@ public class State {
 
     double[] mejorDistancia = new double[sensores.size()]; //variable global que solo utiliza mi funcion. En caso de no usar esta heuristica, no se inicializa.
     public double mecaHeuristica() {
-        if (mejorDistancia[1] == 0.0) Arrays.fill(mejorDistancia, UNDEFINED);
-        double load = 0.0;
-        double distancia = 0.0;
-        for (int i = 0; i < conexiones.length; i++) {
 
-            if(mejorDistancia[i] == UNDEFINED) {
+        if (mejorDistancia[1] == 0.0) {
+            for (int i = 0; i < sensores.size(); i++) {
+                mejorDistancia[i] = UNDEFINED;
                 for (int j = 0; j < sensores.size(); j++) {
                     if(j != i) mejorDistancia[i] = Math.min(mejorDistancia[i],calcularDistancia(i, j));
                 }
@@ -692,6 +668,13 @@ public class State {
                     mejorDistancia[i] = Math.min(mejorDistancia[i],calcularDistancia(i, -j));
                 }
             }
+        }
+
+        double load = 0.0;
+        double distancia = 0.0;
+        for (int i = 0; i < conexiones.length; i++) {
+
+
 
             if(sensores.get(i).getCapacidad()*3 >= conexiones[i].volumen) {
                 load += sensores.get(i).getCapacidad();
@@ -704,7 +687,7 @@ public class State {
             }
         }
 
-        return -load/distancia;
+        return -load/(distancia*distancia);
     }
 
 
