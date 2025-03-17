@@ -581,6 +581,17 @@ public class State {
         return true;
     }
 
+    public boolean circularSwap(List<Integer> lista) {
+
+        int n = lista.size();
+
+        int i1Destino = conexiones[lista.get(0)].destino;
+        for (int i = 0; i < n-1; i++) {if (!move(lista.get(i), conexiones[lista.get(i+1)].destino)) return false;}
+        if (!move(lista.get(n-1), i1Destino)) return false;
+
+        return true;
+    }
+
 
     /* --------------------------- HEURÍSTICAS ------------------------------ */
 
