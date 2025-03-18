@@ -297,7 +297,7 @@ public class State {
 
                 // Acumulamos la suma de volúmenes de todos los sensores entrantes al sensor actual
                 for (int input : conexiones[sensor].entrantes) {
-                    coste += datosTransmitidos(input);
+                    coste += conexiones[input].volumen;
                 }
 
                 // El nuevo volumen es el mínimo entre 3 veces su capacidad de transmisión y la suma de la transimisión de los sensores entrantes y su propia transmisión
@@ -673,7 +673,7 @@ public class State {
             for (int i = 0; i < sensores.size(); i++) {
                 mejorDistancia[i] = UNDEFINED;
                 for (int j = 0; j < sensores.size(); j++) {
-                    if(j != i) mejorDistancia[i] = Math.min(mejorDistancia[i],calcularDistancia(i, j));
+                    if(j != i) {mejorDistancia[i] = Math.min(mejorDistancia[i],calcularDistancia(i, j));}
                 }
                 for(int j = 1; j <= centros.size(); j++) {
                     mejorDistancia[i] = Math.min(mejorDistancia[i],calcularDistancia(i, -j));
@@ -685,16 +685,14 @@ public class State {
         double distancia = 0.0;
         for (int i = 0; i < conexiones.length; i++) {
 
-
+            distancia += calcularDistancia(i, conexiones[i].destino) - mejorDistancia[i];
 
             if(sensores.get(i).getCapacidad()*3 >= conexiones[i].volumen) {
                 load += sensores.get(i).getCapacidad();
-                distancia += calcularDistancia(i, conexiones[i].destino) - mejorDistancia[i];
             }
             else {
                 double penalizacion = (conexiones[i].volumen - sensores.get(i).getCapacidad()*3);
                 load -= penalizacion * penalizacion;
-                distancia += calcularDistancia(i, conexiones[i].destino) - mejorDistancia[i];
             }
         }
 
@@ -751,6 +749,9 @@ public class State {
         }
         for (int i = 0; i < contadorInputCentros.length; i++) {
             nuevo.contadorInputCentros[i] = contadorInputCentros[i];
+        }
+        for (int i = 0; i < mejorDistancia.length; i++) {
+            nuevo.mejorDistancia[i] = mejorDistancia[i];
         }
         return nuevo;
     }

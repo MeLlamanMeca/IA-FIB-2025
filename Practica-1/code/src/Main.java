@@ -29,6 +29,7 @@ public class Main {
                 new HeuristicFunc()         // Heurística de evaluación
         );
 
+
         long startTime = System.currentTimeMillis();
 
         Search alg = new HillClimbingSearch();
@@ -86,7 +87,7 @@ public class Main {
         // Seleccionamos estado inicial
         // state.generadorGreedyMinDist();
         state.generadorGreedyHierarchy();
-        // state.generadorGreedyRandom();
+        //state.generadorGreedyRandom();
 
         // Ejecutamos los dos algoritmos con el mismo estado inicial para poder comparar sus ejecuciones
         ejecutarHillClimbing(state);

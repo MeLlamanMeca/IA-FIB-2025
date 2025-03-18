@@ -13,7 +13,8 @@ import java.util.logging.Level;
 public class SuccesorFunctionHC implements SuccessorFunction {
 
     // Logger para la clase
-    private static final Logger logger = Logger.getLogger(SuccesorFunctionHC.class.getName());
+    //private static final Logger logger = Logger.getLogger(SuccesorFunctionHC.class.getName());
+    private Set<List<Integer>> uniqueStates = new HashSet<>();
 
     private static List<Integer> normalizeSwap(int i, int j, int k) {
         // Generar las 3 rotaciones posibles
@@ -28,20 +29,35 @@ public class SuccesorFunctionHC implements SuccessorFunction {
         int a,b,c,d,av,bv,cv,dv;
         a = b = c = d = av = bv = cv = dv = 0;
 
+
+
         ArrayList retval = new ArrayList();
         State board = (State) state;
 
-        logger.info("Obteniendo sucesores para el estado: " + state);
+        if(uniqueStates.isEmpty()) {
+            for (int i = 0; i < board.numSensores(); i++) {
+                for (int j = 0; j < board.numSensores(); j++) {
+                    for (int k = 0; k < board.numSensores(); k++) {
+                        if (i != j && j != k && k != i) { // Evitar tripletas con valores repetidos
+                            uniqueStates.add(normalizeSwap(i, j, k));
+                        }
+                    }
+                }
+            }
+
+        }
+
+        //logger.info("Obteniendo sucesores para el estado: " + state);
 
         for (int i = 0; i < board.numSensores() - 1; ++i) {
 
             // Moves hacia centros
             for (int j = 1; j <= board.numCentros(); ++j) {
                 State newBoard = board.copy();
-                logger.fine("Moviendo el puntero del sensor " + i + " al centro " + -j);
-                ++a;
+                //logger.fine("Moviendo el puntero del sensor " + i + " al centro " + -j);
+                //++a;
                 if (newBoard.move(i, -j)) {
-                    ++av;
+                    //++av;
                     String action = "Move sensor pointer " + i + " to center " + -j;
                     retval.add(new Successor(action, newBoard));
                 }
@@ -50,20 +66,20 @@ public class SuccesorFunctionHC implements SuccessorFunction {
             // Moves y swaps hacia sensores
             for (int j = 0; j < board.numSensores(); ++j) {
                 State newBoard = board.copy();
-                logger.fine("Moviendo el puntero del sensor " + i + " al sensor " + j);
-                ++a;
+                //logger.fine("Moviendo el puntero del sensor " + i + " al sensor " + j);
+                //++a;
                 if (i != j && newBoard.move(i, j)) {
-                    ++av;
+                    //++av;
                     String action = "Move sensor pointer " + i + " to sensor " + j;
                     retval.add(new Successor(action, newBoard));
                 }
 
                 if (j > i) {
                     newBoard = board.copy();
-                    logger.fine("Intercambiando los punteros de los sensores " + i + " y " + j);
-                    ++b;
+                    //logger.fine("Intercambiando los punteros de los sensores " + i + " y " + j);
+                    //++b;
                     if (newBoard.swap(i, j)) {
-                        ++bv;
+                        //++bv;
                         String action = "Swap sensors pointers " + i + " and " + j;
                         retval.add(new Successor(action, newBoard));
                     }
@@ -71,34 +87,22 @@ public class SuccesorFunctionHC implements SuccessorFunction {
             }
         }
 
-        // Circular swaps
-        Set<List<Integer>> uniqueStates = new HashSet<>();
-        for (int i = 0; i < board.numSensores(); i++) {
-            for (int j = 0; j < board.numSensores(); j++) {
-                for (int k = 0; k < board.numSensores(); k++) {
-                    if (i != j && j != k && k != i) { // Evitar tripletas con valores repetidos
-                        uniqueStates.add(normalizeSwap(i, j, k));
-                    }
-                }
-            }
-        }
-
         for (List<Integer> swap : uniqueStates) {
             State newBoard = board.copy();
-            logger.fine("Intercambiando los punteros de los sensores " + swap.get(0) + ", " + swap.get(1) + " y " + swap.get(2));
-            ++c;
+            //logger.fine("Intercambiando los punteros de los sensores " + swap.get(0) + ", " + swap.get(1) + " y " + swap.get(2));
+            //++c;
             if (newBoard.circularSwap(swap)) {
-                ++cv;
+                //++cv;
                 String action = "Circular swap sensors pointers " + swap.get(0) + ", " + swap.get(1) + " and " + swap.get(2);
                 retval.add(new Successor(action, newBoard));
             }
         }
 
 
-        logger.info("Se han obtenido " + retval.size() + " sucesores.");
-        logger.info("Se han obtenido " + av + ":" + a + " movimientos de sensores.");
-        logger.info("Se han obtenido " + bv + ":" + b + " intercambios de punteros de sensores.");
-        logger.info("Se han obtenido " + cv + ":" + c + " intercambios circulares de punteros de sensores.");
+        //logger.info("Se han obtenido " + retval.size() + " sucesores.");
+        //logger.info("Se han obtenido " + av + ":" + a + " movimientos de sensores.");
+        //logger.info("Se han obtenido " + bv + ":" + b + " intercambios de punteros de sensores.");
+        //logger.info("Se han obtenido " + cv + ":" + c + " intercambios circulares de punteros de sensores.");
         return retval;
     }
 }
