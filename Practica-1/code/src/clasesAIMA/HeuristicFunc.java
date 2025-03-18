@@ -18,9 +18,15 @@ public class HeuristicFunc implements HeuristicFunction {
             case 2:
                 return ((State) n).heuristicaDatosEntreDistancia();
             case 3:
-                return ((State) n).heuristicaSobrecarga();
+                return ((State) n).heuristicaSobrecarga(0.5);
             case 4:
                 return ((State) n).mecaHeuristica();
+            case 5:
+                return ((State) n).heuristicaSobrecargaEntropiaCruzada();
+            case 6:
+                return ((State) n).heuristicaEnunciado();
+            case 7:
+                return ((State) n).heuristicaEnunciadoMejorada();
             default:
                 return ((State) n).heuristicaMaximizarDatos();
         }

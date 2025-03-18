@@ -19,6 +19,22 @@ import java.util.Properties;
 
 public class Main {
 
+    private static State ejecutarHillClimbingSinImprimir(State state) throws Exception {
+        // Creamos el problema para Hill Climbing
+        Problem p = new Problem(
+                state,                      // Estado inicial
+                new SuccesorFunctionHC(),   // Función de sucesores
+                new GoalTestFunc(),         // Condición de parada
+                new HeuristicFunc()         // Heurística de evaluación
+        );
+
+        Search alg = new HillClimbingSearch();
+        SearchAgent agent = new SearchAgent(p, alg);
+
+        // Retornamos el estado meta obtenido
+        return (State)alg.getGoalState();
+    }
+
     private static void ejecutarHillClimbing(State state) throws Exception {
 
         // Creamos problema para Hill Climbing
@@ -86,12 +102,44 @@ public class Main {
 
         // Seleccionamos estado inicial
         // state.generadorGreedyMinDist();
-        state.generadorGreedyHierarchy();
-        //state.generadorGreedyRandom();
+        // state.generadorGreedyHierarchy();
+        // state.generadorRandom1();
+
+
+        // state.generadorGreedyHierarchy();
+
+        // Generar 1000 randoms y probar una heuristica:
+
+        State bestState = null;
+        double bestHeuristic = Double.POSITIVE_INFINITY; // Suponiendo que una heurística menor es mejor
+        int iterations = 10;
+
+        for (int i = 0; i < iterations; i++) {
+            System.out.println("Iteracion: " + i + " ejecutandose");
+            // Generamos un estado inicial; puedes elegir el método que prefieras
+            State initialState = new State();
+            initialState.generadorRandom1(); // Usamos el generador Random1
+
+            // Ejecutamos Hill Climbing y obtenemos el estado resultado
+            State resultState = ejecutarHillClimbingSinImprimir(initialState);
+
+            // Evaluamos la solución con la función heurística
+            double heuristicValue = new HeuristicFunc().getHeuristicValue(resultState);
+            if (heuristicValue < bestHeuristic) {
+                bestHeuristic = heuristicValue;
+                bestState = resultState;
+            }
+        }
+        System.out.println("Mejor solución encontrada tras " + iterations + " ejecuciones:");
+        System.out.println("Heurística: " + bestHeuristic);
+        System.out.println(bestState);
+
+
+
 
         // Ejecutamos los dos algoritmos con el mismo estado inicial para poder comparar sus ejecuciones
-        ejecutarHillClimbing(state);
-        ejecutarSimulatedAnnealing(state);
+        // ejecutarHillClimbing(state);
+        // ejecutarSimulatedAnnealing(state);
     }
 
     private static void printInstrumentation(Properties properties) {

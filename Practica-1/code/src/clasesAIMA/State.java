@@ -478,7 +478,7 @@ public class State {
      * Observación:
      *  - Es una solución inicial mala
      */
-    public void generadorGreedyRandom() {
+    public void generadorRandom() {
         int n = sensores.size();
         int m = centros.size();
         Random rand = new Random();
@@ -531,7 +531,95 @@ public class State {
             }
         }
 
+
+        // Recorrer cada sensor para detectar y romper ciclos en su cadena de padres
+        for (int i = 0; i < n; i++) {
+            // Usamos un HashMap para almacenar los sensores visitados y el índice en la cadena
+            HashMap<Integer, Integer> chainIndices = new HashMap<>();
+            int current = i;
+            chainIndices.put(current, 0);
+            int index = 1;
+            boolean cicloEncontrado = false;
+            int primerElementoCiclo = -1;
+
+            while (true) {
+                int padre = conexiones[current].destino;
+                // Si el padre es un centro, la cadena termina sin formar ciclo
+                if (padre < 0) {
+                    break;
+                }
+                // Si ya visitamos este sensor, hemos detectado un ciclo
+                if (chainIndices.containsKey(padre)) {
+                    cicloEncontrado = true;
+                    primerElementoCiclo = padre;
+                    break;
+                }
+                chainIndices.put(padre, index);
+                index++;
+                current = padre;
+            }
+
+            if (cicloEncontrado) {
+                // Romper el ciclo cambiando el padre del primer elemento del ciclo por un nuevo valor aleatorio
+                int nuevoPadre;
+                // Elegir aleatoriamente entre sensor o centro de datos
+                if (rand.nextBoolean() && n > 0) {
+                    nuevoPadre = rand.nextInt(n); // sensor aleatorio
+                } else if (m > 0) {
+                    nuevoPadre = -(rand.nextInt(m) + 1); // centro de datos aleatorio
+                } else {
+                    // Fallback en caso de no disponer de centros
+                    nuevoPadre = rand.nextInt(n);
+                }
+                eliminarConexion(primerElementoCiclo);
+                añadirConexion(primerElementoCiclo, nuevoPadre);
+            }
+        }
+
         // Recorremos al grafo para calcular los costes de cada sensor
+        calculateTraffic();
+    }
+
+
+    public void generadorRandom1() {
+        int n = sensores.size();
+        int m = centros.size();
+        Random rand = new Random();
+
+        // Crear la lista SuC que contenga centros y sensores.
+        int[] SuC = new int[n + m];
+
+        // Agregar sensores (números 0 a n-1)
+        for (int i = 0; i < n; i++) {
+            SuC[i] = i;
+        }
+
+        // Agregar centros de datos (números negativos -1 a -m)
+        for (int i = 0; i < m; i++) {
+            SuC[i + n] = -(i + 1);
+        }
+
+        // Permutar SuC usando Fisher-Yates
+        for (int i = n + m - 1; i > 0; i--) {
+            int j = rand.nextInt(i + 1); // Número aleatorio entre 0 e i (inclusive)
+            int temp = SuC[i];
+            SuC[i] = SuC[j];
+            SuC[j] = temp;
+        }
+
+        // Conectar cada sensor con el siguiente en la lista
+        for (int i = 0; i < n + m - 1; i++) {
+            if (SuC[i] >= 0) { // Solo conectar si SuC[i] es un sensor
+                añadirConexion(SuC[i], SuC[i + 1]);
+            }
+        }
+
+        // Conectar el último con el primero si el último es un sensor
+        if (SuC[n + m - 1] >= 0) {
+            añadirConexion(SuC[n + m - 1], SuC[0]);
+        }
+
+        // Recorremos el grafo para calcular los costes de cada sensor
         calculateTraffic();
     }
 
@@ -556,6 +644,7 @@ public class State {
         eliminarVolumen(iDestino,iVolumen);
         añadirVolumen(jDestino, iVolumen);
         añadirVolumen(iDestino, jVolumen);
+        calculateTraffic();
 
         return true;
     }
@@ -577,9 +666,11 @@ public class State {
 
         eliminarVolumen(iDestino,iVolumen);
         añadirVolumen(j, iVolumen);
+        calculateTraffic();
 
         return true;
     }
+
 
     public boolean circularSwap(List<Integer> lista) {
 
@@ -592,6 +683,18 @@ public class State {
         return true;
     }
 
+    public boolean linearMove(List<Integer> lista) {
+        int n = lista.size();
+
+        for (int i = 0; i < n-1; i++) {
+            if(!sensorApuntable(lista.get(i+1))) return false;
+            if(!move(lista.get(i), lista.get((i + 1)))) return false;
+        }
+
+        return true;
+    }
+
+
 
     /* --------------------------- HEURÍSTICAS ------------------------------ */
 
@@ -602,7 +705,7 @@ public class State {
     public double heuristicaMaximizarDatos() {
         double volumenTotal = 0.0;
         for (int i = 0; i < conexiones.length; i++) {
-            volumenTotal += datosTransmitidos(i);
+            if (conexiones[i].destino < 0) volumenTotal += datosTransmitidos(i);
         }
         return -volumenTotal; // Negativo para buscar los minimos con el hill climbing
     }
@@ -632,6 +735,37 @@ public class State {
         return datosTotales/distanciasTotales;
     }
 
+    /**
+     * Busca aumentar los datos penalizando por el coste de d(x,y)^2*v(x)
+     */
+    public double heuristicaEnunciado() {
+        double datosTotales = heuristicaMaximizarDatos();
+        double costesTotales = 0.0;
+        for (int i = 0; i < conexiones.length; i++) {
+            double volumenTransmitido = datosTransmitidos(i);
+            costesTotales += Math.pow(calcularDistancia(i, conexiones[i].destino), 2.0)*datosTransmitidos(i);
+        }
+
+        return -datosTotales + costesTotales;
+    }
+
+    /**
+     * Busca aumentar los datos penalizando por el coste de d(x,y)^2*v(x)
+     */
+    public double heuristicaEnunciadoMejorada() {
+        double datosTotales = heuristicaMaximizarDatos();
+        double costesTotales = 0.0;
+        double cuellosDeBotella = 0.0;
+        for (int i = 0; i < conexiones.length; i++) {
+            double volumenTotal = conexiones[i].volumen;
+            cuellosDeBotella += Math.abs(sensores.get(i).getCapacidad()*3 - volumenTotal);
+            double volumenTransmitido = datosTransmitidos(i);
+            costesTotales += Math.pow(calcularDistancia(i, conexiones[i].destino), 2.0)*datosTransmitidos(i);
+        }
+
+        return -datosTotales + costesTotales + cuellosDeBotella;
+    }
+
 
     /**
      * Busca combinar la heuristica de datos y de distancias dandole un peso a cada una
@@ -654,17 +788,61 @@ public class State {
      * - Si no llega a la carga máxima, le sumamos lo que falte para llegar
      * - Si se pasa, sumamos lo que se pasa
      */
-    public double heuristicaSobrecarga() {
+    public double heuristicaSobrecarga(double lambda) {
         double diferencia = 0.0;
+        double datosTotales = heuristicaMaximizarDatos();
 
         for (int i = 0; i < conexiones.length; i++) {
-            double capacidad = sensores.get(i).getCapacidad();  // Asegurar que getCapacidad() retorna double
-            double volumenTransmitido = datosTransmitidos(i); // Asegurar que volumen también es double
-            diferencia += Math.abs(capacidad*3 - volumenTransmitido);
+            double capacidad = sensores.get(i).getCapacidad();
+            double volumenTotal = conexiones[i].volumen;
+            diferencia += Math.abs(capacidad*3 - volumenTotal);
         }
 
-        return diferencia;
+        return datosTotales - (lambda*diferencia);
     }
+
+
+    /**
+     * Busca balancear la carga de datos para que se acerquen a la optima.
+     * Asi evitamos cuellos de botella y permitimos los sensores hojas.
+     * - Si el volumen transmitido se acerca a su capacidad base o su capacidad maxima, no penalizamos
+     * - Si se queda entre medias, si penalizamos
+     * - Utiliza la entropia cruzada
+     */
+    public double heuristicaSobrecargaEntropiaCruzada() {
+        double diferencia = 0.0;
+        double datosTotales = heuristicaMaximizarDatos();
+
+        for (int i = 0; i < conexiones.length; i++) {
+            double capacidad_base = sensores.get(i).getCapacidad();
+            double capacidad_maxima = sensores.get(i).getCapacidad()*3;
+            double volumenTransmitido = datosTransmitidos(i);
+
+            // Normalizamos el volumen transmitido en el rango [0, 1]
+            double p_actual = (volumenTransmitido - capacidad_base) / (capacidad_maxima - capacidad_base);
+            // Aseguramos que esté entre 0 y 1
+            p_actual = Math.max(0.0, Math.min(1.0, p_actual));
+
+            // Seleccionamos el objetivo ideal:
+            // Si está más cerca de la base (p_actual < 0.5), el ideal es 0, si está más cerca del máximo, el ideal es 1.
+            double p_target = (p_actual < 0.5) ? 0.0 : 1.0;
+
+            // Para evitar log(0), usamos un epsilon pequeño.
+            double epsilon = 1e-10;
+            double p_actual_safe = Math.max(epsilon, Math.min(1 - epsilon, p_actual));
+
+            // Calculamos la entropía cruzada:
+            // H(p_target, p_actual) = - [ p_target * log(p_actual_safe) + (1 - p_target) * log(1 - p_actual_safe) ]
+            double crossEntropy = (p_target * Math.log(p_actual_safe) + (1 - p_target) * Math.log(1 - p_actual_safe));
+
+            diferencia += crossEntropy;
+        }
+
+        return -datosTotales/diferencia;
+    }
+
+
+
 
     double[] mejorDistancia = new double[sensores.size()]; //variable global que solo utiliza mi funcion. En caso de no usar esta heuristica, no se inicializa.
     public double mecaHeuristica() {
@@ -698,6 +876,7 @@ public class State {
 
         return -load/(distancia*distancia);
     }
+
 
 
     /* ------------------------------ OTROS --------------------------------- */
