@@ -369,7 +369,7 @@ public class State {
                 int idCentro = centroAsignado[i];
 
                 // Buscamos a qué sensor conectarlo
-                for (int sensor : sensoresPorCentro[idCentro]) {    // A la que encontramos uno al que nos podamos conectar lo hacemos y paramos (Es probable que se generen malas soluciones pero para empezar tenemos una aproximación
+                for (int sensor : sensoresPorCentro[-idCentro - 1]) {    // A la que encontramos uno al que nos podamos conectar lo hacemos y paramos (Es probable que se generen malas soluciones pero para empezar tenemos una aproximación
                     if (sensorApuntable(sensor)) {
                         conexiones[i].destino = sensor;
                         conexiones[sensor].entrantes.add(i);
