@@ -4,34 +4,59 @@ import aima.search.framework.SuccessorFunction;
 import aima.search.framework.Successor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-/**
- * Created by bejar on 17/01/17
- */
+
 public class SuccesorFunctionSA implements SuccessorFunction{
 
-    public List getSuccessors(Object state){
-        ArrayList retval = new ArrayList();
-        //ProbIA5Board board = (ProbIA5Board) state;
 
-        // Some code here
-        // (flip all the consecutive pairs of coins and generate new states
-        // Add the states to retval as Succesor("flip i j", new_state)
-        // new_state has to be a copy of state
+    public List getSuccessors(Object state) {
+        List<Successor> retval = new ArrayList<>();
+        State board = (State) state;
+        State newBoard = board.copy();
 
-        //for (int i = 0; i < board.getBoard().length - 1; ++i) {
-        //    State newBoard = board.copy();
-        //    newBoard.flip_it(i);
+        int numSensores = board.numSensores();
+        int numCentros = board.numCentros();
+        Random rand = new Random();
 
-            // Generar descripción del movimiento
-        //    String action = "Flip coins at positions " + i + " and " + (i + 1);
+        double probMove = 0.5;  // Probabilidad de usar move
+        double probSwap = 0.4;  // Probabilidad de usar swap
+        double probCircularSwap = 0.1;  // Probabilidad de circularSwap
 
-            // Agregar nuevo estado a la lista de sucesores
-        //    retval.add(new Successor(action, newBoard));
-        //}
+        double choice = rand.nextDouble();
+
+        if (choice < probMove) {  // Intentar un move
+            int i = rand.nextInt(numSensores);
+            int destino = rand.nextBoolean() ? -rand.nextInt(numCentros) - 1 : rand.nextInt(numSensores);   // destino puede ser centro o sensor
+
+            if (newBoard.move(i, destino)) {
+                String action = "Mover sensor " + i + " a " + (destino < 0 ? "centro " + destino : "sensor " + destino);
+                retval.add(new Successor(action, newBoard));
+            }
+
+        } else if (choice < probMove + probSwap) {  // Intentar un swap
+            int i = rand.nextInt(numSensores);
+            int j = rand.nextInt(numSensores);
+            while (i == j) { j = rand.nextInt(numSensores); }
+
+            if (newBoard.swap(i, j)) {
+                String action = "Swapear sensores " + i + " y " + j;
+                retval.add(new Successor(action, newBoard));
+            }
+
+        } else {  // Intentar un circularSwap
+            List<Integer> indices = new ArrayList<>();
+            while (indices.size() < 3) {
+                int next = rand.nextInt(numSensores);
+                if (!indices.contains(next)) indices.add(next);
+            }
+
+            if (newBoard.circularSwap(indices)) {
+                String action = "Circular swap sobre sensores " + indices;
+                retval.add(new Successor(action, newBoard));
+            }
+        }
 
         return retval;
-
     }
-
 }

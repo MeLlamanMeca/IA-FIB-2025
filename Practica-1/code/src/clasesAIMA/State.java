@@ -644,7 +644,6 @@ public class State {
         eliminarVolumen(iDestino,iVolumen);
         añadirVolumen(jDestino, iVolumen);
         añadirVolumen(iDestino, jVolumen);
-        calculateTraffic();
 
         return true;
     }
@@ -666,7 +665,6 @@ public class State {
 
         eliminarVolumen(iDestino,iVolumen);
         añadirVolumen(j, iVolumen);
-        calculateTraffic();
 
         return true;
     }
@@ -683,24 +681,14 @@ public class State {
         return true;
     }
 
-    public boolean linearMove(List<Integer> lista) {
-        int n = lista.size();
-
-        for (int i = 0; i < n-1; i++) {
-            if(!sensorApuntable(lista.get(i+1))) return false;
-            if(!move(lista.get(i), lista.get((i + 1)))) return false;
-        }
-
-        return true;
-    }
-
-
 
     /* --------------------------- HEURÍSTICAS ------------------------------ */
 
     // No se muy bien como se conecta con el AIMA, pero hago unos ejemplos de un par de euristicas sencillas
     /**
      * Mientras mas datos se transmitan en las conexiones, la heuristica retorna un valor menor
+     *
+     * Contra: Puede que haya una zona con mucho volumen pero que acabe en un centro que limite all el tráfico a 150 y se queden centros sin recibir nada.
      */
     public double heuristicaMaximizarDatos() {
         double volumenTotal = 0.0;
@@ -842,8 +830,6 @@ public class State {
     }
 
 
-
-
     double[] mejorDistancia = new double[sensores.size()]; //variable global que solo utiliza mi funcion. En caso de no usar esta heuristica, no se inicializa.
     public double mecaHeuristica() {
 
@@ -917,6 +903,7 @@ public class State {
         return centros.size();
     }
 
+
     public State copy() { //TODO checkear que sea correcto, generado automaticamente.
         State nuevo = new State();
         for (int i = 0; i < conexiones.length; i++) {
@@ -934,6 +921,7 @@ public class State {
         }
         return nuevo;
     }
+
 
     public boolean confirmarCambios(List<Integer> s) {
         int n = s.size();
@@ -961,5 +949,10 @@ public class State {
         }
 
         return true;
+    }
+
+
+    public int getDestino(int i) {
+        return conexiones[i].destino;
     }
 }

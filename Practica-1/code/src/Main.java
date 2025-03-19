@@ -93,26 +93,27 @@ public class Main {
     public static void main(String[] args) throws Exception{
 
         // Inicializamos el contexto del problema
-        Sensores s = new Sensores(100, 1234);       // número de sensores, semilla
-        CentrosDatos c = new CentrosDatos(4, 4321); // número de centros de datos, semilla
+        Sensores s = new Sensores(100, 4321);       // número de sensores, semilla
+        CentrosDatos c = new CentrosDatos(4, 1234); // número de centros de datos, semilla
         State.setEnvironment(s, c);
 
         // Establecemos el contexto en el estado
         State state = new State();
 
         // Seleccionamos estado inicial
-        // state.generadorGreedyMinDist();
+         state.generadorGreedyMinDist();
         // state.generadorGreedyHierarchy();
         // state.generadorRandom1();
 
+        ejecutarSimulatedAnnealing(state);
 
         // state.generadorGreedyHierarchy();
 
         // Generar 1000 randoms y probar una heuristica:
-
+        /*
         State bestState = null;
         double bestHeuristic = Double.POSITIVE_INFINITY; // Suponiendo que una heurística menor es mejor
-        int iterations = 10;
+        int iterations = 1;
 
         for (int i = 0; i < iterations; i++) {
             System.out.println("Iteracion: " + i + " ejecutandose");
@@ -130,10 +131,11 @@ public class Main {
                 bestState = resultState;
             }
         }
+
         System.out.println("Mejor solución encontrada tras " + iterations + " ejecuciones:");
         System.out.println("Heurística: " + bestHeuristic);
         System.out.println(bestState);
-
+        */
 
 
 
