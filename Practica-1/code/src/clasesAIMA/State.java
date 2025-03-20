@@ -626,7 +626,8 @@ public class State {
 
     /* --------------------------- OPERADORES ------------------------------- */
 
-    public boolean swap(int i, int j) {
+    public boolean checkSwap(int i, int j) {
+        boolean result = true;
 
         int jDestino = conexiones[j].destino;
         int iDestino = conexiones[i].destino;
@@ -638,20 +639,37 @@ public class State {
         añadirConexion(i, jDestino);
         añadirConexion(j, iDestino);
 
-        if(!confirmarCambios(List.of(i,j))) return false;
+        if(!confirmarCambios(List.of(i,j))) result =  false;
+
+        eliminarConexion(i);
+        eliminarConexion(j);
+        añadirConexion(i, iDestino);
+        añadirConexion(j, jDestino);
+
+        return result;
+    }
+
+    public void swap(int i, int j) {
+
+        int jDestino = conexiones[j].destino;
+        int iDestino = conexiones[i].destino;
+        double jVolumen = conexiones[j].volumen;
+        double iVolumen = conexiones[i].volumen;
+
+        eliminarConexion(i);
+        eliminarConexion(j);
+        añadirConexion(i, jDestino);
+        añadirConexion(j, iDestino);
 
         eliminarVolumen(jDestino,jVolumen);
         eliminarVolumen(iDestino,iVolumen);
         añadirVolumen(jDestino, iVolumen);
         añadirVolumen(iDestino, jVolumen);
-        calculateTraffic();
 
-        return true;
     }
 
-
-
-    public boolean move(int i, int j) {
+    public boolean checkMove(int i, int j) {
+        boolean result = true;
 
         if(j >= 0){if(!sensorApuntable(j)) return false;}
         else if(!centroApuntable(j)) return false;
@@ -662,37 +680,51 @@ public class State {
         eliminarConexion(i);
         añadirConexion(i, j);
 
-        if(!confirmarCambios(Collections.singletonList(i))) return false;
+        if(!confirmarCambios(Collections.singletonList(i))) result =  false;
 
-        eliminarVolumen(iDestino,iVolumen);
-        añadirVolumen(j, iVolumen);
-        calculateTraffic();
+        eliminarConexion(i);
+        añadirConexion(i, iDestino);
 
-        return true;
+        return result;
     }
 
 
-    public boolean circularSwap(List<Integer> lista) {
+    public void move(int i, int j) {
+
+        int iDestino = conexiones[i].destino;
+        double iVolumen = conexiones[i].volumen;
+
+        eliminarConexion(i);
+        añadirConexion(i, j);
+
+        eliminarVolumen(iDestino,iVolumen);
+        añadirVolumen(j, iVolumen);
+
+    }
+
+    public boolean checkCircularSwap(List<Integer> lista) {
 
         int n = lista.size();
 
         int i1Destino = conexiones[lista.get(0)].destino;
-        for (int i = 0; i < n-1; i++) {if (!move(lista.get(i), conexiones[lista.get(i+1)].destino)) return false;}
-        if (!move(lista.get(n-1), i1Destino)) return false;
-
+        for (int i = 0; i < n-1; i++) {
+            if (!checkMove(lista.get(i), conexiones[lista.get(i+1)].destino)) return false;
+        }
+        if (!checkMove(lista.get(n-1), i1Destino)) return false;
         return true;
     }
 
-    public boolean linearMove(List<Integer> lista) {
+
+    public void circularSwap(List<Integer> lista) {
+
         int n = lista.size();
 
-        for (int i = 0; i < n-1; i++) {
-            if(!sensorApuntable(lista.get(i+1))) return false;
-            if(!move(lista.get(i), lista.get((i + 1)))) return false;
-        }
+        int i1Destino = conexiones[lista.get(0)].destino;
+        for (int i = 0; i < n-1; i++) {move(lista.get(i), conexiones[lista.get(i+1)].destino);}
+        move(lista.get(n-1), i1Destino);
 
-        return true;
     }
+
 
 
 
@@ -851,7 +883,9 @@ public class State {
             for (int i = 0; i < sensores.size(); i++) {
                 mejorDistancia[i] = UNDEFINED;
                 for (int j = 0; j < sensores.size(); j++) {
-                    if(j != i) {mejorDistancia[i] = Math.min(mejorDistancia[i],calcularDistancia(i, j));}
+                    if(j != i) {
+                        mejorDistancia[i] = Math.min(mejorDistancia[i],calcularDistancia(i, j));
+                    }
                 }
                 for(int j = 1; j <= centros.size(); j++) {
                     mejorDistancia[i] = Math.min(mejorDistancia[i],calcularDistancia(i, -j));
@@ -871,6 +905,7 @@ public class State {
             else {
                 double penalizacion = (conexiones[i].volumen - sensores.get(i).getCapacidad()*3);
                 load -= penalizacion * penalizacion;
+                //LA PENALIZACION DEBERIA VARIAR SI LA DISTANCAI ES MAS GRANDE.
             }
         }
 
@@ -961,5 +996,22 @@ public class State {
         }
 
         return true;
+    }
+
+    public List<Double> getInfo() {
+        double allmb = 0;
+        double mb = 0;
+        double distance = 0.0;
+        double coste = 0.0;
+        for(int i = 0; i < sensores.size(); i++) {
+            allmb += sensores.get(i).getCapacidad();
+            if(conexiones[i].destino < 0) {
+                mb += datosTransmitidos(i);
+            }
+            distance += calcularDistancia(i, conexiones[i].destino);
+            coste += Math.pow(calcularDistancia(i, conexiones[i].destino), 2.0)*datosTransmitidos(i);
+        }
+
+        return List.of(allmb,mb, distance, coste);
     }
 }

@@ -1,4 +1,5 @@
 import IA.Red.CentrosDatos;
+import IA.Red.Sensor;
 import IA.Red.Sensores;
 import aima.search.informed.HillClimbingSearch;
 import aima.search.informed.SimulatedAnnealingSearch;
@@ -13,6 +14,7 @@ import aima.search.framework.Search;
 import aima.search.framework.SearchAgent;
 import aima.search.informed.AStarSearch;
 import aima.search.informed.IterativeDeepeningAStarSearch;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -58,6 +60,10 @@ public class Main {
         System.out.println("\nResultado Hill Climbing:");
         printInstrumentation(agent.getInstrumentation());
         System.out.println(alg.getGoalState());
+        State goal = (State) alg.getGoalState();
+        List<Double> a = goal.getInfo();
+        System.out.println("Megabytes: " + a.get(1) + ":" + a.get(0) + " Distancia : " + a.get(2) + " Coste : " + a.get(3));
+
     }
 
     private static void ejecutarSimulatedAnnealing(State state) throws Exception {
@@ -93,8 +99,8 @@ public class Main {
     public static void main(String[] args) throws Exception{
 
         // Inicializamos el contexto del problema
-        Sensores s = new Sensores(100, 1234);       // número de sensores, semilla
-        CentrosDatos c = new CentrosDatos(4, 4321); // número de centros de datos, semilla
+        Sensores s = new Sensores(100, 4321);       // número de sensores, semilla
+        CentrosDatos c = new CentrosDatos(4, 1234); // número de centros de datos, semilla
         State.setEnvironment(s, c);
 
         // Establecemos el contexto en el estado
@@ -102,14 +108,12 @@ public class Main {
 
         // Seleccionamos estado inicial
         // state.generadorGreedyMinDist();
-        // state.generadorGreedyHierarchy();
+        state.generadorGreedyHierarchy();
         // state.generadorRandom1();
-
-
         // state.generadorGreedyHierarchy();
 
         // Generar 1000 randoms y probar una heuristica:
-
+/*
         State bestState = null;
         double bestHeuristic = Double.POSITIVE_INFINITY; // Suponiendo que una heurística menor es mejor
         int iterations = 10;
@@ -136,9 +140,11 @@ public class Main {
 
 
 
+ */
+
 
         // Ejecutamos los dos algoritmos con el mismo estado inicial para poder comparar sus ejecuciones
-        // ejecutarHillClimbing(state);
+        ejecutarHillClimbing(state);
         // ejecutarSimulatedAnnealing(state);
     }
 
