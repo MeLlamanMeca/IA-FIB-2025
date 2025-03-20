@@ -1,8 +1,5 @@
 package clasesAIMA;
 
-/**
- * Created by bejar on 17/01/17.
- */
 
 import aima.search.framework.HeuristicFunction;
 

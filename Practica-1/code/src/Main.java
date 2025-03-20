@@ -1,5 +1,4 @@
 import IA.Red.CentrosDatos;
-import IA.Red.Sensor;
 import IA.Red.Sensores;
 import aima.search.informed.HillClimbingSearch;
 import aima.search.informed.SimulatedAnnealingSearch;
@@ -14,7 +13,6 @@ import aima.search.framework.Search;
 import aima.search.framework.SearchAgent;
 import aima.search.informed.AStarSearch;
 import aima.search.informed.IterativeDeepeningAStarSearch;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;

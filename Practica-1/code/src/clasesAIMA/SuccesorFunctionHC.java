@@ -7,15 +7,12 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
-/**
- * Created by bejar on 17/01/17
- */
+
 public class SuccesorFunctionHC implements SuccessorFunction {
 
     // Logger para la clase
     private static final Logger logger = Logger.getLogger(SuccesorFunctionHC.class.getName());
     private Set<List<Integer>> uniqueStates = new HashSet<>();
-    private int ciclo = 0;
 
     private static List<Integer> normalizeSwap(int i, int j, int k) {
         // Generar las 3 rotaciones posibles
@@ -111,7 +108,6 @@ public class SuccesorFunctionHC implements SuccessorFunction {
         logger.info("Se han obtenido " + av + ":" + a + " movimientos de sensores.");
         logger.info("Se han obtenido " + bv + ":" + b + " intercambios de punteros de sensores.");
         logger.info("Se han obtenido " + cv + ":" + c + " intercambios circulares de punteros de sensores.");
-        ciclo = (ciclo+1)%4;
         return retval;
     }
 }
