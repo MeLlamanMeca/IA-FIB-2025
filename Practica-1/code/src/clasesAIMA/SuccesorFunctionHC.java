@@ -46,7 +46,6 @@ public class SuccesorFunctionHC implements SuccessorFunction {
         }
 
 
-
         //logger.info("Obteniendo sucesores para el estado: " + state);
 
         for (int i = 0; i < board.numSensores() - 1; ++i) {
@@ -68,6 +67,7 @@ public class SuccesorFunctionHC implements SuccessorFunction {
             for (int j = 0; j < board.numSensores(); ++j) {
                 //logger.fine("Moviendo el puntero del sensor " + i + " al sensor " + j);
                 ++a;
+
                 if (i != j && board.checkMove(i, j)) {
                     State newBoard = board.copy();
                     newBoard.move(i, j);
@@ -75,6 +75,8 @@ public class SuccesorFunctionHC implements SuccessorFunction {
                     String action = "Move sensor pointer " + i + " to sensor " + j;
                     retval.add(new Successor(action, newBoard));
                 }
+
+
 
                 if (j > i) {
 
@@ -91,6 +93,12 @@ public class SuccesorFunctionHC implements SuccessorFunction {
             }
         }
 
+
+
+
+
+
+
         for (List<Integer> swap : uniqueStates) {
 
             //logger.fine("Intercambiando los punteros de los sensores " + swap.get(0) + ", " + swap.get(1) + " y " + swap.get(2));
@@ -104,10 +112,10 @@ public class SuccesorFunctionHC implements SuccessorFunction {
             }
         }
 
-        logger.info("Se han obtenido " + retval.size() + " sucesores.");
-        logger.info("Se han obtenido " + av + ":" + a + " movimientos de sensores.");
-        logger.info("Se han obtenido " + bv + ":" + b + " intercambios de punteros de sensores.");
-        logger.info("Se han obtenido " + cv + ":" + c + " intercambios circulares de punteros de sensores.");
+        //logger.info("Se han obtenido " + retval.size() + " sucesores.");
+        //logger.info("Se han obtenido " + av + ":" + a + " movimientos de sensores.");
+        //logger.info("Se han obtenido " + bv + ":" + b + " intercambios de punteros de sensores.");
+        //logger.info("Se han obtenido " + cv + ":" + c + " intercambios circulares de punteros de sensores.");
         return retval;
     }
 }

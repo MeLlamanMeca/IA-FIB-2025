@@ -166,7 +166,6 @@ public class State {
             xj = s2.getCoordX();
             yj = s2.getCoordY();
         }
-
         return Math.sqrt((xi - xj) * (xi - xj) + (yi - yj) * (yi - yj));
     }
 
@@ -877,21 +876,20 @@ public class State {
 
 
     double[] mejorDistancia = new double[sensores.size()]; //variable global que solo utiliza mi funcion. En caso de no usar esta heuristica, no se inicializa.
-    public double mecaHeuristica() {
-
-        if (mejorDistancia[1] == 0.0) {
-            for (int i = 0; i < sensores.size(); i++) {
-                mejorDistancia[i] = UNDEFINED;
-                for (int j = 0; j < sensores.size(); j++) {
-                    if(j != i) {
-                        mejorDistancia[i] = Math.min(mejorDistancia[i],calcularDistancia(i, j));
-                    }
-                }
-                for(int j = 1; j <= centros.size(); j++) {
-                    mejorDistancia[i] = Math.min(mejorDistancia[i],calcularDistancia(i, -j));
+    public void inicializarMejorDistancia() {
+        for (int i = 0; i < sensores.size(); i++) {
+            mejorDistancia[i] = UNDEFINED;
+            for (int j = 0; j < sensores.size(); j++) {
+                if(j != i) {
+                    mejorDistancia[i] = Math.min(mejorDistancia[i],calcularDistancia(i, j));
                 }
             }
+            for(int j = 1; j <= centros.size(); j++) {
+                mejorDistancia[i] = Math.min(mejorDistancia[i],calcularDistancia(i, -j));
+            }
         }
+    }
+    public double mecaHeuristica() {
 
         double load = 0.0;
         double distancia = 0.0;

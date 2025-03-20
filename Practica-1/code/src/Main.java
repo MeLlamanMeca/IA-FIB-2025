@@ -1,4 +1,5 @@
 import IA.Red.CentrosDatos;
+import IA.Red.Sensor;
 import IA.Red.Sensores;
 import aima.search.informed.HillClimbingSearch;
 import aima.search.informed.SimulatedAnnealingSearch;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Properties;
 
 public class Main {
+    public static int seed = 2;
 
     private static State ejecutarHillClimbingSinImprimir(State state) throws Exception {
         // Creamos el problema para Hill Climbing
@@ -53,14 +55,17 @@ public class Main {
 
         // Imprimir todas las estadísticas
         long estimatedTime = System.currentTimeMillis() - startTime;
-        System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
+        //System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
 
         System.out.println("\nResultado Hill Climbing:");
         printInstrumentation(agent.getInstrumentation());
-        System.out.println(alg.getGoalState());
+        //System.out.println(alg.getGoalState());
         State goal = (State) alg.getGoalState();
         List<Double> a = goal.getInfo();
+        System.out.println("semilla: " + seed);
+        System.out.println("Operadores: Move + Swap");
         System.out.println("Megabytes: " + a.get(1) + ":" + a.get(0) + " Distancia : " + a.get(2) + " Coste : " + a.get(3));
+        System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
 
     }
 
@@ -95,22 +100,24 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception{
+        for(int i = 0; i < 10; ++i) {
+            seed = i;
+            // Inicializamos el contexto del problema
+            Sensores s = new Sensores(100, seed);       // número de sensores, semilla
+            CentrosDatos c = new CentrosDatos(4, seed); // número de centros de datos, semilla
 
-        // Inicializamos el contexto del problema
-        Sensores s = new Sensores(100, 4321);       // número de sensores, semilla
-        CentrosDatos c = new CentrosDatos(4, 1234); // número de centros de datos, semilla
-        State.setEnvironment(s, c);
+            State.setEnvironment(s, c);
 
-        // Establecemos el contexto en el estado
-        State state = new State();
+            // Establecemos el contexto en el estado
+            State state = new State();
+            state.inicializarMejorDistancia();
+            // Seleccionamos estado inicial
+            // state.generadorGreedyMinDist();
+            state.generadorGreedyHierarchy();
+            // state.generadorRandom1();
+            // state.generadorGreedyHierarchy();
 
-        // Seleccionamos estado inicial
-        // state.generadorGreedyMinDist();
-        state.generadorGreedyHierarchy();
-        // state.generadorRandom1();
-        // state.generadorGreedyHierarchy();
-
-        // Generar 1000 randoms y probar una heuristica:
+            // Generar 1000 randoms y probar una heuristica:
 /*
         State bestState = null;
         double bestHeuristic = Double.POSITIVE_INFINITY; // Suponiendo que una heurística menor es mejor
@@ -141,9 +148,10 @@ public class Main {
  */
 
 
-        // Ejecutamos los dos algoritmos con el mismo estado inicial para poder comparar sus ejecuciones
-        ejecutarHillClimbing(state);
-        // ejecutarSimulatedAnnealing(state);
+            // Ejecutamos los dos algoritmos con el mismo estado inicial para poder comparar sus ejecuciones
+            ejecutarHillClimbing(state);
+            // ejecutarSimulatedAnnealing(state);
+        }
     }
 
     private static void printInstrumentation(Properties properties) {
