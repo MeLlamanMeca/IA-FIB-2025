@@ -29,7 +29,8 @@ public class SuccesorFunctionSA implements SuccessorFunction{
             int i = rand.nextInt(numSensores);
             int destino = rand.nextBoolean() ? -rand.nextInt(numCentros) - 1 : rand.nextInt(numSensores);   // destino puede ser centro o sensor
 
-            if (newBoard.move(i, destino)) {
+            if (newBoard.checkMove(i, destino)) {
+                newBoard.move(i,destino);
                 String action = "Mover sensor " + i + " a " + (destino < 0 ? "centro " + destino : "sensor " + destino);
                 retval.add(new Successor(action, newBoard));
             }
@@ -39,7 +40,8 @@ public class SuccesorFunctionSA implements SuccessorFunction{
             int j = rand.nextInt(numSensores);
             while (i == j) { j = rand.nextInt(numSensores); }
 
-            if (newBoard.swap(i, j)) {
+            if (newBoard.checkSwap(i, j)) {
+                newBoard.swap(i, j);
                 String action = "Swapear sensores " + i + " y " + j;
                 retval.add(new Successor(action, newBoard));
             }
@@ -51,7 +53,8 @@ public class SuccesorFunctionSA implements SuccessorFunction{
                 if (!indices.contains(next)) indices.add(next);
             }
 
-            if (newBoard.circularSwap(indices)) {
+            if (newBoard.checkCircularSwap(indices)) {
+                newBoard.circularSwap(indices);
                 String action = "Circular swap sobre sensores " + indices;
                 retval.add(new Successor(action, newBoard));
             }
