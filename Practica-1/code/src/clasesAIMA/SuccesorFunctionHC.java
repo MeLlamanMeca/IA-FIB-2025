@@ -32,7 +32,7 @@ public class SuccesorFunctionHC implements SuccessorFunction {
 
 
 
-
+/*
         if(uniqueStates.isEmpty()) {
             for (int i = 0; i < board.numSensores(); i++) {
                 for (int j = 0; j < board.numSensores(); j++) {
@@ -45,6 +45,8 @@ public class SuccesorFunctionHC implements SuccessorFunction {
             }
         }
 
+
+ */
 
         //logger.info("Obteniendo sucesores para el estado: " + state);
 
@@ -98,7 +100,7 @@ public class SuccesorFunctionHC implements SuccessorFunction {
 
 
 
-
+/*
         for (List<Integer> swap : uniqueStates) {
 
             //logger.fine("Intercambiando los punteros de los sensores " + swap.get(0) + ", " + swap.get(1) + " y " + swap.get(2));
@@ -111,7 +113,7 @@ public class SuccesorFunctionHC implements SuccessorFunction {
                 retval.add(new Successor(action, newBoard));
             }
         }
-
+*/
         //logger.info("Se han obtenido " + retval.size() + " sucesores.");
         //logger.info("Se han obtenido " + av + ":" + a + " movimientos de sensores.");
         //logger.info("Se han obtenido " + bv + ":" + b + " intercambios de punteros de sensores.");

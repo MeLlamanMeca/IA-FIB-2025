@@ -63,7 +63,7 @@ public class Main {
         State goal = (State) alg.getGoalState();
         List<Double> a = goal.getInfo();
         System.out.println("semilla: " + seed);
-        System.out.println("Operadores: Move + Swap");
+        System.out.println("Operadores: Move+Swap");
         System.out.println("Megabytes: " + a.get(1) + ":" + a.get(0) + " Distancia : " + a.get(2) + " Coste : " + a.get(3));
         System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
 
@@ -72,7 +72,7 @@ public class Main {
     private static void ejecutarSimulatedAnnealing(State state) throws Exception {
 
         // Establecer parámetros Simulated Annealing
-        int steps = 100000;         // Número total de iteraciones del algoritmo
+        int steps = 1000000;         // Número total de iteraciones del algoritmo
         int stiter = 100;           // Número de iteraciones por cada nivel de temperatura
         int k = 125;                // Factor de ajuste para la función de probabilidad de aceptación (cuanto mayor sea más tiempo aceptara soluciones peores)
         double lambda = 0.0001;     // Parámetro de enfriamiento
@@ -97,14 +97,20 @@ public class Main {
         System.out.println("\nResultado Simulated Annealing:");
         printInstrumentation(agent.getInstrumentation());
         System.out.println(alg.getGoalState());
+        State goal = (State) alg.getGoalState();
+        List<Double> a = goal.getInfo();
+        System.out.println("semilla: " + seed);
+        System.out.println("Operadores: Move+Swap");
+        System.out.println("Megabytes: " + a.get(1) + ":" + a.get(0) + " Distancia : " + a.get(2) + " Coste : " + a.get(3));
+        System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
     }
 
     public static void main(String[] args) throws Exception{
         for(int i = 0; i < 10; ++i) {
             seed = i;
             // Inicializamos el contexto del problema
-            Sensores s = new Sensores(100, seed);       // número de sensores, semilla
-            CentrosDatos c = new CentrosDatos(4, seed); // número de centros de datos, semilla
+            Sensores s = new Sensores(250, seed);       // número de sensores, semilla
+            CentrosDatos c = new CentrosDatos(10, seed); // número de centros de datos, semilla
 
             State.setEnvironment(s, c);
 
@@ -112,8 +118,8 @@ public class Main {
             State state = new State();
             state.inicializarMejorDistancia();
             // Seleccionamos estado inicial
-            // state.generadorGreedyMinDist();
-            state.generadorGreedyHierarchy();
+            state.generadorGreedyMinDist();
+            //state.generadorGreedyHierarchy();
             // state.generadorRandom1();
             // state.generadorGreedyHierarchy();
 
@@ -150,7 +156,7 @@ public class Main {
 
             // Ejecutamos los dos algoritmos con el mismo estado inicial para poder comparar sus ejecuciones
             ejecutarHillClimbing(state);
-            // ejecutarSimulatedAnnealing(state);
+            //ejecutarSimulatedAnnealing(state);
         }
     }
 

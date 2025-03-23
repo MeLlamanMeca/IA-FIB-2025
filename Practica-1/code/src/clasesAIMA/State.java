@@ -14,6 +14,7 @@ public class State {
     private static Sensores sensores;
     private static CentrosDatos centros;
     public static final int UNDEFINED = Integer.MAX_VALUE;
+    double[] volumenCentros;
 
 
 
@@ -29,6 +30,8 @@ public class State {
         public int destino;
         // Volumen de datos que tiene el sensor en total, no tiene limite
         public double volumen;
+
+
 
         /**
          * Antes de llamarse debe haberse configurado el escenario con setStatic
@@ -52,9 +55,11 @@ public class State {
     public State() {
         int n = sensores.size();
         int m = centros.size();
+
         conexiones = new ConexionSensor[n];
         // El índice 0 en centros corresponde al índice 1 en contadorInputCentros (necesario para diferenciar el índice 0 de los sensores y de los centros
         contadorInputCentros = new int[m];  // Se inicializa a 0
+        volumenCentros = new double[m];
         for (int i = 0; i < n; i++) {
             conexiones[i] = new ConexionSensor(i);
         }
@@ -103,6 +108,7 @@ public class State {
             conexiones[destino].volumen += volumen;
             añadirVolumen(conexiones[destino].destino, volumen);
         }
+        else volumenCentros[-destino-1] += volumen;
         //todo: si queremos guardar el volumen en los centros hacerlo aquí
     }
 
@@ -111,6 +117,7 @@ public class State {
             conexiones[destino].volumen -= jvolumen;
             eliminarVolumen(conexiones[destino].destino, jvolumen);
         }
+        else volumenCentros[-destino -1] -= jvolumen;
         //todo: si queremos guardar el volumen en los centros hacerlo aquí
     }
 
@@ -273,6 +280,9 @@ public class State {
      * Función para calcular el tráfico de datos de cada sensor y asignarselo recorriendo el grafo desde las hojas hasta los centros por niveles
      */
     private void calculateTraffic() {
+        for(int i = 0; i < centros.size(); i++) {
+            volumenCentros[i] = 0;
+        }
         int n = conexiones.length;
 
         // Obtenemos las hojas del grafo original
@@ -291,7 +301,7 @@ public class State {
 
             if (!visitado[sensor]) {
                 visitado[sensor] = true;
-
+                //coste
                 double coste = 0.0;
 
                 // Acumulamos la suma de volúmenes de todos los sensores entrantes al sensor actual
@@ -308,6 +318,7 @@ public class State {
                     hojas.add(output);
                 }
                 else {  // Si el destino es un centro
+                    volumenCentros[-output - 1] += conexiones[sensor].volumen;
                     // Podríamos guardar en algún lado el volumen que recibe cada centro ya que tiene un máximo de 150
                     // todo (si alguien lo ve una opción útil que lo implemente)
                 }
@@ -889,6 +900,7 @@ public class State {
             }
         }
     }
+
     public double mecaHeuristica() {
 
         double load = 0.0;
@@ -905,6 +917,10 @@ public class State {
                 load -= penalizacion * penalizacion;
                 //LA PENALIZACION DEBERIA VARIAR SI LA DISTANCAI ES MAS GRANDE.
             }
+        }
+
+        for(int i = 0; i < volumenCentros.length; i++) {
+            if(volumenCentros[i] > 150) load -= Math.pow(volumenCentros[i],2);
         }
 
         return -load/(distancia*distancia);
@@ -952,6 +968,9 @@ public class State {
 
     public State copy() { //TODO checkear que sea correcto, generado automaticamente.
         State nuevo = new State();
+        for(int i = 0; i < centros.size(); i++) {
+            nuevo.volumenCentros[i] = volumenCentros[i];
+        }
         for (int i = 0; i < conexiones.length; i++) {
             nuevo.conexiones[i].destino = conexiones[i].destino;
             nuevo.conexiones[i].volumen = conexiones[i].volumen;
@@ -998,19 +1017,22 @@ public class State {
 
     public List<Double> getInfo() {
         double allmb = 0;
-        double mb = 0;
+        double[] mb = new double[centros.size()];
+        double mbtotal = 0;
         double distance = 0.0;
         double coste = 0.0;
         for(int i = 0; i < sensores.size(); i++) {
             allmb += sensores.get(i).getCapacidad();
             if(conexiones[i].destino < 0) {
-                mb += datosTransmitidos(i);
+                mb[-conexiones[i].destino -1] += datosTransmitidos(i);
             }
             distance += calcularDistancia(i, conexiones[i].destino);
             coste += Math.pow(calcularDistancia(i, conexiones[i].destino), 2.0)*datosTransmitidos(i);
         }
-
-        return List.of(allmb,mb, distance, coste);
+        for(int i = 0; i < mb.length; i++) {
+            mbtotal += Math.min(mb[i],150);
+        }
+        return List.of(allmb,mbtotal, distance, coste);
     }
 
 
