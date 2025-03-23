@@ -98,7 +98,7 @@ public class SuccesorFunctionHC implements SuccessorFunction {
 
 
 
-
+        /*
         for (List<Integer> swap : uniqueStates) {
 
             //logger.fine("Intercambiando los punteros de los sensores " + swap.get(0) + ", " + swap.get(1) + " y " + swap.get(2));
@@ -111,6 +111,7 @@ public class SuccesorFunctionHC implements SuccessorFunction {
                 retval.add(new Successor(action, newBoard));
             }
         }
+        */
 
         //logger.info("Se han obtenido " + retval.size() + " sucesores.");
         //logger.info("Se han obtenido " + av + ":" + a + " movimientos de sensores.");
