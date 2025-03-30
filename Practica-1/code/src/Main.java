@@ -17,9 +17,14 @@ import aima.search.informed.IterativeDeepeningAStarSearch;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 
 public class Main {
-    public static int seed = 2;
+    public static int seed2 = 0;
+    public static int seed1 = 0;
+    public static int stateIni = 1;
+    public static int algoritmo = 1;
+    public static int h = 1;
 
     private static State ejecutarHillClimbingSinImprimir(State state) throws Exception {
         // Creamos el problema para Hill Climbing
@@ -40,11 +45,13 @@ public class Main {
     private static void ejecutarHillClimbing(State state) throws Exception {
 
         // Creamos problema para Hill Climbing
+        HeuristicFunc h1 = new HeuristicFunc();
+        h1.setSelected(h);
         Problem p = new Problem(
                 state,                      // Estado inicial
                 new SuccesorFunctionHC(),   // Función de sucesores
                 new GoalTestFunc(),         // Condición de parada
-                new HeuristicFunc()         // Heurística de evaluación
+                h1         // Heurística de evaluación
         );
 
 
@@ -62,8 +69,7 @@ public class Main {
         //System.out.println(alg.getGoalState());
         State goal = (State) alg.getGoalState();
         List<Double> a = goal.getInfo();
-        System.out.println("semilla: " + seed);
-        System.out.println("Operadores: Move+Swap");
+        System.out.println("semilla: " + seed1);
         System.out.println("Megabytes: " + a.get(1) + ":" + a.get(0) + " Distancia : " + a.get(2) + " Coste : " + a.get(3));
         System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
 
@@ -72,92 +78,63 @@ public class Main {
     private static void ejecutarSimulatedAnnealing(State state) throws Exception {
 
         // Establecer parámetros Simulated Annealing
-        int steps = 1000000;         // Número total de iteraciones del algoritmo
-        int stiter = 100;           // Número de iteraciones por cada nivel de temperatura
-        int k = 125;                // Factor de ajuste para la función de probabilidad de aceptación (cuanto mayor sea más tiempo aceptara soluciones peores)
-        double lambda = 0.0001;     // Parámetro de enfriamiento
+        int steps = 85000;         // Número total de iteraciones del algoritmo
+        int stiter = 250;           // Número de iteraciones por cada nivel de temperatura
+        int k = 75;                // Factor de ajuste para la función de probabilidad de aceptación (cuanto mayor sea más tiempo aceptara soluciones peores)
+        double lambda = 0.0005;     // Parámetro de enfriamiento
+        HeuristicFunc h1 = new HeuristicFunc();
+        h1.setSelected(h);
 
-        long startTime = System.currentTimeMillis();
-
-        // Creamos problema para Simulated Annealing
         Problem p = new Problem(
                 state,                      // Estado inicial
                 new SuccesorFunctionSA(),   // Función de sucesores
                 new GoalTestFunc(),         // Condición de parada
-                new HeuristicFunc()         // Heurística de evaluación
+                h1        // Heurística de evaluación
         );
-
+        long startTime = System.currentTimeMillis();
         Search alg = new SimulatedAnnealingSearch(steps, stiter, k, lambda);
         SearchAgent agent = new SearchAgent(p, alg);
-
         // Imprimir todas las estadísticas
         long estimatedTime = System.currentTimeMillis() - startTime;
-        System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
-
+        //System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
         System.out.println("\nResultado Simulated Annealing:");
         printInstrumentation(agent.getInstrumentation());
-        System.out.println(alg.getGoalState());
+        //System.out.println(alg.getGoalState());
         State goal = (State) alg.getGoalState();
         List<Double> a = goal.getInfo();
-        System.out.println("semilla: " + seed);
-        System.out.println("Operadores: Move+Swap");
+        System.out.println("semilla: " + seed1);
         System.out.println("Megabytes: " + a.get(1) + ":" + a.get(0) + " Distancia : " + a.get(2) + " Coste : " + a.get(3));
         System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
     }
 
     public static void main(String[] args) throws Exception{
-        for(int i = 0; i < 10; ++i) {
-            seed = i;
+        inicializar();
             // Inicializamos el contexto del problema
-            Sensores s = new Sensores(250, seed);       // número de sensores, semilla
-            CentrosDatos c = new CentrosDatos(10, seed); // número de centros de datos, semilla
+
+            Sensores s = new Sensores(100, seed1);       // número de sensores, semilla
+            CentrosDatos c = new CentrosDatos(4, seed2); // número de centros de datos, semilla
 
             State.setEnvironment(s, c);
+
 
             // Establecemos el contexto en el estado
             State state = new State();
             state.inicializarMejorDistancia();
-            // Seleccionamos estado inicial
-            state.generadorGreedyMinDist();
-            //state.generadorGreedyHierarchy();
-            // state.generadorRandom1();
-            // state.generadorGreedyHierarchy();
-
-            // Generar 1000 randoms y probar una heuristica:
-/*
-        State bestState = null;
-        double bestHeuristic = Double.POSITIVE_INFINITY; // Suponiendo que una heurística menor es mejor
-        int iterations = 10;
-
-        for (int i = 0; i < iterations; i++) {
-            System.out.println("Iteracion: " + i + " ejecutandose");
-            // Generamos un estado inicial; puedes elegir el método que prefieras
-            State initialState = new State();
-            initialState.generadorRandom1(); // Usamos el generador Random1
-
-            // Ejecutamos Hill Climbing y obtenemos el estado resultado
-            State resultState = ejecutarHillClimbingSinImprimir(initialState);
-
-            // Evaluamos la solución con la función heurística
-            double heuristicValue = new HeuristicFunc().getHeuristicValue(resultState);
-            if (heuristicValue < bestHeuristic) {
-                bestHeuristic = heuristicValue;
-                bestState = resultState;
-            }
-        }
-        System.out.println("Mejor solución encontrada tras " + iterations + " ejecuciones:");
-        System.out.println("Heurística: " + bestHeuristic);
-        System.out.println(bestState);
-
-
-
- */
-
+            //estado inicial
+            if (stateIni == 1) state.generadorGreedyMinDist();
+            else if (stateIni == 2) state.generadorGreedyHierarchy();
+            else state.generadorRandom1();
 
             // Ejecutamos los dos algoritmos con el mismo estado inicial para poder comparar sus ejecuciones
-            ejecutarHillClimbing(state);
-            //ejecutarSimulatedAnnealing(state);
-        }
+            if (algoritmo == 1) {
+                ejecutarHillClimbing(state);
+            } else if (algoritmo == 2) {
+                ejecutarSimulatedAnnealing(state);
+
+            } else {
+                ejecutarHillClimbing(state);
+                ejecutarSimulatedAnnealing(state);
+            }
     }
 
     private static void printInstrumentation(Properties properties) {
@@ -174,5 +151,85 @@ public class Main {
             String action = (String) actions.get(i);
             System.out.println(action);
         }
+    }
+
+    private static void inicializar() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print("Semilla sensores:");
+
+            if (scanner.hasNextInt()) {
+                seed1 = scanner.nextInt();
+                break; // Opción válida, salimos del bucle
+
+            } else scanner.next(); // Limpiar entrada inválida
+        }
+
+        while (true) {
+            System.out.print("Semilla centros:");
+
+            if (scanner.hasNextInt()) {
+                seed2 = scanner.nextInt();
+                break; // Opción válida, salimos del bucle
+
+            } else scanner.next(); // Limpiar entrada inválida
+        }
+
+
+
+        while (true) {
+            System.out.println("Que estado inicial deseas? (1-3)");
+            System.out.println("Posibles respuestas:");
+            System.out.println("1. Greedy de minima distancia.");
+            System.out.println("2. Greedy jerarquico.");
+            System.out.println("3. Random.");
+            System.out.print("Selecciona una opción: ");
+
+            if (scanner.hasNextInt()) {
+                stateIni = scanner.nextInt();
+                if (stateIni >= 1 && stateIni <= 3) {
+                    break; // Opción válida, salimos del bucle
+                }
+            } else {
+                scanner.next(); // Limpiar entrada inválida
+            }
+        }
+
+        while (true) {
+            System.out.println("Que algoritmo quieres ejecutar? (1-3)");
+            System.out.println("Posibles respuestas:");
+            System.out.println("1. HC");
+            System.out.println("2. SA");
+            System.out.println("3. HC+SA");
+            System.out.print("Selecciona una opción: ");
+
+            if (scanner.hasNextInt()) {
+                algoritmo = scanner.nextInt();
+                if (algoritmo >= 1 && algoritmo <= 3) {
+                    break; // Opción válida, salimos del bucle
+                }
+            } else {
+                scanner.next(); // Limpiar entrada inválida
+            }
+        }
+
+        while (true) {
+            System.out.println("Que heurística quieres ejecutar? (1-3)");
+            System.out.println("Posibles respuestas:");
+            System.out.println("1. Maximizar datos");
+            System.out.println("2. Minimizar distancias");
+            System.out.println("3. Datos entre distancia");
+            System.out.println("4. Meca Heurística");
+            System.out.print("Selecciona una opción: ");
+            if (scanner.hasNextInt()) {
+                h = scanner.nextInt();
+                if (h >= 1 && h <= 4) {
+                    break; // Opción válida, salimos del bucle
+                }
+            } else {
+                scanner.next(); // Limpiar entrada inválida
+            }
+        }
+        scanner.close();
     }
 }

@@ -902,7 +902,9 @@ public class State {
     }
 
     public double mecaHeuristica() {
-
+        double alpha = 1; //usado para el experimento 7. Valor por defecto 1.0, no cambia nada.
+        //Aumentar este valor es darle mucha importancia a la carga, por lo que la heuristica intentara reducir este valor.
+        //En consecuencia, el coste disminuye.
         double load = 0.0;
         double distancia = 0.0;
         for (int i = 0; i < conexiones.length; i++) {
@@ -910,12 +912,11 @@ public class State {
             distancia += calcularDistancia(i, conexiones[i].destino) - mejorDistancia[i];
 
             if(sensores.get(i).getCapacidad()*3 >= conexiones[i].volumen) {
-                load += sensores.get(i).getCapacidad();
+                load += sensores.get(i).getCapacidad()*alpha;
             }
             else {
                 double penalizacion = (conexiones[i].volumen - sensores.get(i).getCapacidad()*3);
                 load -= penalizacion * penalizacion;
-                //LA PENALIZACION DEBERIA VARIAR SI LA DISTANCAI ES MAS GRANDE.
             }
         }
 
@@ -923,7 +924,7 @@ public class State {
             if(volumenCentros[i] > 150) load -= Math.pow(volumenCentros[i],2);
         }
 
-        return -load/(distancia*distancia);
+        return -(load)/(distancia*distancia);
     }
 
 
