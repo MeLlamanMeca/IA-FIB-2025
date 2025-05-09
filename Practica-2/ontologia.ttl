@@ -1,0 +1,487 @@
+@prefix : <http://www.rico-rico.com/ontologia#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.rico-rico.com/ontologia#> .
+
+<http://www.rico-rico.com/ontologia> rdf:type owl:Ontology ;
+                                      rdfs:comment "Ontología para modelar menús personalizados según restricciones y preferencias de cliente." .
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.rico-rico.com/ontologia#appliesTechnique
+:appliesTechnique rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Dish ;
+                  rdfs:range :Technique ;
+                  rdfs:label "tiene técnica culinaria" .
+
+
+###  http://www.rico-rico.com/ontologia#availableInSeason
+:availableInSeason rdf:type owl:ObjectProperty ;
+                   rdfs:domain :Ingredient ;
+                   rdfs:range :Season ;
+                   rdfs:comment "Indica si ingrediente esta disponible en una temporada. Por ejemplo, las fresas no son de otoño" ;
+                   rdfs:label "disponible en temporada" .
+
+
+###  http://www.rico-rico.com/ontologia#compatibleWith
+:compatibleWith rdf:type owl:ObjectProperty ;
+                rdfs:domain :Dish ;
+                rdfs:range :Dish ;
+                rdfs:comment "Dos platos combinan bien, por ejemplo un gazpacho de primero y cocido madrileño de segundo serian una horrible combinación" ;
+                rdfs:label "compatible con" .
+
+
+###  http://www.rico-rico.com/ontologia#goodInSeason
+:goodInSeason rdf:type owl:ObjectProperty ;
+              rdfs:domain :Dish ;
+              rdfs:range :Season ;
+              rdfs:comment "Un plato es adecuado para comer en una temporada. Por ej. no es muy adecuado servir sopa caliente en verano" ;
+              rdfs:label "adecuado para temporada" .
+
+
+###  http://www.rico-rico.com/ontologia#hasBeverage
+:hasBeverage rdf:type owl:ObjectProperty ;
+             rdfs:domain :Menu ;
+             rdfs:range :Beverage ;
+             rdfs:label "tiene bebida" .
+
+
+###  http://www.rico-rico.com/ontologia#hasCuisineStyle
+:hasCuisineStyle rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Dish ;
+                 rdfs:range :CuisineStyle ;
+                 rdfs:comment "Que estilo culinario tiene un plato." ;
+                 rdfs:label "estilo culinario" .
+
+
+###  http://www.rico-rico.com/ontologia#hasDessert
+:hasDessert rdf:type owl:ObjectProperty ;
+            rdfs:domain :Menu ;
+            rdfs:range :Dessert ;
+            rdfs:label "tiene postre" .
+
+
+###  http://www.rico-rico.com/ontologia#hasEventType
+:hasEventType rdf:type owl:ObjectProperty ;
+              rdfs:domain :Event ;
+              rdfs:range :Event ;
+              rdfs:label "tipo de evento" .
+
+
+###  http://www.rico-rico.com/ontologia#hasFirstCourse
+:hasFirstCourse rdf:type owl:ObjectProperty ;
+                rdfs:domain :Menu ;
+                rdfs:range :FirstCourse ;
+                rdfs:label "tiene primer plato" .
+
+
+###  http://www.rico-rico.com/ontologia#hasIngredient
+:hasIngredient rdf:type owl:ObjectProperty ;
+               rdfs:domain :Dish ;
+               rdfs:range :Ingredient ;
+               rdfs:label "tiene ingrediente" .
+
+
+###  http://www.rico-rico.com/ontologia#hasMainCourse
+:hasMainCourse rdf:type owl:ObjectProperty ;
+               rdfs:domain :Menu ;
+               rdfs:range :MainCourse ;
+               rdfs:label "tiene segundo plato" .
+
+
+###  http://www.rico-rico.com/ontologia#hasSeason
+:hasSeason rdf:type owl:ObjectProperty ;
+           rdfs:domain :Event ;
+           rdfs:range :Season ;
+           rdfs:comment "En qué época del año se celebra el evento" ;
+           rdfs:label "epoca del año" .
+
+
+###  http://www.rico-rico.com/ontologia#hasTemperature
+:hasTemperature rdf:type owl:ObjectProperty ;
+                rdfs:domain :Dish ;
+                rdfs:range :TemperatureType ;
+                rdfs:label "tiene temperatura" .
+
+
+###  http://www.rico-rico.com/ontologia#origin
+:origin rdf:type owl:ObjectProperty ;
+        rdfs:domain :Dish ;
+        rdfs:range :PlaceOfOrigin ;
+        rdfs:label "región de origen" .
+
+
+###  http://www.rico-rico.com/ontologia#servesAs
+:servesAs rdf:type owl:ObjectProperty ;
+          rdfs:domain :Beverage ;
+          rdfs:range :Dish ;
+          rdfs:comment "Un plato y una bebida son adecuados ya que sus sabores combinan bien" ;
+          rdfs:label "adecuada para plato" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.rico-rico.com/ontologia#bevPrice
+:bevPrice rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Beverage ;
+          rdfs:range xsd:decimal ;
+          rdfs:label "precio" .
+
+
+###  http://www.rico-rico.com/ontologia#difficulty
+:difficulty rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Dish ;
+            rdfs:range xsd:integer ;
+            rdfs:comment "Es un número del 0 al 10 indicando que tan dificil de cocinar es" ;
+            rdfs:label "dificultad técnica" .
+
+
+###  http://www.rico-rico.com/ontologia#dishPrice
+:dishPrice rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Dish ;
+           rdfs:range xsd:decimal ;
+           rdfs:label "precio" .
+
+
+###  http://www.rico-rico.com/ontologia#hasCourseType
+:hasCourseType rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Dish ;
+               rdfs:range xsd:string ;
+               rdfs:label "tipo de plato (frío/caliente, etc.)" .
+
+
+###  http://www.rico-rico.com/ontologia#hasDate
+:hasDate rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Event ;
+         rdfs:range xsd:date ;
+         rdfs:label "fecha" .
+
+
+###  http://www.rico-rico.com/ontologia#hasGuestCount
+:hasGuestCount rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Event ;
+               rdfs:range xsd:integer ;
+               rdfs:label "número de comensales" .
+
+
+###  http://www.rico-rico.com/ontologia#isVegetarian
+:isVegetarian rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Dish ;
+              rdfs:range xsd:boolean ;
+              rdfs:label "es vegetariano" .
+
+
+###  http://www.rico-rico.com/ontologia#menuPrice
+:menuPrice rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Menu ;
+           rdfs:range xsd:decimal ;
+           rdfs:label "precio por persona" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.rico-rico.com/ontologia#AlcoholicBeverage
+:AlcoholicBeverage rdf:type owl:Class ;
+                   rdfs:subClassOf :Beverage ;
+                   rdfs:label "Bebida con alcohol" .
+
+
+###  http://www.rico-rico.com/ontologia#Beverage
+:Beverage rdf:type owl:Class ;
+          rdfs:label "Bebida" .
+
+
+###  http://www.rico-rico.com/ontologia#CongressEvent
+:CongressEvent rdf:type owl:Class ;
+               rdfs:subClassOf :Event ;
+               rdfs:label "Evento de Congreso" .
+
+
+###  http://www.rico-rico.com/ontologia#CuisineStyle
+:CuisineStyle rdf:type owl:Class ;
+              rdfs:label "Estilo de Cocina" .
+
+
+###  http://www.rico-rico.com/ontologia#Dessert
+:Dessert rdf:type owl:Class ;
+         rdfs:subClassOf :Dish ;
+         rdfs:label "Postre" .
+
+
+###  http://www.rico-rico.com/ontologia#Dish
+:Dish rdf:type owl:Class ;
+      rdfs:label "Plato" .
+
+
+###  http://www.rico-rico.com/ontologia#Event
+:Event rdf:type owl:Class ;
+       rdfs:label "Evento" .
+
+
+###  http://www.rico-rico.com/ontologia#FamilyEvent
+:FamilyEvent rdf:type owl:Class ;
+             rdfs:subClassOf :Event ;
+             rdfs:label "Evento Familiar" .
+
+
+###  http://www.rico-rico.com/ontologia#FirstCourse
+:FirstCourse rdf:type owl:Class ;
+             rdfs:subClassOf :Dish ;
+             rdfs:label "Primer Plato" .
+
+
+###  http://www.rico-rico.com/ontologia#Ingredient
+:Ingredient rdf:type owl:Class ;
+            rdfs:label "Ingrediente" .
+
+
+###  http://www.rico-rico.com/ontologia#MainCourse
+:MainCourse rdf:type owl:Class ;
+            rdfs:subClassOf :Dish ;
+            rdfs:label "Segundo Plato" .
+
+
+###  http://www.rico-rico.com/ontologia#Menu
+:Menu rdf:type owl:Class ;
+      owl:equivalentClass [ owl:intersectionOf ( :Menu
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty :hasDessert ;
+                                                   owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                 ]
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty :hasFirstCourse ;
+                                                   owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                 ]
+                                                 [ rdf:type owl:Restriction ;
+                                                   owl:onProperty :hasMainCourse ;
+                                                   owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                 ]
+                                               ) ;
+                            rdf:type owl:Class
+                          ] ;
+      rdfs:label "Menú" .
+
+
+###  http://www.rico-rico.com/ontologia#NonAlcoholicBeverage
+:NonAlcoholicBeverage rdf:type owl:Class ;
+                      rdfs:subClassOf :Beverage ;
+                      rdfs:label "Bebida sin alcohol" .
+
+
+###  http://www.rico-rico.com/ontologia#PlaceOfOrigin
+:PlaceOfOrigin rdf:type owl:Class ;
+               rdfs:label "Lugar de origen" .
+
+
+###  http://www.rico-rico.com/ontologia#Restriction
+:Restriction rdf:type owl:Class ;
+             rdfs:comment "Hay alergenos a un ingrediente, etc. (No se si realmente hará falta esta clase)" ;
+             rdfs:label "Restricción" .
+
+
+###  http://www.rico-rico.com/ontologia#Season
+:Season rdf:type owl:Class ;
+        rdfs:comment "Se puede añadir por meses para ser más exactos pero sería mas complejo" ;
+        rdfs:label "Temporada" .
+
+
+###  http://www.rico-rico.com/ontologia#Technique
+:Technique rdf:type owl:Class ;
+           rdfs:label "Tecnica culinaria" .
+
+
+###  http://www.rico-rico.com/ontologia#TemperatureType
+:TemperatureType rdf:type owl:Class ;
+                 rdfs:label "Tipo de temperatura" .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.rico-rico.com/ontologia#Autumn
+:Autumn rdf:type owl:NamedIndividual ,
+                 :Season ;
+        rdfs:label "Otoño" .
+
+
+###  http://www.rico-rico.com/ontologia#Baked
+:Baked rdf:type owl:NamedIndividual ,
+                :Technique ;
+       rdfs:label "Horneado" .
+
+
+###  http://www.rico-rico.com/ontologia#Beer
+:Beer rdf:type owl:NamedIndividual ,
+               :AlcoholicBeverage ;
+      rdfs:label "Cerveza" .
+
+
+###  http://www.rico-rico.com/ontologia#Cava
+:Cava rdf:type owl:NamedIndividual ,
+               :AlcoholicBeverage ;
+      rdfs:label "Cava" .
+
+
+###  http://www.rico-rico.com/ontologia#Champagne
+:Champagne rdf:type owl:NamedIndividual ,
+                    :AlcoholicBeverage ;
+           rdfs:label "Champán" .
+
+
+###  http://www.rico-rico.com/ontologia#Cider
+:Cider rdf:type owl:NamedIndividual ,
+                :AlcoholicBeverage ;
+       rdfs:label "Sidra" .
+
+
+###  http://www.rico-rico.com/ontologia#Coke
+:Coke rdf:type owl:NamedIndividual ,
+               :NonAlcoholicBeverage ;
+      rdfs:label "Coca Cola" .
+
+
+###  http://www.rico-rico.com/ontologia#Cold
+:Cold rdf:type owl:NamedIndividual ,
+               :TemperatureType ;
+      rdfs:label "Frio" .
+
+
+###  http://www.rico-rico.com/ontologia#Fanta
+:Fanta rdf:type owl:NamedIndividual ,
+                :NonAlcoholicBeverage ;
+       rdfs:label "Fanta" .
+
+
+###  http://www.rico-rico.com/ontologia#Fried
+:Fried rdf:type owl:NamedIndividual ,
+                :Technique ;
+       rdfs:label "Frito" .
+
+
+###  http://www.rico-rico.com/ontologia#Gourmet
+:Gourmet rdf:type owl:NamedIndividual ,
+                  :CuisineStyle ;
+         rdfs:label "Gourmet" .
+
+
+###  http://www.rico-rico.com/ontologia#Grilled
+:Grilled rdf:type owl:NamedIndividual ,
+                  :Technique ;
+         rdfs:label "A la plancha" .
+
+
+###  http://www.rico-rico.com/ontologia#Hot
+:Hot rdf:type owl:NamedIndividual ,
+              :TemperatureType ;
+     rdfs:label "Caliente" .
+
+
+###  http://www.rico-rico.com/ontologia#Modern
+:Modern rdf:type owl:NamedIndividual ,
+                 :CuisineStyle ;
+        rdfs:label "Moderno" .
+
+
+###  http://www.rico-rico.com/ontologia#Raw
+:Raw rdf:type owl:NamedIndividual ,
+              :Technique ;
+     rdfs:label "Crudo" .
+
+
+###  http://www.rico-rico.com/ontologia#Red_Wine
+:Red_Wine rdf:type owl:NamedIndividual ,
+                   :AlcoholicBeverage ;
+          rdfs:label "Vino tinto" .
+
+
+###  http://www.rico-rico.com/ontologia#Regional
+:Regional rdf:type owl:NamedIndividual ,
+                   :CuisineStyle ;
+          rdfs:label "Regional" .
+
+
+###  http://www.rico-rico.com/ontologia#Reserve_wine
+:Reserve_wine rdf:type owl:NamedIndividual ,
+                       :AlcoholicBeverage ;
+              rdfs:label "Vino reserva" .
+
+
+###  http://www.rico-rico.com/ontologia#Spring
+:Spring rdf:type owl:NamedIndividual ,
+                 :Season ;
+        rdfs:label "Primavera" .
+
+
+###  http://www.rico-rico.com/ontologia#Steamed
+:Steamed rdf:type owl:NamedIndividual ,
+                  :Technique ;
+         rdfs:label "Al vapor" .
+
+
+###  http://www.rico-rico.com/ontologia#Stewed
+:Stewed rdf:type owl:NamedIndividual ,
+                 :Technique ;
+        rdfs:label "Guisado" .
+
+
+###  http://www.rico-rico.com/ontologia#Summer
+:Summer rdf:type owl:NamedIndividual ,
+                 :Season ;
+        rdfs:label "Verano" .
+
+
+###  http://www.rico-rico.com/ontologia#Traditional
+:Traditional rdf:type owl:NamedIndividual ,
+                      :CuisineStyle ;
+             rdfs:label "Clásico" .
+
+
+###  http://www.rico-rico.com/ontologia#Trina
+:Trina rdf:type owl:NamedIndividual ,
+                :NonAlcoholicBeverage ;
+       rdfs:label "Trina" .
+
+
+###  http://www.rico-rico.com/ontologia#Vermut
+:Vermut rdf:type owl:NamedIndividual ,
+                 :AlcoholicBeverage ;
+        rdfs:label "Vermut" .
+
+
+###  http://www.rico-rico.com/ontologia#Warm
+:Warm rdf:type owl:NamedIndividual ,
+               :TemperatureType ;
+      rdfs:label "Templado" .
+
+
+###  http://www.rico-rico.com/ontologia#Water
+:Water rdf:type owl:NamedIndividual ,
+                :NonAlcoholicBeverage ;
+       rdfs:label "Agua" .
+
+
+###  http://www.rico-rico.com/ontologia#Winter
+:Winter rdf:type owl:NamedIndividual ,
+                 :Season ;
+        rdfs:label "Invierno" .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

@@ -17,41 +17,23 @@ import aima.search.informed.IterativeDeepeningAStarSearch;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
-    public static int seed2 = 0;
-    public static int seed1 = 0;
-    public static int stateIni = 1;
-    public static int algoritmo = 1;
-    public static int h = 1;
+    public static int seed = 2;
 
-    private static State ejecutarHillClimbingSinImprimir(State state) throws Exception {
-        // Creamos el problema para Hill Climbing
+
+    private static void ejecutarHillClimbing(State state) throws Exception {
+
+        // Creamos problema para Hill Climbing
         Problem p = new Problem(
                 state,                      // Estado inicial
                 new SuccesorFunctionHC(),   // Función de sucesores
                 new GoalTestFunc(),         // Condición de parada
                 new HeuristicFunc()         // Heurística de evaluación
-        );
-
-        Search alg = new HillClimbingSearch();
-        SearchAgent agent = new SearchAgent(p, alg);
-
-        // Retornamos el estado meta obtenido
-        return (State)alg.getGoalState();
-    }
-
-    private static void ejecutarHillClimbing(State state) throws Exception {
-
-        // Creamos problema para Hill Climbing
-        HeuristicFunc h1 = new HeuristicFunc();
-        h1.setSelected(h);
-        Problem p = new Problem(
-                state,                      // Estado inicial
-                new SuccesorFunctionHC(),   // Función de sucesores
-                new GoalTestFunc(),         // Condición de parada
-                h1         // Heurística de evaluación
         );
 
 
@@ -69,72 +51,306 @@ public class Main {
         //System.out.println(alg.getGoalState());
         State goal = (State) alg.getGoalState();
         List<Double> a = goal.getInfo();
-        System.out.println("semilla: " + seed1);
+        System.out.println("semilla: " + seed);
+        System.out.println("Operadores: Move + Swap");
         System.out.println("Megabytes: " + a.get(1) + ":" + a.get(0) + " Distancia : " + a.get(2) + " Coste : " + a.get(3));
         System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
 
     }
 
-    private static void ejecutarSimulatedAnnealing(State state) throws Exception {
+    public class Experiment {
 
-        // Establecer parámetros Simulated Annealing
-        int steps = 85000;         // Número total de iteraciones del algoritmo
-        int stiter = 250;           // Número de iteraciones por cada nivel de temperatura
-        int k = 75;                // Factor de ajuste para la función de probabilidad de aceptación (cuanto mayor sea más tiempo aceptara soluciones peores)
-        double lambda = 0.0005;     // Parámetro de enfriamiento
-        HeuristicFunc h1 = new HeuristicFunc();
-        h1.setSelected(h);
+        // Clase para almacenar los resultados de cada ejecución
+        public static class Result {
+            public int seed;
+            public double lambda;
+            public double megabyte1;
+            public double megabyte2;
+            public double distance;
+            public double cost;
+            public long executionTime;
 
-        Problem p = new Problem(
-                state,                      // Estado inicial
-                new SuccesorFunctionSA(),   // Función de sucesores
-                new GoalTestFunc(),         // Condición de parada
-                h1        // Heurística de evaluación
-        );
-        long startTime = System.currentTimeMillis();
-        Search alg = new SimulatedAnnealingSearch(steps, stiter, k, lambda);
-        SearchAgent agent = new SearchAgent(p, alg);
-        // Imprimir todas las estadísticas
-        long estimatedTime = System.currentTimeMillis() - startTime;
-        //System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
-        System.out.println("\nResultado Simulated Annealing:");
-        printInstrumentation(agent.getInstrumentation());
-        //System.out.println(alg.getGoalState());
-        State goal = (State) alg.getGoalState();
-        List<Double> a = goal.getInfo();
-        System.out.println("semilla: " + seed1);
-        System.out.println("Megabytes: " + a.get(1) + ":" + a.get(0) + " Distancia : " + a.get(2) + " Coste : " + a.get(3));
-        System.out.println("Tiempo de ejecución: " + estimatedTime + " ms");
-    }
-
-    public static void main(String[] args) throws Exception{
-        inicializar();
-            // Inicializamos el contexto del problema
-
-            Sensores s = new Sensores(100, seed1);       // número de sensores, semilla
-            CentrosDatos c = new CentrosDatos(4, seed2); // número de centros de datos, semilla
-
-            State.setEnvironment(s, c);
-
-
-            // Establecemos el contexto en el estado
-            State state = new State();
-            state.inicializarMejorDistancia();
-            //estado inicial
-            if (stateIni == 1) state.generadorGreedyMinDist();
-            else if (stateIni == 2) state.generadorGreedyHierarchy();
-            else state.generadorRandom1();
-
-            // Ejecutamos los dos algoritmos con el mismo estado inicial para poder comparar sus ejecuciones
-            if (algoritmo == 1) {
-                ejecutarHillClimbing(state);
-            } else if (algoritmo == 2) {
-                ejecutarSimulatedAnnealing(state);
-
-            } else {
-                ejecutarHillClimbing(state);
-                ejecutarSimulatedAnnealing(state);
+            public Result(int seed, double lambda, double megabyte1, double megabyte2, double distance, double cost, long executionTime) {
+                this.seed = seed;
+                this.lambda = lambda;
+                this.megabyte1 = megabyte1;
+                this.megabyte2 = megabyte2;
+                this.distance = distance;
+                this.cost = cost;
+                this.executionTime = executionTime;
             }
+        }
+
+        // Método modificado para devolver un objeto Result en lugar de imprimir directamente
+        public static Result ejecutarSimulatedAnnealing(State state, int seed, int steps, int stiter, int k, double lambda) throws Exception {
+            long startTime = System.currentTimeMillis();
+
+            // Creamos problema para Simulated Annealing
+            Problem p = new Problem(
+                    state,                      // Estado inicial
+                    new SuccesorFunctionSA(),   // Función de sucesores
+                    new GoalTestFunc(),         // Condición de parada
+                    new HeuristicFunc()         // Heurística de evaluación
+            );
+
+            Search alg = new SimulatedAnnealingSearch(steps, stiter, k, lambda);
+            SearchAgent agent = new SearchAgent(p, alg);
+
+            long estimatedTime = System.currentTimeMillis() - startTime;
+
+            // Obtenemos la información del estado meta
+            State goal = (State) alg.getGoalState();
+            List<Double> a = goal.getInfo();
+            // Se asume: a.get(1) y a.get(0) representan dos valores de "Megabytes",
+            // a.get(2) la Distancia y a.get(3) el Coste.
+            double mb1 = a.get(1);
+            double mb2 = a.get(0);
+            double distance = a.get(2);
+            double cost = a.get(3);
+
+            // Retornamos un objeto Result con los datos obtenidos
+            return new Result(seed, lambda, mb1, mb2, distance, cost, estimatedTime);
+        }
+
+        private static State ejecutarHillClimbingSinImprimir(State state) throws Exception {
+            // Creamos el problema para Hill Climbing
+            Problem p = new Problem(
+                    state,                      // Estado inicial
+                    new SuccesorFunctionHC(),   // Función de sucesores
+                    new GoalTestFunc(),         // Condición de parada
+                    new HeuristicFunc()         // Heurística de evaluación
+            );
+
+            Search alg = new HillClimbingSearch();
+            SearchAgent agent = new SearchAgent(p, alg);
+
+            // Retornamos el estado meta obtenido
+            return (State)alg.getGoalState();
+        }
+
+        public static Map<String, Double> runHillClimbingExperiments() throws Exception {
+            Map<String, Double> averageTimes = new HashMap<>();
+
+            int numSensores = 200;
+            int numCentros = 8;
+            for (int i = 0; i < 10; ++i) {
+                System.out.println("=== Probando con sensores: " + numSensores + " == y centros: " + numCentros + " ===");
+                long totalTime = 0;
+
+                for (int seed = 0; seed < 3; seed++) {
+                    System.out.println("\n--- Semilla: " + seed + " ---");
+                    Sensores s = new Sensores(numSensores, seed);
+                    CentrosDatos c = new CentrosDatos(numCentros, seed);
+
+                    State.setEnvironment(s, c);
+
+                    // Creamos el estado y definimos el contexto
+                    State state = new State();
+                    state.inicializarMejorDistancia();
+
+                    // Seleccionamos estado inicial
+                    state.generadorGreedyMinDist();
+                    // Alternativamente:
+                    // state.generadorRandom1();
+                    // state.generadorGreedyHierarchy();
+
+                    long startTime = System.currentTimeMillis();
+                    ejecutarHillClimbing(state);
+                    long elapsedTime = System.currentTimeMillis() - startTime;
+
+                    int[] gradosCentros = state.sensoresPorCentro();
+                    for (int j = 0; j < gradosCentros.length; ++j) {
+                        System.out.println("Grado del centro" + j + ": " + gradosCentros[j]);
+                    }
+                    totalTime += elapsedTime;
+                }
+                double avgTime = totalTime / 10.0;
+                String configKey = "Sensores: " + numSensores + ", Centros: " + numCentros;
+                averageTimes.put(configKey, avgTime);
+
+                numCentros += 2;
+                numSensores += 50;
+            }
+
+
+            return averageTimes;
+        }
+
+        public static Map<Integer, List<Result>> runExperimentsVaryingVar() throws Exception {
+            double lambda = 0.0005;  // valor fijo de lambda
+            int steps = 85000;
+            int stiter = 250;
+
+            int[] kValues = {25, 50, 75, 100, 125, 150, 175, 200, 225, 250};
+
+            Map<Integer, List<Result>> resultsBySteps = new HashMap<>();
+
+            for (int k : kValues) {
+                List<Result> resultsForSteps = new ArrayList<>();
+                System.out.println("=== Probando con k = " + k + " ===");
+
+                for (int i = 0; i < 10; ++i) {
+                    int seed = i;
+                    System.out.println("\n--- Semilla: " + seed + " ---");
+
+                    // Inicializar sensores y centros de datos
+                    Sensores s = new Sensores(100, seed);
+                    CentrosDatos c = new CentrosDatos(4, seed);
+                    State.setEnvironment(s, c);
+
+                    // Estado inicial
+                    State state = new State();
+                    state.inicializarMejorDistancia();
+                    state.generadorGreedyMinDist();
+
+                    // Ejecutar SA
+                    Result res = ejecutarSimulatedAnnealing(state, seed, steps, stiter, k, lambda);
+                    resultsForSteps.add(res);
+                }
+
+                resultsBySteps.put(k, resultsForSteps);
+            }
+
+            return resultsBySteps;
+        }
+
+        // Método para ejecutar todo el experimento, devolviendo un mapa con los resultados agrupados por lambda
+        public static Map<Double, List<Result>> runExperiments() throws Exception {
+            double[] lambdas = {
+                    0.00001,   // enfriamiento muy lento
+                    0.000025,
+                    0.00005,
+                    0.000075,
+                    0.0001,    // valor base
+                    0.00025,
+                    0.0005,
+                    0.001,
+                    0.005,
+                    0.01       // enfriamiento rápido
+            };
+
+            Map<Double, List<Result>> resultsByLambda = new HashMap<>();
+
+            // Ejecutar experimentos (3) para cada valor de lambda y cada semilla
+            for (double lambda : lambdas) {
+                List<Result> resultsForLambda = new ArrayList<>();
+                System.out.println("=== Probando con lambda = " + lambda + " ===");
+
+                for (int i = 0; i < 10; ++i) {
+                    int seed = i;
+                    System.out.println("\n--- Semilla: " + seed + " ---");
+
+                    // Inicializamos el contexto del problema
+                    Sensores s = new Sensores(100, seed);       // número de sensores, semilla
+                    CentrosDatos c = new CentrosDatos(4, seed);   // número de centros de datos, semilla
+
+                    State.setEnvironment(s, c);
+
+                    // Creamos el estado y definimos el contexto
+                    State state = new State();
+                    state.inicializarMejorDistancia();
+
+                    // Seleccionamos estado inicial
+                    state.generadorGreedyMinDist();
+                    // Alternativamente:
+                    // state.generadorRandom1();
+                    // state.generadorGreedyHierarchy();
+
+                    // Ejecutamos Simulated Annealing y recogemos el resultado
+                    Result res = ejecutarSimulatedAnnealing(state, seed, 100000, 100, 125, lambda);
+                    resultsForLambda.add(res);
+                }
+                resultsByLambda.put(lambda, resultsForLambda);
+            }
+
+            return resultsByLambda;
+        }
+
+        public static void printAveragesInt(Map<Integer, List<Result>> results) {
+            System.out.println("\n=== Promedios por lambda ===");
+            for (Map.Entry<Integer, List<Result>> entry : results.entrySet()) {
+                double step = entry.getKey();
+                List<Result> resList = entry.getValue();
+                double sumMb1 = 0, sumMb2 = 0, sumDistance = 0, sumCost = 0;
+                long sumTime = 0;
+                for (Result r : resList) {
+                    sumMb1 += r.megabyte1;
+                    sumMb2 += r.megabyte2;
+                    sumDistance += r.distance;
+                    sumCost += r.cost;
+                    sumTime += r.executionTime;
+                }
+                int count = resList.size();
+                double avgMb1 = sumMb1 / count;
+                double avgMb2 = sumMb2 / count;
+                double avgDistance = sumDistance / count;
+                double avgCost = sumCost / count;
+                double avgTime = (double) sumTime / count;
+
+                System.out.println("Steps: " + step);
+                System.out.println("Promedio Megabytes: " + avgMb1 + " : " + avgMb2);
+                System.out.println("Promedio Distancia: " + avgDistance);
+                System.out.println("Promedio Coste: " + avgCost);
+                System.out.println("Promedio Tiempo de ejecución: " + avgTime + " ms\n");
+            }
+        }
+
+
+        public static void printAverages(Map<Double, List<Result>> results) {
+            System.out.println("\n=== Promedios por lambda ===");
+            for (Map.Entry<Double, List<Result>> entry : results.entrySet()) {
+                double lambda = entry.getKey();
+                List<Result> resList = entry.getValue();
+                double sumMb1 = 0, sumMb2 = 0, sumDistance = 0, sumCost = 0;
+                long sumTime = 0;
+                for (Result r : resList) {
+                    sumMb1 += r.megabyte1;
+                    sumMb2 += r.megabyte2;
+                    sumDistance += r.distance;
+                    sumCost += r.cost;
+                    sumTime += r.executionTime;
+                }
+                int count = resList.size();
+                double avgMb1 = sumMb1 / count;
+                double avgMb2 = sumMb2 / count;
+                double avgDistance = sumDistance / count;
+                double avgCost = sumCost / count;
+                double avgTime = (double) sumTime / count;
+
+                System.out.println("Lambda: " + lambda);
+                System.out.println("Promedio Megabytes: " + avgMb1 + " : " + avgMb2);
+                System.out.println("Promedio Distancia: " + avgDistance);
+                System.out.println("Promedio Coste: " + avgCost);
+                System.out.println("Promedio Tiempo de ejecución: " + avgTime + " ms\n");
+            }
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        /* Experimento 3
+        Map<Double, List<Experiment.Result>> resultsByLambda = Experiment.runExperiments();
+
+        // Imprime los promedios para cada lambda
+        Experiment.printAverages(resultsByLambda);
+         */
+        //Map<Integer, List<Experiment.Result>> resultsByStep = Experiment.runExperimentsVaryingVar();
+
+        // Imprime los promedios para cada lambda
+        //Experiment.printAveragesInt(resultsByStep);
+
+
+
+        // Experimento 4
+
+
+        Map<String, Double> averageTimes = Experiment.runHillClimbingExperiments();
+
+        System.out.println("=== Resultados promedio Hill Climbing ===");
+        for (Map.Entry<String, Double> entry : averageTimes.entrySet()) {
+            System.out.println(entry.getKey() + " -> Tiempo promedio: " + entry.getValue() + " ms");
+        }
+
+
     }
 
     private static void printInstrumentation(Properties properties) {
@@ -151,85 +367,5 @@ public class Main {
             String action = (String) actions.get(i);
             System.out.println(action);
         }
-    }
-
-    private static void inicializar() {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.print("Semilla sensores:");
-
-            if (scanner.hasNextInt()) {
-                seed1 = scanner.nextInt();
-                break; // Opción válida, salimos del bucle
-
-            } else scanner.next(); // Limpiar entrada inválida
-        }
-
-        while (true) {
-            System.out.print("Semilla centros:");
-
-            if (scanner.hasNextInt()) {
-                seed2 = scanner.nextInt();
-                break; // Opción válida, salimos del bucle
-
-            } else scanner.next(); // Limpiar entrada inválida
-        }
-
-
-
-        while (true) {
-            System.out.println("Que estado inicial deseas? (1-3)");
-            System.out.println("Posibles respuestas:");
-            System.out.println("1. Greedy de minima distancia.");
-            System.out.println("2. Greedy jerarquico.");
-            System.out.println("3. Random.");
-            System.out.print("Selecciona una opción: ");
-
-            if (scanner.hasNextInt()) {
-                stateIni = scanner.nextInt();
-                if (stateIni >= 1 && stateIni <= 3) {
-                    break; // Opción válida, salimos del bucle
-                }
-            } else {
-                scanner.next(); // Limpiar entrada inválida
-            }
-        }
-
-        while (true) {
-            System.out.println("Que algoritmo quieres ejecutar? (1-3)");
-            System.out.println("Posibles respuestas:");
-            System.out.println("1. HC");
-            System.out.println("2. SA");
-            System.out.println("3. HC+SA");
-            System.out.print("Selecciona una opción: ");
-
-            if (scanner.hasNextInt()) {
-                algoritmo = scanner.nextInt();
-                if (algoritmo >= 1 && algoritmo <= 3) {
-                    break; // Opción válida, salimos del bucle
-                }
-            } else {
-                scanner.next(); // Limpiar entrada inválida
-            }
-        }
-
-        while (true) {
-            System.out.println("Que heurística quieres ejecutar? (1-3)");
-            System.out.println("Posibles respuestas:");
-            System.out.println("1. Maximizar datos");
-            System.out.println("2. Minimizar distancias");
-            System.out.println("3. Datos entre distancia");
-            System.out.println("4. Meca Heurística");
-            System.out.print("Selecciona una opción: ");
-            if (scanner.hasNextInt()) {
-                h = scanner.nextInt();
-                if (h >= 1 && h <= 4) {
-                    break; // Opción válida, salimos del bucle
-                }
-            } else {
-                scanner.next(); // Limpiar entrada inválida
-            }
-        }
-        scanner.close();
     }
 }

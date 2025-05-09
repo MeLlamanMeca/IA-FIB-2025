@@ -939,6 +939,11 @@ public class State {
     }
 
 
+    public int[] sensoresPorCentro() {
+        return contadorInputCentros;
+    }
+
+
     // Para depurar
     @Override
     public String toString() {
