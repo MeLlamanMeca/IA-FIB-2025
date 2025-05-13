@@ -1,0 +1,106 @@
+EVENTOS-------------------------------------------------------------------------------------
+
+Que tipo de evento es?
+
+	Boda
+	Al ser un evento con mucha gente, habria que tener cuidado al servir comida con glute, lactosa, alergias etc... ya que podria ser que el usuario que contacta a la empresa no conozca al 100% todas las alergias. Normalmente suelen haber niños, por lo que se preguntará si asistirán para crear un menu sin alcohol y algo adaptado. Suele ser un evento formal, por lo que se intentara crear platos elegantes, pero al mismo tiempo, deben ser platos en masa.
+	Efectos prácticos:
+	++ Platos formales
+	++ Platos en masa
+	-- Platos saludable
+
+	Communion
+	No alcohol, hay niños. Hay que tener en cuenta la religion. La comida suele ser de festividad 
+	-Alcohol
+	++ Festividad
+	++ Religion
+	-- Platos pequeños
+	-- Platos sofisticados
+
+	Bautizo
+	Hay niños, no alcohol y comida sencilla con texturas blandas.  Comida menos formal.
+	Efectos practios:
+	- Alcohol
+	++ Platos sencillos y blandos.
+	++ Comida tradicional.
+
+	Evento corporativo
+	Los banquetes suelen ser formales con menus inclusivos. Puede contener alcohol o no, dependiendo del gusto. Comida moderna, vistosa y detallada. Comida rapida.
+	++ Menus inclusivos
+	++ Menus rapidos
+	++ Menus bonitos
+
+
+Fecha del evento?
+	Invierno,verano,otoño,primavera
+	Esto nos sirve para los ingredientes y platos de temporada.
+
+
+Numero de personas:
+	<30 plato dificil
+	>=30 < 50 plato medio
+	<=50 plato facil
+
+Evento formal, semiformal o casual?
+	Formal: Platos modernos, gran cantidad de ingredientes en un mismo plato, ingredientes exoticos
+	Semiformal: No importa, como veas.
+	Casual: Lo tipico, platos sencillos, faciles o medios lo tipico
+	
+Hora?
+	Comida: Comida energizante, y que llene.
+	Cena: comida mas ligera, vinos recomendados
+
+PERFILES -------------------------------------------------------------------------------------------
+
+Restricciones dieteticas o alergias o religiosas?
+	Filtrado
+
+Se quiere alcohol?
+	Si/no/no importa
+
+Gente de mayor edad o con necesidades especiales?
+ 	Alimentos blandos, liquidos...
+
+PREFERENCIAS Y ESTILO ------------------------------------------------------------------------------
+
+Quieres algun tipo de comida regional?
+	Si o no
+	Si -> enseñamos países -> ++ ese pais
+	No -> -- combinaciones de origen
+
+Ingrediente o plato especifico que quieres que haya?
+
+Ingrediente o plato especifico que quieres que no haya?
+
+Quieres comida con ingredientes locales o extranjeros o da igual?
+	Locales/extranjeros/no tengo preferencia
+
+Te gustaria algun postre especial?
+	Tarta de cumpleaños, pastel.
+
+Estilo de comida especifico?
+	Sibarita, tradicional, moderno, regional, rustico o te da igual.
+
+PPRESUPUESTO -------------------------------------------------------------------------------------------
+
+Cuanto dinero estas dispuesto a gastar por persona? maximo y minimo
+
+Quieres darle mas importancia a la bebida o a la comida?
+Bebida,comida o da igual.
+
+Segun el experto, abaratar en este orden -> bebida, postre,primero, segundo
+
+BEBIDAS ----------------------------------------------------------------------------------------------
+
+Algun tipo en especifico? FILTRADO
+O algo que no quieras?
+refresco,vino,cerveza,agua
+
+
+PRESENTACION Y EXPERIENCIA ----------------------------------------------------------------------------
+
+La presentacion/esrtilo es importante para ti?
+Si -> plato mas complicado con mas ingredientes
+
+
+	
