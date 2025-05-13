@@ -1,0 +1,465 @@
+@prefix : <http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/> .
+
+<http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica> rdf:type owl:Ontology .
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/propiedades_generales
+:propiedades_generales rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/compatibleCon
+:compatibleCon rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdf:type owl:SymmetricProperty ;
+               rdfs:domain :Plato ;
+               rdfs:range :Bebida ,
+                          :Plato .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/contiene
+:contiene rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :Plato ;
+          rdfs:range :Ingrediente .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/postre
+:postre rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf owl:topObjectProperty ;
+        rdf:type owl:FunctionalProperty ;
+        rdfs:domain :Menu ;
+        rdfs:range :Plato .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/primer_plato
+:primer_plato rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              rdf:type owl:FunctionalProperty ;
+              rdfs:domain :Menu ;
+              rdfs:range :Plato .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/primera_bebida
+:primera_bebida rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                rdf:type owl:FunctionalProperty ;
+                rdfs:domain :Menu ;
+                rdfs:range :Bebida .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/segunda_bebida
+:segunda_bebida rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                rdf:type owl:FunctionalProperty ;
+                rdfs:domain :Menu ;
+                rdfs:range :Bebida .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/segundo_plato
+:segundo_plato rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdf:type owl:FunctionalProperty ;
+               rdfs:domain :Menu ;
+               rdfs:range :Plato .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/alcoholica
+:alcoholica rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdf:type owl:FunctionalProperty ;
+            rdfs:domain :Bebida ;
+            rdfs:range xsd:boolean .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/dificultad_preparacion
+:dificultad_preparacion rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf owl:topDataProperty ;
+                        rdf:type owl:FunctionalProperty ;
+                        rdfs:domain :Bebida ,
+                                    :Plato ;
+                        rdfs:range [ rdf:type rdfs:Datatype ;
+                                     owl:oneOf [ rdf:type rdf:List ;
+                                                 rdf:first "dificil" ;
+                                                 rdf:rest [ rdf:type rdf:List ;
+                                                            rdf:first "facil" ;
+                                                            rdf:rest [ rdf:type rdf:List ;
+                                                                       rdf:first "normal" ;
+                                                                       rdf:rest rdf:nil
+                                                                     ]
+                                                          ]
+                                               ]
+                                   ] .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/festividad
+:festividad rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain :Bebida ,
+                        :Plato ;
+            rdfs:range xsd:boolean .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/metodo_preparacion
+:metodo_preparacion rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain :Plato ;
+                    rdfs:range [ rdf:type rdfs:Datatype ;
+                                 owl:oneOf [ rdf:type rdf:List ;
+                                             rdf:first "barbacoa" ;
+                                             rdf:rest [ rdf:type rdf:List ;
+                                                        rdf:first "crudo" ;
+                                                        rdf:rest [ rdf:type rdf:List ;
+                                                                   rdf:first "estofado" ;
+                                                                   rdf:rest [ rdf:type rdf:List ;
+                                                                              rdf:first "frito" ;
+                                                                              rdf:rest [ rdf:type rdf:List ;
+                                                                                         rdf:first "hervido" ;
+                                                                                         rdf:rest [ rdf:type rdf:List ;
+                                                                                                    rdf:first "horno" ;
+                                                                                                    rdf:rest [ rdf:type rdf:List ;
+                                                                                                               rdf:first "marinado" ;
+                                                                                                               rdf:rest [ rdf:type rdf:List ;
+                                                                                                                          rdf:first "plancha" ;
+                                                                                                                          rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                     rdf:first "vapor" ;
+                                                                                                                                     rdf:rest rdf:nil
+                                                                                                                                   ]
+                                                                                                                        ]
+                                                                                                             ]
+                                                                                                  ]
+                                                                                       ]
+                                                                            ]
+                                                                 ]
+                                                      ]
+                                           ]
+                               ] .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/nombre
+:nombre rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf owl:topDataProperty ;
+        rdf:type owl:FunctionalProperty ;
+        rdfs:domain :Bebida ,
+                    :Ingrediente ,
+                    :Plato ;
+        rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/origen
+:origen rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf owl:topDataProperty ;
+        rdf:type owl:FunctionalProperty ;
+        rdfs:domain :Bebida ,
+                    :Plato ;
+        rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/origen_ingrediente
+:origen_ingrediente rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain :Ingrediente ;
+                    rdfs:range [ rdf:type rdfs:Datatype ;
+                                 owl:oneOf [ rdf:type rdf:List ;
+                                             rdf:first "extranjero" ;
+                                             rdf:rest [ rdf:type rdf:List ;
+                                                        rdf:first "local" ;
+                                                        rdf:rest rdf:nil
+                                                      ]
+                                           ]
+                               ] .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/precio
+:precio rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf owl:topDataProperty ;
+        rdf:type owl:FunctionalProperty ;
+        rdfs:domain :Bebida ,
+                    :Menu ,
+                    :Plato ;
+        rdfs:range xsd:float .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/presentacion
+:presentacion rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdf:type owl:FunctionalProperty ;
+              rdfs:domain :Plato ;
+              rdfs:range [ rdf:type rdfs:Datatype ;
+                           owl:oneOf [ rdf:type rdf:List ;
+                                       rdf:first "moderno" ;
+                                       rdf:rest [ rdf:type rdf:List ;
+                                                  rdf:first "regional" ;
+                                                  rdf:rest [ rdf:type rdf:List ;
+                                                             rdf:first "rustica" ;
+                                                             rdf:rest [ rdf:type rdf:List ;
+                                                                        rdf:first "sibarita" ;
+                                                                        rdf:rest [ rdf:type rdf:List ;
+                                                                                   rdf:first "tradicional" ;
+                                                                                   rdf:rest rdf:nil
+                                                                                 ]
+                                                                      ]
+                                                           ]
+                                                ]
+                                     ]
+                         ] .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/propiedades_dieteticas
+:propiedades_dieteticas rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf owl:topDataProperty ;
+                        rdfs:domain :Bebida ,
+                                    :Plato ;
+                        rdfs:range [ rdf:type rdfs:Datatype ;
+                                     owl:oneOf [ rdf:type rdf:List ;
+                                                 rdf:first "bajo-en-sodio" ;
+                                                 rdf:rest [ rdf:type rdf:List ;
+                                                            rdf:first "carne" ;
+                                                            rdf:rest [ rdf:type rdf:List ;
+                                                                       rdf:first "diabetico" ;
+                                                                       rdf:rest [ rdf:type rdf:List ;
+                                                                                  rdf:first "dieta-saludable" ;
+                                                                                  rdf:rest [ rdf:type rdf:List ;
+                                                                                             rdf:first "halal" ;
+                                                                                             rdf:rest [ rdf:type rdf:List ;
+                                                                                                        rdf:first "kosher" ;
+                                                                                                        rdf:rest [ rdf:type rdf:List ;
+                                                                                                                   rdf:first "marisco" ;
+                                                                                                                   rdf:rest [ rdf:type rdf:List ;
+                                                                                                                              rdf:first "nut-free" ;
+                                                                                                                              rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                         rdf:first "pescado" ;
+                                                                                                                                         rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                    rdf:first "sin-gluten" ;
+                                                                                                                                                    rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                               rdf:first "sin-lactosa" ;
+                                                                                                                                                               rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                                          rdf:first "vegano" ;
+                                                                                                                                                                          rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                                                     rdf:first "vegetariano" ;
+                                                                                                                                                                                     rdf:rest rdf:nil
+                                                                                                                                                                                   ]
+                                                                                                                                                                        ]
+                                                                                                                                                             ]
+                                                                                                                                                  ]
+                                                                                                                                       ]
+                                                                                                                            ]
+                                                                                                                 ]
+                                                                                                      ]
+                                                                                           ]
+                                                                                ]
+                                                                     ]
+                                                          ]
+                                               ]
+                                   ] .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/propiedades_ingrediente
+:propiedades_ingrediente rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf owl:topDataProperty ;
+                         rdfs:domain :Ingrediente ;
+                         rdfs:range [ rdf:type rdfs:Datatype ;
+                                      owl:oneOf [ rdf:type rdf:List ;
+                                                  rdf:first "carbohidratos" ;
+                                                  rdf:rest [ rdf:type rdf:List ;
+                                                             rdf:first "fibra" ;
+                                                             rdf:rest [ rdf:type rdf:List ;
+                                                                        rdf:first "lipidos" ;
+                                                                        rdf:rest [ rdf:type rdf:List ;
+                                                                                   rdf:first "proteina" ;
+                                                                                   rdf:rest [ rdf:type rdf:List ;
+                                                                                              rdf:first "vegetal" ;
+                                                                                              rdf:rest [ rdf:type rdf:List ;
+                                                                                                         rdf:first "vitaminas" ;
+                                                                                                         rdf:rest rdf:nil
+                                                                                                       ]
+                                                                                            ]
+                                                                                 ]
+                                                                      ]
+                                                           ]
+                                                ]
+                                    ] .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/sabor
+:sabor rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf owl:topDataProperty ;
+       rdfs:domain :Plato ;
+       rdfs:range [ rdf:type rdfs:Datatype ;
+                    owl:oneOf [ rdf:type rdf:List ;
+                                rdf:first "dulce" ;
+                                rdf:rest [ rdf:type rdf:List ;
+                                           rdf:first "fuerte" ;
+                                           rdf:rest [ rdf:type rdf:List ;
+                                                      rdf:first "picante" ;
+                                                      rdf:rest [ rdf:type rdf:List ;
+                                                                 rdf:first "salado" ;
+                                                                 rdf:rest [ rdf:type rdf:List ;
+                                                                            rdf:first "suave" ;
+                                                                            rdf:rest rdf:nil
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ]
+                              ]
+                  ] .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/temperatura
+:temperatura rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdf:type owl:FunctionalProperty ;
+             rdfs:domain :Plato ;
+             rdfs:range [ rdf:type rdfs:Datatype ;
+                          owl:oneOf [ rdf:type rdf:List ;
+                                      rdf:first "caliente" ;
+                                      rdf:rest [ rdf:type rdf:List ;
+                                                 rdf:first "frio" ;
+                                                 rdf:rest [ rdf:type rdf:List ;
+                                                            rdf:first "templado" ;
+                                                            rdf:rest rdf:nil
+                                                          ]
+                                               ]
+                                    ]
+                        ] .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/temporadas
+:temporadas rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain :Bebida ,
+                        :Plato ;
+            rdfs:range [ rdf:type rdfs:Datatype ;
+                         owl:oneOf [ rdf:type rdf:List ;
+                                     rdf:first "invierno" ;
+                                     rdf:rest [ rdf:type rdf:List ;
+                                                rdf:first "otoño" ;
+                                                rdf:rest [ rdf:type rdf:List ;
+                                                           rdf:first "primavera" ;
+                                                           rdf:rest [ rdf:type rdf:List ;
+                                                                      rdf:first "verano" ;
+                                                                      rdf:rest rdf:nil
+                                                                    ]
+                                                         ]
+                                              ]
+                                   ]
+                       ] .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/textura
+:textura rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:domain :Plato ;
+         rdfs:range [ rdf:type rdfs:Datatype ;
+                      owl:oneOf [ rdf:type rdf:List ;
+                                  rdf:first "cremoso" ;
+                                  rdf:rest [ rdf:type rdf:List ;
+                                             rdf:first "crujiente" ;
+                                             rdf:rest [ rdf:type rdf:List ;
+                                                        rdf:first "firme" ;
+                                                        rdf:rest [ rdf:type rdf:List ;
+                                                                   rdf:first "jugoso" ;
+                                                                   rdf:rest [ rdf:type rdf:List ;
+                                                                              rdf:first "liquido" ;
+                                                                              rdf:rest [ rdf:type rdf:List ;
+                                                                                         rdf:first "tierno" ;
+                                                                                         rdf:rest rdf:nil
+                                                                                       ]
+                                                                            ]
+                                                                 ]
+                                                      ]
+                                           ]
+                                ]
+                    ] .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/tipo_plato
+:tipo_plato rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain :Plato ;
+            rdfs:range [ rdf:type rdfs:Datatype ;
+                         owl:oneOf [ rdf:type rdf:List ;
+                                     rdf:first "postre" ;
+                                     rdf:rest [ rdf:type rdf:List ;
+                                                rdf:first "primero" ;
+                                                rdf:rest [ rdf:type rdf:List ;
+                                                           rdf:first "segundo" ;
+                                                           rdf:rest rdf:nil
+                                                         ]
+                                              ]
+                                   ]
+                       ] .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/Bebida
+:Bebida rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/Cerveza
+:Cerveza rdf:type owl:Class ;
+         rdfs:subClassOf :Bebida .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/Coctel
+:Coctel rdf:type owl:Class ;
+        rdfs:subClassOf :Bebida .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/Ingrediente
+:Ingrediente rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/Menu
+:Menu rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/Plato
+:Plato rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/Refresco
+:Refresco rdf:type owl:Class ;
+          rdfs:subClassOf :Bebida .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/Vino
+:Vino rdf:type owl:Class ;
+      rdfs:subClassOf :Bebida .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/Vino_blanco
+:Vino_blanco rdf:type owl:Class ;
+             rdfs:subClassOf :Vino .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/Vino_tinto
+:Vino_tinto rdf:type owl:Class ;
+            rdfs:subClassOf :Vino .
+
+
+###  http://www.semanticweb.org/alrupa/ontologies/2025/4/ontologiaPractica/Zumo
+:Zumo rdf:type owl:Class ;
+      rdfs:subClassOf :Bebida .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
