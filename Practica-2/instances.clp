@@ -590,67 +590,67 @@
     (chocolate-negro of Ingrediente
         (nombre "chocolate negro")
         (origen_ingrediente extranjero)
-        (propiedades_dieteticas carbohidratos lipidos fibra)
+        (propiedades_ingrediente carbohidratos lipidos fibra)
     )
 
     (frambuesa of Ingrediente
         (nombre "frambuesa")
         (origen_ingrediente local)
-        (propiedades_dieteticas vegetal fibra vitaminas)
+        (propiedades_ingrediente vegetal fibra vitaminas)
     )
 
     (mora of Ingrediente
         (nombre "mora")
         (origen_ingrediente local)
-        (propiedades_dieteticas vegetal fibra vitaminas)
+        (propiedades_ingrediente vegetal fibra vitaminas)
     )
 
     (cafe of Ingrediente
         (nombre "cafe")
         (origen_ingrediente extranjero)
-        (propiedades_dieteticas vitaminas)
+        (propiedades_ingrediente vitaminas)
     )
 
     (bizcocho-de-soletilla of Ingrediente
         (nombre "bizcocho de soletilla")
         (origen_ingrediente local)
-        (propiedades_dieteticas carbohidratos)
+        (propiedades_ingrediente carbohidratos)
     )
 
     (cacao of Ingrediente
         (nombre "cacao")
         (origen_ingrediente local)
-        (propiedades_dieteticas lipidos fibra vitaminas)
+        (propiedades_ingrediente lipidos fibra vitaminas)
     )
 
     (mango of Ingrediente
         (nombre "mango")
         (origen_ingrediente extranjero)
-        (propiedades_dieteticas vegetal fibra vitaminas)
+        (propiedades_ingrediente vegetal fibra vitaminas)
     )
 
     (piña of Ingrediente
         (nombre "piña")
         (origen_ingrediente extranjero)
-        (propiedades_dieteticas vegetal fibra vitaminas)
+        (propiedades_ingrediente vegetal fibra vitaminas)
     )
 
     (papaya of Ingrediente
         (nombre "papaya")
         (origen_ingrediente extranjero)
-        (propiedades_dieteticas vegetal fibra vitaminas)
+        (propiedades_ingrediente vegetal fibra vitaminas)
     )
 
     (menta of Ingrediente
         (nombre "menta")
         (origen_ingrediente local)
-        (propiedades_dieteticas vegetal fibra vitaminas)
+        (propiedades_ingrediente vegetal fibra vitaminas)
     )
 
     (nuez of Ingrediente
         (nombre "nuez")
         (origen_ingrediente extranjero)
-        (propiedades_dieteticas proteina lipidos vitaminas)
+        (propiedades_ingrediente proteina lipidos vitaminas)
     )
 
 
@@ -671,7 +671,6 @@
     ;    (precio)
     ;    (propiedades_generales)
     ;)
-
 
     ; Primeros
     (p1 of Plato
@@ -1299,7 +1298,7 @@
         (precio 2.00)
     )
 
-    (b12 of Bebida
+    (b12 of Agua
         (nombre "agua")
         (alcoholica false)
         (origen "españa")

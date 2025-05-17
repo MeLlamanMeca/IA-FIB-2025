@@ -31,7 +31,7 @@
         (create-accessor read-write))
     (multislot temporadas
         (type SYMBOL)
-        (allowed primavera verano otoño invierno)
+        (allowed-values primavera verano otoño invierno)
         (create-accessor read-write))
 )
 
@@ -77,11 +77,17 @@
     (pattern-match reactive)
 )
 
+(defclass Agua
+    (is-a Bebida)
+    (role concrete)
+    (pattern-match reactive)
+)
+
 (defclass Ingrediente
     (is-a USER)
     (role concrete)
     (pattern-match reactive)
-    (slot origen
+    (slot nombre
         (type STRING)
         (create-accessor read-write))
     (multislot origen_ingrediente
@@ -148,7 +154,7 @@
         (create-accessor read-write))
     (multislot temporadas
         (type SYMBOL)
-        (allowed primavera verano otoño invierno)
+        (allowed-values primavera verano otoño invierno)
         (create-accessor read-write))
     (multislot propiedades_generales
         (type SYMBOL)
