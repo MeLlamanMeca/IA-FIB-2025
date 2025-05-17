@@ -16,10 +16,6 @@
         (type SYMBOL)
         (allowed-values facil normal dificil)
         (create-accessor read-write))
-    (multislot festividad
-        (type SYMBOL)
-        (allowed-values true false)
-        (create-accessor read-write))
     (slot nombre
         (type STRING)
         (create-accessor read-write))
@@ -31,7 +27,7 @@
         (create-accessor read-write))
     (multislot propiedades_dieteticas
         (type SYMBOL)
-        (allowed-values bajo-en-sodio carne diabetico dieta-saludable halal koshur nut-free marisco pescado sin-gluten sin-lactosa vegano vegetariano)
+        (allowed-values bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda liquida)
         (create-accessor read-write))
     (multislot temporadas
         (type SYMBOL)
@@ -126,23 +122,12 @@
     (is-a USER)
     (role concrete)
     (pattern-match reactive)
-    (multislot compatibleCon
-        (type INSTANCE)
-        (create-accessor read-write))
     (multislot contiene
         (type INSTANCE)
         (create-accessor read-write))
     (slot dificultad_preparacion
         (type SYMBOL)
         (allowed-values facil normal dificil)
-        (create-accessor read-write))
-    (multislot festividad
-        (type SYMBOL)
-        (allowed-values true false)
-        (create-accessor read-write))
-    (multislot metodo_preparacion
-        (type SYMBOL)
-        (allowed-values barbacoa crudo frito hervido horno marinado plancha vapor estofado)
         (create-accessor read-write))
     (slot nombre
         (type STRING)
@@ -155,27 +140,19 @@
         (create-accessor read-write))
     (slot presentacion
         (type SYMBOL)
-        (allowed-values moderno regional rustica sibarita tradicional)
+        (allowed-values formal informal)
         (create-accessor read-write))
     (multislot propiedades_dieteticas
         (type SYMBOL)
-        (allowed-values bajo-en-sodio carne diabetico dieta-saludable halal kosher nut-free marisco pescado sin-gluten sin-lactosa vegano vegetariano)
-        (create-accessor read-write))
-    (multislot sabor
-        (type SYMBOL)
-        (allowed-values dulce fuerte picante salado suave)
-        (create-accessor read-write))
-    (slot temperatura
-        (type SYMBOL)
-        (allowed-values caliente frio templado)
+        (allowed-values bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano liquida blanda)
         (create-accessor read-write))
     (multislot temporadas
         (type SYMBOL)
         (allowed primavera verano otoño invierno)
         (create-accessor read-write))
-    (multislot textura
+    (multislot propiedades_generales
         (type SYMBOL)
-        (allowed-values cremoso crujiente firme jugoso liquido tierno)
+        (allowed-values cremoso crujiente firme jugoso caliente frio templado dulce fuerte picante salado suave barbacoa crudo frito hervido horno marinado plancha vapor estofado)
         (create-accessor read-write))
     (multislot tipo_plato
         (type SYMBOL)
