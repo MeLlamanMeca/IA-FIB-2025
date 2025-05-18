@@ -90,14 +90,6 @@
     (slot nombre
         (type STRING)
         (create-accessor read-write))
-    (multislot origen_ingrediente
-        (type SYMBOL)
-        (allowed-values extranjero local)
-        (create-accessor read-write))
-    (multislot propiedades_ingrediente
-        (type SYMBOL)
-        (allowed-values carbohidratos fibra lipidos proteina vegetal vitaminas)
-        (create-accessor read-write))
 )
 
 (defclass Menu
@@ -164,4 +156,9 @@
         (type SYMBOL)
         (allowed-values postre primero segundo)
         (create-accessor read-write))
+    (multislot bebidas_recomendadas
+        (type SYMBOL)
+        (allowed-values Agua Cerveza Coctel Refresco Vino_blanco Vino_tinto Zumo)
+        (create-accessor read-write))
+    )
 )

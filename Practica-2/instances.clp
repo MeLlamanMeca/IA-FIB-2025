@@ -7,650 +7,434 @@
     ; Esta es una estructura de datos que representa un ingrediente
     ;(i of Ingrediente
     ;    (nombre)
-    ;    (origen_ingrediente)
-    ;    (propiedades_ingrediente)
     ;)
 
     (aguacate of Ingrediente
         (nombre "aguacate")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente fibra lipidos vegetal vitaminas)
     )
 
     (tomate of Ingrediente
         (nombre "tomate")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (cebolla of Ingrediente
         (nombre "cebolla")
-        (origen_ingrediente local)
-        (propiedades_ingrediente vegetal vitaminas)
     )
 
     (aceite-oliva of Ingrediente
         (nombre "aceite de oliva")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos vegetal vitaminas)
     )
 
     (sal of Ingrediente
         (nombre "sal")
-        (origen_ingrediente local)
-        (propiedades_ingrediente)
     )
 
     (vinagre of Ingrediente
         (nombre "vinagre")
-        (origen_ingrediente local)
-        (propiedades_ingrediente)
     )
 
     (pepino of Ingrediente
         (nombre "pepino")
-        (origen_ingrediente local)
-        (propiedades_ingrediente vegetal vitaminas)
     )
 
     (pimiento of Ingrediente
         (nombre "pimiento")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (ajo of Ingrediente
         (nombre "ajo")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra proteina vegetal vitaminas)
     )
 
     (agua of Ingrediente
         (nombre "agua")
-        (origen_ingrediente local)
-        (propiedades_ingrediente)
     )
 
     (caldo-de-carne of Ingrediente
         (nombre "caldo de carne")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos proteina)
     )
 
     (pan of Ingrediente
         (nombre "pan")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos)
     )
 
     (queso-gruyere of Ingrediente
         (nombre "queso gruyere")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente lipidos proteina)
     )
 
     (mantequilla of Ingrediente
         (nombre "mantequilla")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos)
     )
 
     (jamon-serrano of Ingrediente
         (nombre "jamon serrano")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos proteina)
     )
 
     (leche of Ingrediente
         (nombre "leche")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos proteina vitaminas)
     )
 
     (harina of Ingrediente
         (nombre "harina")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos)
     )
 
     (huevo of Ingrediente
         (nombre "huevo")
-        (origen_ingrediente local)
-        (propiedades_ingrediente proteina vitaminas)
     )
 
     (arroz of Ingrediente
         (nombre "arroz")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos)
     )
 
     (gambas of Ingrediente
         (nombre "gambas")
-        (origen_ingrediente local)
-        (propiedades_ingrediente proteina)
     )
 
     (mejillones of Ingrediente
         (nombre "mejillones")
-        (origen_ingrediente local)
-        (propiedades_ingrediente proteina vitaminas)
     )
 
     (calamares of Ingrediente
         (nombre "calamares")
-        (origen_ingrediente local)
-        (propiedades_ingrediente proteina)
     )
 
     (azafran of Ingrediente
         (nombre "azafran")
-        (origen_ingrediente local)
-        (propiedades_ingrediente)
     )
 
     (caldo-de-pescado of Ingrediente
         (nombre "caldo de pescado")
-        (origen_ingrediente local)
-        (propiedades_ingrediente proteina)
     )
 
     (lomo-de-cerdo of Ingrediente
         (nombre "lomo de cerdo")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos proteina vitaminas)
     )
 
     (salsa-barbacoa of Ingrediente
         (nombre "salsa barbacoa")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos)
     )
 
     (rabo-de-toro of Ingrediente
         (nombre "rabo de toro")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos proteina vitaminas)
     )
 
     (zanahoria of Ingrediente
         (nombre "zanahoria")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (vino-tinto of Ingrediente
         (nombre "vino tinto")
-        (origen_ingrediente local)
-        (propiedades_ingrediente)
     )
 
     (laurel of Ingrediente
         (nombre "laurel")
-        (origen_ingrediente local)
-        (propiedades_ingrediente)
     )
 
     (bacalao of Ingrediente
         (nombre "bacalao")
-        (origen_ingrediente local)
-        (propiedades_ingrediente proteina vitaminas)
     )
 
     (atun of Ingrediente
         (nombre "atun")
-        (origen_ingrediente local)
-        (propiedades_ingrediente proteina vitaminas)
     )
 
     (alga-nori of Ingrediente
         (nombre "alga nori")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente fibra vitaminas)
     )
 
     (vinagre-de-arroz of Ingrediente
         (nombre "vinagre de arroz")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente carbohidratos)
     )
 
     (salsa-de-soja of Ingrediente
         (nombre "salsa de soja")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente carbohidratos proteina)
     )
 
     (wasabi of Ingrediente
         (nombre "wasabi")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente carbohidratos fibra)
     )
 
     (manzana of Ingrediente
         (nombre "manzana")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (azucar of Ingrediente
         (nombre "azucar")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos)
     )
 
     (canela of Ingrediente
         (nombre "canela")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos fibra)
     )
 
     (nuez-moscada of Ingrediente
         (nombre "nuez moscada")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos lipidos proteina vitaminas)
     )
 
     (vainilla of Ingrediente
         (nombre "vainilla")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente carbohidratos)
     )
 
     (nata of Ingrediente
         (nombre "nata")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos vitaminas)
     )
 
     (caramelo of Ingrediente
         (nombre "caramelo")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos)
     )
 
     (setas of Ingrediente
         (nombre "setas")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos fibra vitaminas)
     )
 
     (caldo-de-verdura of Ingrediente
         (nombre "caldo de verdura")
-        (origen_ingrediente local)
-        (propiedades_ingrediente vegetal vitaminas)
     )
 
     (parmesano of Ingrediente
         (nombre "parmesano")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente lipidos proteina vitaminas)
     )
 
     (canelones of Ingrediente
         (nombre "canelones")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos)
     )
 
     (espinacas of Ingrediente
         (nombre "espinacas")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (ricotta of Ingrediente
         (nombre "ricotta")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente lipidos proteina vitaminas)
     )
 
     (pasta of Ingrediente
         (nombre "pasta")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos)
     )
 
     (albahaca of Ingrediente
         (nombre "albahaca")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (piñones of Ingrediente
         (nombre "piñones")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente lipidos proteina vitaminas)
     )
 
     (cerdo of Ingrediente
         (nombre "cerdo")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos proteina vitaminas)
     )
 
     (cilantro of Ingrediente
         (nombre "cilantro")
-        (origen_ingrediente local)
-        (propiedades_ingrediente vegetal vitaminas)
     )
 
     (chile of Ingrediente
         (nombre "chile")
-        (origen_ingrediente local)
-        (propiedades_ingrediente vegetal vitaminas)
     )
 
     (tortilla-de-maiz of Ingrediente
         (nombre "tortilla de maiz")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos)
     )
 
     (lima of Ingrediente
         (nombre "lima")
-        (origen_ingrediente local)
-        (propiedades_ingrediente vegetal vitaminas)
     )
 
     (comino of Ingrediente
         (nombre "comino")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal)
     )
 
     (carne-picada of Ingrediente
         (nombre "carne picada")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos proteina vitaminas)
     )
 
     (aceitunas of Ingrediente
         (nombre "aceitunas")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos fibra vegetal)
     )
 
     (pasas of Ingrediente
         (nombre "pasas")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos fibra vegetal)
     )
 
     (pimenton of Ingrediente
         (nombre "pimenton")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal)
     )
 
     (masa of Ingrediente
         (nombre "masa")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos)
     )
 
     (fideos of Ingrediente
         (nombre "fideos")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos)
     )
 
     (caldo-de-pollo of Ingrediente
         (nombre "caldo de pollo")
-        (origen_ingrediente local)
-        (propiedades_ingrediente proteina vitaminas)
     )
 
     (pollo of Ingrediente
         (nombre "pollo")
-        (origen_ingrediente local)
-        (propiedades_ingrediente proteina vitaminas)
     )
 
     (cebollino of Ingrediente
         (nombre "cebolino")
-        (origen_ingrediente local)
-        (propiedades_ingrediente vegetal vitaminas)
     )
 
     (aceite-sesamo of Ingrediente
         (nombre "aceite de sesamo")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente lipidos)
     )
 
     (calabaza of Ingrediente
         (nombre "calabaza")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos fibra vegetal vitaminas)
     )
 
     (leche-coco of Ingrediente
         (nombre "leche de coco")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente carbohidratos lipidos)
     )
 
     (jengibre of Ingrediente
         (nombre "jengibre")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (curcuma of Ingrediente
         (nombre "curcuma")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (quinoa of Ingrediente
         (nombre "quinoa")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos fibra proteina vitaminas)
     )
 
     (brocoli of Ingrediente
         (nombre "brocoli")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (calabacin of Ingrediente
         (nombre "calabacin")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (limon of Ingrediente
         (nombre "limon")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (vieiras of Ingrediente
         (nombre "vieiras")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente proteina vitaminas)
     )
 
     (coliflor of Ingrediente
         (nombre "coliflor")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (berenjena of Ingrediente
         (nombre "berenjena")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (bonito of Ingrediente
         (nombre "bonito")
-        (origen_ingrediente local)
-        (propiedades_ingrediente proteina vitaminas)
     )
 
     (queso of Ingrediente
         (nombre "queso")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos proteina vitaminas)
     )
 
     (guindilla of Ingrediente
         (nombre "guindilla")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (perejil of Ingrediente
         (nombre "perejil")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (pato of Ingrediente
         (nombre "pato")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos proteina vitaminas)
     )
 
     (frutos-rojos of Ingrediente
         (nombre "frutos rojos")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (boniato of Ingrediente
         (nombre "boniato")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos fibra vegetal vitaminas)
     )
 
     (carrillera of Ingrediente
         (nombre "carrillera")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos proteina vitaminas)
     )
 
     (patata of Ingrediente
         (nombre "patata")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos fibra vegetal vitaminas)
     )
 
     (frijoles of Ingrediente
         (nombre "frijoles")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente carbohidratos fibra proteina vitaminas)
     )
 
     (costillas-de-res of Ingrediente
         (nombre "costillas de res")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos proteina vitaminas)
     )
 
     (romero of Ingrediente
         (nombre "romero")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (salsa-teriyaki of Ingrediente
         (nombre "salsa teriyaki")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente carbohidratos fibra)
     )
 
     (salmon of Ingrediente
         (nombre "salmon")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente lipidos proteina vitaminas)
     )
 
     (esparrago of Ingrediente
         (nombre "esparrago")
-        (origen_ingrediente local)
-        (propiedades_ingrediente fibra vegetal vitaminas)
     )
 
     (cordero of Ingrediente
         (nombre "cordero")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos proteina vitaminas)
     )
 
     (pan-rallado of Ingrediente
         (nombre "pan rallado")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos)
     )
 
     (chocolate-negro of Ingrediente
         (nombre "chocolate negro")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente carbohidratos lipidos fibra)
     )
 
     (frambuesa of Ingrediente
         (nombre "frambuesa")
-        (origen_ingrediente local)
-        (propiedades_ingrediente vegetal fibra vitaminas)
     )
 
     (mora of Ingrediente
         (nombre "mora")
-        (origen_ingrediente local)
-        (propiedades_ingrediente vegetal fibra vitaminas)
     )
 
     (cafe of Ingrediente
         (nombre "cafe")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente vitaminas)
     )
 
     (bizcocho-de-soletilla of Ingrediente
         (nombre "bizcocho de soletilla")
-        (origen_ingrediente local)
-        (propiedades_ingrediente carbohidratos)
     )
 
     (cacao of Ingrediente
         (nombre "cacao")
-        (origen_ingrediente local)
-        (propiedades_ingrediente lipidos fibra vitaminas)
     )
 
     (mango of Ingrediente
         (nombre "mango")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente vegetal fibra vitaminas)
     )
 
     (piña of Ingrediente
         (nombre "piña")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente vegetal fibra vitaminas)
     )
 
     (papaya of Ingrediente
         (nombre "papaya")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente vegetal fibra vitaminas)
     )
 
     (menta of Ingrediente
         (nombre "menta")
-        (origen_ingrediente local)
-        (propiedades_ingrediente vegetal fibra vitaminas)
     )
 
     (nuez of Ingrediente
-        (nombre "nuez")
-        (origen_ingrediente extranjero)
-        (propiedades_ingrediente proteina lipidos vitaminas)
+        (nombre "nuez").
     )
 
 
@@ -670,6 +454,7 @@
     ;    (propiedades_dieteticas)
     ;    (precio)
     ;    (propiedades_generales)
+    ;    (bebidas_recomendadas)
     ;)
 
     ; Primeros
@@ -684,6 +469,7 @@
         (propiedades_dieteticas bajo-en-sodio diabetico dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano)
         (precio 6.00)
         (propiedades_generales cremoso crujiente frio suave salado crudo)
+        (bebidas_recomendadas Zumo Agua Refresco Vino_blanco Cerveza)
     )
 
     (p2 of Plato
@@ -697,6 +483,7 @@
         (propiedades_dieteticas bajo-en-sodio dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano liquida)
         (precio 8.00)
         (propiedades_generales frio suave salado crudo)
+        (bebidas_recomendadas Vino_blanco Agua Zumo Refresco Cerveza)
     )
 
     (p3 of Plato
@@ -710,6 +497,7 @@
         (propiedades_dieteticas carne-free nut-free liquida)
         (precio 10.00)
         (propiedades_generales cremoso caliente salado fuerte hervido)
+        (bebidas_recomendadas Vino_tinto Agua Vino_blanco Cerveza)
     )
 
     (p4 of Plato
@@ -723,6 +511,7 @@
         (propiedades_dieteticas carne-free nut-free)
         (precio 9.00)
         (propiedades_generales cremoso crujiente caliente salado fuerte frito)
+        (bebidas_recomendadas Vino_tinto Cerveza Agua Refresco)
     )
 
     (p5 of Plato
@@ -736,6 +525,7 @@
         (propiedades_dieteticas halal nut-free sin-gluten vegetariano)
         (precio 12.00)
         (propiedades_generales cremoso caliente suave salado hervido)
+        (bebidas_recomendadas Vino_blanco Agua Vino_tinto Refresco)
     )
 
     (p6 of Plato
@@ -749,6 +539,7 @@
         (propiedades_dieteticas carne-free halal nut-free vegetariano blanda)
         (precio 10.00)
         (propiedades_generales cremoso caliente suave salado horno)
+        (bebidas_recomendadas Vino_blanco Agua Refresco Vino_tinto)
     )
 
     (p7 of Plato
@@ -762,6 +553,7 @@
         (propiedades_dieteticas halal vegetariano blanda)
         (precio 9.00)
         (propiedades_generales caliente suave salado hervido)
+        (bebidas_recomendadas Vino_blanco Agua Refresco Vino_tinto)
     )
 
     (p8 of Plato
@@ -775,6 +567,7 @@
         (propiedades_dieteticas carne-free nut-free sin-lactosa blanda)
         (precio 10.00)
         (propiedades_generales jugoso caliente salado fuerte picante hervido horno)
+        (bebidas_recomendadas Cerveza Refresco Agua Coctel)
     )
 
     (p9 of Plato
@@ -788,6 +581,7 @@
         (propiedades_dieteticas carne-free kosher nut-free sin-lactosa)
         (precio 8.00)
         (propiedades_generales crujiente jugoso salado horno)
+        (bebidas_recomendadas Vino_tinto Cerveza Agua Refresco)
     )
 
     (p10 of Plato
@@ -801,6 +595,7 @@
         (propiedades_dieteticas carne-free halal kosher nut-free sin-lactosa blanda)
         (precio 11.00)
         (propiedades_generales suave caliente salado hervido)
+        (bebidas_recomendadas Agua Vino_blanco Cerveza Refresco)
     )
 
     (p11 of Plato
@@ -814,6 +609,7 @@
         (propiedades_dieteticas baja-en-sodio diabetico dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano liquida)
         (precio 7.00)
         (propiedades_generales cremoso templado suave dulce hervido)
+        (bebidas_recomendadas Vino_blanco Agua Refresco Zumo)
     )
 
     (p12 of Plato
@@ -827,6 +623,7 @@
         (propiedades_dieteticas bajo-en-sodio diabetico dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano)
         (precio 8.00)
         (propiedades_generales firme crujiente frio suave vapor)
+        (bebidas_recomendadas Agua Zumo Vino_blanco Refresco)
     )
 
     (p13 of Plato
@@ -840,6 +637,7 @@
         (propiedades_dieteticas bajo-en-sodio diabetico dieta-saludable marisco-free sin-gluten blanda)
         (precio 15.00)
         (propiedades_generales cremoso caliente suave plancha)
+        (bebidas_recomendadas Vino_blanco Agua Cerveza Refresco)
     )
 
     (p14 of Plato
@@ -853,6 +651,7 @@
         (propiedades_dieteticas diabetico dieta-saludable halal nut-free pescado-free sin-gluten)
         (precio 8.00)
         (propiedades_generales jugoso cremoso caliente suave salado horno)
+        (bebidas_recomendadas Vino_blanco Agua Cerveza Refresco)
     )
 
     (p15 of Plato
@@ -866,6 +665,7 @@
         (propiedades_dieteticas diabetico nut-free marisco-free sin-gluten sin-lactosa blanda)
         (precio 10.00)
         (propiedades_generales jugoso caliente picante salado plancha)
+        (bebidas_recomendadas Vino_blanco Cerveza Agua Refresco)
     )
 
     ; Segundos
@@ -881,6 +681,7 @@
         (propiedades_dieteticas halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa blanda)
         (precio 18.00)
         (propiedades_generales jugoso caliente salado fuerte hervido horno)
+        (bebidas_recomendadas Vino_blanco Agua Cerveza Refresco)
     )
 
     (p22 of Plato
@@ -894,6 +695,7 @@
         (propiedades_dieteticas carne-free nut-free sin-gluten sin-lactosa blanda)
         (precio 20.00)
         (propiedades_generales jugoso caliente salado fuerte barbacoa)
+        (bebidas_recomendadas Vino_tinto Cerveza Agua Refresco)
     )
 
     (p23 of Plato
@@ -907,6 +709,7 @@
         (propiedades_dieteticas carne-free nut-free sin-gluten sin-lactosa)
         (precio 25.00)
         (propiedades_generales jugoso caliente fuerte salado hervido estofado)
+        (bebidas_recomendadas Vino_tinto Agua Cerveza Refresco)
     )
 
     (p24 of Plato
@@ -920,6 +723,7 @@
         (propiedades_dieteticas diabetico dieta-saludable halal kosher nut-free pescado-free sin-gluten sin-lactosa blanda)
         (precio 15.00)
         (propiedades_generales jugoso caliente salado fuerte horno)
+        (bebidas_recomendadas Vino_blanco Agua Cerveza Refresco)
     )
 
     (p25 of Plato
@@ -933,6 +737,7 @@
         (propiedades_dieteticas dieta-saludable halal kosher nut-free pescado-free sin-lactosa)
         (precio 12.00)
         (propiedades_generales firme jugoso frio suave salado picante crudo)
+        (bebidas_recomendadas Vino_blanco Agua Cerveza Zumo Refresco)
     )
 
     (p26 of Plato
@@ -946,6 +751,7 @@
         (propiedades_dieteticas carne-free nut-free sin-gluten sin-lactosa blanda)
         (precio 16.00)
         (propiedades_generales jugoso caliente dulce fuerte plancha horno)
+        (bebidas_recomendadas Vino_tinto Agua Cerveza Refresco)
     )
 
     (p27 of Plato
@@ -959,6 +765,7 @@
         (propiedades_dieteticas carne-free nut-free sin-gluten)
         (precio 14.00)
         (propiedades_generales jugoso caliente fuerte salado estofado)
+        (bebidas_recomendadas Vino_tinto Agua Cerveza Refresco)
     )
 
     (p28 of Plato
@@ -972,6 +779,7 @@
         (propiedades_dieteticas bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free sin-gluten sin-lactosa blanda)
         (precio 8.00)
         (propiedades_generales jugoso caliente suave plancha hervido)
+        (bebidas_recomendadas Vino_blanco Agua Zumo Refresco)
     )
 
     (p29 of Plato
@@ -985,6 +793,7 @@
         (propiedades_dieteticas halal kosher nut-free sin-gluten sin-lactosa vegetariano blanda)
         (precio 9.00)
         (propiedades_generales cremoso caliente suave salado frito)
+        (bebidas_recomendadas Vino_tinto Cerveza Agua Refresco)
     )
 
     (p30 of Plato
@@ -998,6 +807,7 @@
         (propiedades_dieteticas carne-free nut-free sin-gluten sin-lactosa blanda)
         (precio 12.00)
         (propiedades_generales jugoso caliente fuerte picante hervido estofado)
+        (bebidas_recomendadas Cerveza Agua Refresco Zumo)
     )
 
     (p31 of Plato
@@ -1011,6 +821,7 @@
         (propiedades_dieteticas carne-free diabetico halal kosher nut-free sin-gluten sin-lactosa)
         (precio 18.00)
         (propiedades_generales jugoso caliente fuerte salado barbacoa)
+        (bebidas_recomendadas Vino_tinto Cerveza Agua Refresco)
     )
 
     (p32 of Plato
@@ -1024,6 +835,7 @@
         (propiedades_dieteticas bajo-en-sodio halal kosher nut-free marisco-free sin-lactosa)
         (precio 9.00)
         (propiedades_generales crujiente caliente suave frito)
+        (bebidas_recomendadas Vino_blanco Cerveza Agua Refresco)
     )
 
     (p33 of Plato
@@ -1037,6 +849,7 @@
         (propiedades_dieteticas carne-free dieta-saludable halal kosher nut-free sin-lactosa blanda)
         (precio 14.00)
         (propiedades_generales jugoso caliente dulce salado plancha marinado)
+        (bebidas_recomendadas Vino_blanco Cerveza Agua Refresco)
     )
 
     (p34 of Plato
@@ -1049,7 +862,8 @@
         (temporadas primavera verano)
         (propiedades_dieteticas bajo-en-sodio dieta-saludable halal kosher nut-free pescado-free sin-gluten sin-lactosa blanda)
         (precio 17.00)
-        (propiedades_generales jugoso caliente suave saaldo horno)
+        (propiedades_generales jugoso caliente suave salado horno)
+        (bebidas_recomendadas Vino_blanco Agua Cerveza Refresco)
     )
 
     (p35 of Plato
@@ -1063,6 +877,7 @@
         (propiedades_dieteticas carne-free nut-free sin-lactosa)
         (precio 17.00)
         (propiedades_generales crujiente caliente salado fuerte frito horno)
+        (bebidas_recomendadas Vino_tinto Cerveza Agua Refresco)
     )
 
 
@@ -1308,7 +1123,17 @@
         (precio 1.50)
     )
 
-    (b13 of Zumo
+    (b13 of Agua
+        (nombre "agua de manantial")
+        (alcoholica false)
+        (origen "españa")
+        (dificultad_preparacion facil)
+        (temporadas primavera verano otoño invierno)
+        (propiedades_dieteticas bajo-en-sodio diabetico dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano)
+        (precio 1.70)
+    )
+
+    (b14 of Zumo
         (nombre "zumo de naranja")
         (alcoholica false)
         (origen "españa")
@@ -1318,7 +1143,7 @@
         (precio 2.50)
     )
 
-    (b14 of Zumo
+    (b15 of Zumo
         (nombre "zumo de manzana")
         (alcoholica false)
         (origen "españa")
@@ -1328,7 +1153,7 @@
         (precio 2.50)
     )
 
-    (b15 of Coctel
+    (b16 of Coctel
         (nombre "mojito")
         (alcoholica true)
         (origen "cuba")
@@ -1338,7 +1163,7 @@
         (precio 8.00)
     )
 
-    (b16 of Coctel
+    (b17 of Coctel
         (nombre "margarita")
         (alcoholica true)
         (origen "mexico")
@@ -1348,7 +1173,7 @@
         (precio 7.00)
     )
 
-    (b17 of Coctel
+    (b18 of Coctel
         (nombre "piña colada")
         (alcoholica true)
         (origen "puerto-rico")
