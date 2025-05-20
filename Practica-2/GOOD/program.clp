@@ -407,7 +407,9 @@
         (eq (send ?x get-Formalidad) (send ?p get-presentacion)) ;;; FORMALIDAD
         (member$ (send ?x get-Temporada) (send ?p get-temporadas)) ;;;TEMPORADA
         (subsetp (send ?x get-restrictions) (send ?p get-propiedades_dieteticas)) ;;; RESTRICCIONES DIETETICAS
-        (subsetp (send ?x get-ingredientes_necesarios) (send ?p get-contiene)) ;;; INGREDIENTES NECESARIOS
+        (or
+            (subsetp (send ?x get-ingredientes_necesarios) (send ?p get-contiene))
+            (member$ postre (send ?p get-tipo_plato))) ;;; INGREDIENTES NECESARIOS
         (empty-intersection (send ?x get-ingredientes_prohibidos) (send ?p get-contiene)) ;;; INGREDIENTES PROHIBIDOS
         (or (eq (send ?x get-OrigenPlato) (send ?p get-origen)) (eq (send ?x get-OrigenPlato) NULL) (eq (send ?p get-origen) internacional)) ;;; ORIGEN
         (or ;;; NUMERO DE PERSONAS
@@ -608,12 +610,15 @@
 (defglobal
   ?*menu-barato* = NULL
   ?*precio-barato* = 1000000
+  ?*menu-barato-locked* = no
 
   ?*menu-caro* = NULL
   ?*precio-caro* = -1
+  ?*menu-caro-locked* = no
 
   ?*menu-promedio* = NULL
   ?*precio-promedio* = 0
+  ?*menu-promedio-locked* = no
 
   ?*precio-total* = 0
   ?*num-menus* = 0
@@ -631,12 +636,14 @@
   (if (< ?total ?*precio-barato*) then
     (bind ?*precio-barato* ?total)
     (bind ?*menu-barato* ?menu-string)
+    (bind ?*menu-barato-locked* si)
   )
 
   ;; actualizar menú más caro
   (if (> ?total ?*precio-caro*) then
     (bind ?*precio-caro* ?total)
     (bind ?*menu-caro* ?menu-string)
+    (bind ?*menu-caro-locked* si)
   )
 
   ;; actualizar menú promedio
@@ -647,6 +654,7 @@
   (if (or (eq ?*menu-promedio* NULL) (< ?diferencia-promedio ?diferencia-anterior)) then
     (bind ?*precio-promedio* ?total)
     (bind ?*menu-promedio* ?menu-string)
+    (bind ?*menu-promedio-locked* si)
   )
 )
 
@@ -659,13 +667,13 @@
   (bind ?menu-string (str-cat "P1: " ?p1nombre ", P2: " ?p2nombre ", P3: " ?nombrepostre ", B1: " ?nombrebebida1 ", B2: " ?nombrebebida2 ", precio: " ?total "$"))
 
   ;; actualizar menú más barato
-  (if (and(< ?total ?*precio-barato*) (eq ?*menu-barato* NULL)) then
+  (if (and(< ?total ?*precio-barato*) (eq ?*menu-barato-locked* no)) then
     (bind ?*precio-barato* ?total)
     (bind ?*menu-barato* ?menu-string)
   )
 
   ;; actualizar menú más caro
-  (if (and(> ?total ?*precio-caro*) (eq ?*menu-caro* NULL)) then
+  (if (and(> ?total ?*precio-caro*) (eq ?*menu-caro-locked* no)) then
     (bind ?*precio-caro* ?total)
     (bind ?*menu-caro* ?menu-string)
   )
@@ -675,7 +683,7 @@
   (bind ?diferencia-promedio (abs (- ?total ?promedio)))
   (bind ?diferencia-anterior (abs (- ?*precio-promedio* ?promedio)))
 
-  (if (and (eq ?*menu-promedio* NULL) (< ?diferencia-promedio ?diferencia-anterior)) then
+  (if (or (eq ?*menu-promedio-locked* no) (< ?diferencia-promedio ?diferencia-anterior)) then
     (bind ?*precio-promedio* ?total)
     (bind ?*menu-promedio* ?menu-string)
   )
@@ -721,12 +729,21 @@
 
     ?b1 <- (bebida_filtrada (nombre ?nombrebebida1 )(precio ?pb1) (tipo ?tipo1))
     ?b2 <- (bebida_filtrada (nombre ?nombrebebida2 )(precio ?pb2) (tipo ?tipo2))
+    (test (or
+           (and (eq  (send ?x get-BebidaUnica) no) (not(eq ?nombrebebida1 ?nombrebebida2)))
+           (and (eq  (send ?x get-BebidaUnica) si) (eq ?nombrebebida1 ?nombrebebida2))
+        )
+    )
     =>
     (bind ?total (+ ?p1precio ?p2precio ?preciopostre ?pb1 ?pb2))
     (if (and (<= (send ?x get-MinMoney) ?total) (>= (send ?x get-MaxMoney) ?total)) then
         (registrar-menuBasico ?p1nombre ?p2nombre ?nombrepostre ?nombrebebida1 ?nombrebebida2 ?total)
     )
 )
+
+
+
+
 
 
 
@@ -738,3 +755,4 @@
   (printout t "🥈 Menú promedio: " ?*menu-promedio* crlf)
   (printout t "🥉 Menú más caro: " ?*menu-caro* crlf)
 )
+

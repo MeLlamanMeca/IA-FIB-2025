@@ -1,0 +1,68 @@
+Test Ingredientes-prohibidos: Evento donde se pide que ningún plato lleve un ingrediente en concreto
+
+Objetivo: 
+Este test pretende experimentar con la restricción de eliminar ingrediente
+
+Output esperado:
+Los tres menús propuestos deben cumplir las siguientes condiciones:
+- Ningún menú puede contener un ingrediente eliminado.
+
+Input de la ejecución:
+Alejandro
+10
+verano
+1
+200
+otro
+clasico
+no
+no
+no
+si
+1
+sal
+no
+indiferente
+indiferente
+no
+
+Output del modo debug:
+# Información del modo debug para ver qué platos y bebidas cumplen las restricciones y con las que se buscarán combinaciones inteligentes
+Plato aceptado: gelatina de frutas naturales, internacional, facil, 2.5, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), informal, (jugoso frio suave), (postre), (), (zumo-de-fruta gelatina)
+Plato aceptado: arroz con leche, españa, facil, 3.0, (bajo-en-sodio halal nut-free sin-gluten vegetariano carne-free marisco-free pescado-free), (primavera verano otoño invierno), informal, (cremoso templado dulce hervido), (postre), (), (arroz leche azucar canela limon)
+Plato aceptado: flan de huevo, españa, facil, 4.0, (halal kosher nut-free sin-gluten vegetariano blanda carne-free marisco-free pescado-free), (primavera verano otoño invierno), informal, (cremoso frio dulce suave horno), (postre), (), (huevo leche azucar vainilla caramelo)
+Plato aceptado: helado de vanilla, italia, facil, 3.0, (bajo-en-sodio halal kosher nut-free sin-gluten vegetariano carne-free marisco-free pescado-free), (verano), informal, (cremoso frio dulce suave crudo), (postre), (), (leche azucar vainilla huevo nata)
+Plato aceptado: pechuga de pollo al limon con arroz integral, internacional, facil, 8.0, (bajo-en-sodio marisco-free pescado-free diabetico dieta-saludable halal kosher nut-free sin-gluten sin-lactosa blanda), (primavera verano otoño invierno), informal, (jugoso caliente suave plancha hervido), (segundo), (vino_blanco agua zumo refresco), (pollo arroz limon ajo aceite-oliva pimienta)
+Plato aceptado: sopa miso vegetal, japon, facil, 7.0, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), informal, (caliente suave salado hervido), (primero), (agua vino_blanco refresco zumo), (caldo-de-verdura miso tofu alga-nori cebollino aceite-sesamo)
+Plato aceptado: berenjenas rellenas de bonito, españa, normal, 8.0, (diabetico dieta-saludable halal nut-free carne-free marisco-free sin-gluten), (verano), informal, (jugoso cremoso caliente suave salado horno), (primero), (vino_blanco agua cerveza refresco), (berenjena bonito tomate cebolla queso)
+Plato aceptado: empanadas de carne, argentina, normal, 8.0, (marisco-free pescado-free kosher nut-free sin-lactosa), (primavera verano otoño invierno), informal, (crujiente jugoso salado horno), (primero), (vino_tinto cerveza agua refresco), (carne-picada cebolla aceitunas huevo pasas comino pimenton masa)
+Plato aceptado: tacos de carnitas, mexico, normal, 10.0, (marisco-free pescado-free nut-free sin-lactosa blanda), (primavera verano otoño invierno), informal, (jugoso caliente salado fuerte picante hervido horno), (primero), (cerveza refresco agua coctel), (cerdo cebolla cilantro chile tortilla-de-maiz lima ajo comino laurel)
+Bebida aceptada: agua de manantial, internacional, false, facil, 1.7, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno)
+Bebida aceptada: agua, internacional, false, facil, 1.5, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno)
+Bebida aceptada: cerveza stout, internacional, true, facil, 5.0, (bajo-en-sodio nut-free sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: cerveza ale, internacional, true, facil, 4.0, (bajo-en-sodio nut-free sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: cerveza lager, internacional, true, facil, 3.0, (bajo-en-sodio nut-free sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: piña colada, internacional, true, facil, 9.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano)
+Bebida aceptada: margarita, internacional, true, facil, 7.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano)
+Bebida aceptada: mojito, internacional, true, facil, 8.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano)
+Bebida aceptada: sprite, internacional, false, facil, 2.0, (halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: fanta, internacional, false, facil, 2.5, (halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: cocacola, internacional, false, facil, 2.5, (halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: vino blanco verdejo, internacional, true, facil, 7.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: vino blanco albariño, internacional, true, facil, 5.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: vino tinto crianza, internacional, true, facil, 8.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: vino tinto ribera del duero, internacional, true, facil, 8.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: vino tinto rioja, internacional, true, facil, 6.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: zumo de manzana, internacional, false, facil, 2.5, (bajo-en-sodio dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: zumo de naranja, internacional, false, facil, 2.5, (bajo-en-sodio dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+
+
+Output de la ejecución:
+🥇 Menú más barato: P1: sopa miso vegetal, P2: pechuga de pollo al limon con arroz integral, P3: gelatina de frutas naturales, B1: agua, B2: agua, precio: 20.5$
+🥈 Menú promedio: P1: empanadas de carne, P2: pechuga de pollo al limon con arroz integral, P3: flan de huevo, B1: cerveza ale, B2: cerveza ale, precio: 28.0$
+🥉 Menú más caro: P1: berenjenas rellenas de bonito, P2: pechuga de pollo al limon con arroz integral, P3: flan de huevo, B1: vino blanco verdejo, B2: vino blanco verdejo, precio: 34.0$
+
+Análisis del Output:
+Si observamos todos los platos filtrados ninguno de ellos contiene sal como uno de sus ingredientes.
+Es curioso que el único segundo plato encontrado en la base de datos que no contiene sal es pechuga de pollo al limon con arroz integral, por este motivo se repite en todos los menús.
+Con una base de datos con más platos obtendríamos resultados más variados.

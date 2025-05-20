@@ -1,0 +1,65 @@
+Test 2: Boda con muchos asistentes, precio muy acotado (20-30), apto para diabéticos y para practicantes de la religión judía y, a poder ser, comida española (Test con muchas restricciones de distinto tipo)
+
+Objetivo: 
+Este test pretende experimentar con distintas condiciones muy restricctivas para ver si el sistema es capaz de encontrar alguna solución.
+
+Output esperado:
+Los tres menús propuestos deben cumplir las siguientes condiciones:
+- Los platos deben tener una presentación formal ya que son para una boda.
+- El menú tiene que tener un precio entre 20$ y 30$.
+- Los platos deben ser aptos para diabéticos y judíos.
+- La comida preferiblemente debe ser de origen español.
+- Los platos deben ser fáciles de preparar ya que asisten muchas personas.
+- Los platos deben poder prepararse en otoño.
+- No pueden repetirse bebidas dentro de un mismo menú.
+
+Input de la ejecución:
+Alejandro
+60
+otoño
+20
+30
+boda
+si
+si
+si
+si
+si
+no
+no
+no
+no
+no
+no
+no
+si
+judía
+no
+si
+española
+no
+no
+no
+si
+indiferente
+no
+
+
+Output del modo debug:
+# Información del modo debug para ver qué platos y bebidas cumplen las restricciones y con las que se buscarán combinaciones inteligentes
+Plato aceptado: compota de manzana y pera sin azucar, internacional, facil, 3.0, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), formal, (jugoso frio suave), (postre), (), (manzana pera canela limon)
+Plato aceptado: rollitos de acelga rellenos de arroz y verduras, internacional, facil, 8.0, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), formal, (jugoso caliente suave horno), (segundo), (vino_blanco agua refresco zumo), (acelga arroz zanahoria cebolla aceite-oliva sal pimienta)
+Plato aceptado: crema templada de coliflor y manzana, internacional, facil, 8.0, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), formal, (cremoso caliente suave dulce salado hervido), (primero), (vino_blanco agua refresco zumo), (coliflor manzana cebolla agua aceite-oliva sal)
+Plato aceptado: crema templada de calabaza y coco, internacional, facil, 7.0, (baja-en-sodio carne-free marisco-free pescado-free diabetico dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano blanda), (otoño invierno), formal, (cremoso templado suave dulce hervido), (primero), (vino_blanco agua refresco zumo), (calabaza leche-coco cebolla jengibre aceite-oliva curcuma sal)
+Bebida aceptada: agua de manantial, internacional, false, facil, 1.7, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno)
+Bebida aceptada: agua, internacional, false, facil, 1.5, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno)
+
+
+Output de la ejecución:
+🥇 Menú más barato: P1: crema templada de calabaza y coco, P2: rollitos de acelga rellenos de arroz y verduras, P3: compota de manzana y pera sin azucar, B1: agua, B2: agua de manantial, precio: 21.2$
+🥈 Menú promedio: P1: crema templada de calabaza y coco, P2: rollitos de acelga rellenos de arroz y verduras, P3: compota de manzana y pera sin azucar, B1: agua, B2: agua de manantial, precio: 21.2$
+🥉 Menú más caro: P1: crema templada de coliflor y manzana, P2: rollitos de acelga rellenos de arroz y verduras, P3: compota de manzana y pera sin azucar, B1: agua, B2: agua de manantial, precio: 22.2$
+
+Análisis del Output:
+Observamos como el sistema ha sido capaz de encontrar 4 platos y 2 bebidas que cumplen con todas las restricciones solicitadas, por este motivo se ha tenido que recomendar un mismo plato dos veces mientras que en la opción
+cara se ha hecho una variación en el primero para encarecer el precio.

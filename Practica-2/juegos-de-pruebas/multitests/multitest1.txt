@@ -57,3 +57,6 @@ Output de la ejecución:
 🥉 Menú más caro: P1: ramen de pollo, P2: salmon al horno con verduras asadas, P3: brownie de chocolate con nueces y helado de vainilla, B1: cocacola, B2: cocacola, precio: 39.0$
 
 Análisis del Output:
+Todas las bebidas filtradas son refrescos, zumos y aguas por lo que no contienen alcohol.
+En el modo debug observamos cómo todos los platos pueden prepararse en primavera y tienen una presentación formal.
+Se generan menús con precios variados y, en este caso, se utiliza la idea de fijar un plato y aumentar la calidad de otro para encarecer el precio.
