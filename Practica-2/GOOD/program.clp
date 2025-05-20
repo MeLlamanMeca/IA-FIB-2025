@@ -243,9 +243,8 @@
             (if (eq ?religion musulmana) then (slot-insert$ ?x restrictions 1 halal))
             (if (eq ?religion judía) then (slot-insert$ ?x restrictions 1 kosher))
         )
-        (bind ?restr2 (ask-question "Quieres algún tipo de condición especial en la comida?  (blanda/liquida/no) " blanda liquida no))
+        (bind ?restr2 (ask-question "Quieres una dieta blanda?  (si/no) " si no))
         (if (eq ?restr2 blanda) then (slot-insert$ ?x restrictions 1 blanda))
-        (if (eq ?restr2 liquida) then (slot-insert$ ?x restrictions 1 liquida))
     ) 
 )
 
@@ -410,7 +409,7 @@
         (subsetp (send ?x get-restrictions) (send ?p get-propiedades_dieteticas)) ;;; RESTRICCIONES DIETETICAS
         (subsetp (send ?x get-ingredientes_necesarios) (send ?p get-contiene)) ;;; INGREDIENTES NECESARIOS
         (empty-intersection (send ?x get-ingredientes_prohibidos) (send ?p get-contiene)) ;;; INGREDIENTES PROHIBIDOS
-        (or (eq (send ?x get-OrigenPlato) (send ?p get-origen)) (eq (send ?x get-OrigenPlato) NULL)) ;;; ORIGEN
+        (or (eq (send ?x get-OrigenPlato) (send ?p get-origen)) (eq (send ?x get-OrigenPlato) NULL) (eq (send ?p get-origen) internacional)) ;;; ORIGEN
         (or ;;; NUMERO DE PERSONAS
             (<= (send ?x get-Asistentes) 30)
             (and 
@@ -523,16 +522,18 @@
    (endAsking)
    ?x <- (object (is-a Prefs))
    ?b <- (bebida_filtrada (nombre ?name))
+   ?b1 <- (object (is-a Agua) (nombre ?name) (origen ?origen) (alcoholica ?alcoholica) (dificultad_preparacion ?dificultad_preparacion) (precio ?precio) (propiedades_dieteticas $?propiedades_dieteticas) (temporadas $?temporadas))
    =>
-    (printout t "Bebida aceptada: " ?name crlf)
+    (printout t "Bebida aceptada: " ?name ", " ?origen ", " ?alcoholica ", " ?dificultad_preparacion ", " ?precio ", " ?propiedades_dieteticas ", " ?temporadas crlf)
 )
 
 (defrule FILTRADO::FiltroPlatoDebuggFunction
    (endAsking)
    ?x <- (object (is-a Prefs))
    ?b <- (plato_filtrado (nombre ?name))
+   ?b1 <- (object (is-a Plato) (nombre ?name) (origen ?origen) (precio ?precio) (presentacion ?presentacion) (dificultad_preparacion ?dificultad_preparacion) (propiedades_dieteticas $?propiedades_dieteticas) (temporadas $?temporadas) (propiedades_generales $?propiedades_generales) (tipo_plato $?tipo_plato) (bebidas_recomendadas $?bebidas_recomendadas) (contiene $?contiene))
    =>
-    (printout t "Plato aceptado: " ?name crlf)
+    (printout t "Plato aceptado: " ?name ", " ?origen ", " ?dificultad_preparacion ", " ?precio ", " ?propiedades_dieteticas ", " ?temporadas ", " ?presentacion ", " ?propiedades_generales ", " ?tipo_plato ", " ?bebidas_recomendadas ", " ?contiene crlf)
 )
 
 ;;; --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -624,7 +625,7 @@
   (bind ?*precio-total* (+ ?*precio-total* ?total))
   (bind ?*num-menus* (+ ?*num-menus* 1))
 
-  (bind ?menu-string (str-cat ?p1nombre ", " ?p2nombre ", " ?nombrepostre ", " ?nombrebebida1 ", " ?nombrebebida2 ", " ?total))
+  (bind ?menu-string (str-cat "P1: " ?p1nombre ", P2: " ?p2nombre ", P3: " ?nombrepostre ", B1: " ?nombrebebida1 ", B2: " ?nombrebebida2 ", precio: " ?total "$"))
 
   ;; actualizar menú más barato
   (if (< ?total ?*precio-barato*) then
