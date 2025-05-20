@@ -1,4 +1,4 @@
-Test Evento Grande: Evento con un gran numero de personas.
+Test Evento Pequeño: Evento con un numero de personas bajo.
 
 Objetivo: 
 Este test pretende ver si se aplica correctamente las restricciones a los platos cuando hay poca gente.
