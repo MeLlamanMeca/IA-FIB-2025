@@ -1150,7 +1150,7 @@
         (dificultad_preparacion facil)
         (temporadas primavera verano otoño invierno)
         (propiedades_dieteticas bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda)
-        (precio 15.00)
+        (precio 6.00)
     )
 
     (b2 of Vino_tinto
@@ -1160,7 +1160,7 @@
         (dificultad_preparacion facil)
         (temporadas primavera verano otoño invierno)
         (propiedades_dieteticas bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda)
-        (precio 20.00)
+        (precio 8.00)
     )
 
     (b3 of Vino_tinto
@@ -1170,7 +1170,7 @@
         (dificultad_preparacion facil)
         (temporadas primavera verano otoño invierno)
         (propiedades_dieteticas bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda)
-        (precio 25.00)
+        (precio 8.00)
     )
 
     (b4 of Vino_blanco
@@ -1180,7 +1180,7 @@
         (dificultad_preparacion facil)
         (temporadas primavera verano otoño invierno)
         (propiedades_dieteticas bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda)
-        (precio 18.00)
+        (precio 5.00)
     )
 
     (b5 of Vino_blanco
@@ -1190,7 +1190,7 @@
         (dificultad_preparacion facil)
         (temporadas primavera verano otoño invierno)
         (propiedades_dieteticas bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda)
-        (precio 22.00)
+        (precio 7.00)
     )
 
     (b6 of Cerveza

@@ -522,7 +522,7 @@
    (endAsking)
    ?x <- (object (is-a Prefs))
    ?b <- (bebida_filtrada (nombre ?name))
-   ?b1 <- (object (is-a Agua) (nombre ?name) (origen ?origen) (alcoholica ?alcoholica) (dificultad_preparacion ?dificultad_preparacion) (precio ?precio) (propiedades_dieteticas $?propiedades_dieteticas) (temporadas $?temporadas))
+   ?b1 <- (object (is-a Bebida) (nombre ?name) (origen ?origen) (alcoholica ?alcoholica) (dificultad_preparacion ?dificultad_preparacion) (precio ?precio) (propiedades_dieteticas $?propiedades_dieteticas) (temporadas $?temporadas))
    =>
     (printout t "Bebida aceptada: " ?name ", " ?origen ", " ?alcoholica ", " ?dificultad_preparacion ", " ?precio ", " ?propiedades_dieteticas ", " ?temporadas crlf)
 )
