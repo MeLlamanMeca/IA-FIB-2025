@@ -1,0 +1,58 @@
+Test 1: Evento con todas las restricciones dietéticas posibles y bebidas diferentes por plato
+
+Objetivo: 
+Este test pretende experimentar con las restricciones dietéticas que el sistema tiene en cuenta
+
+Output esperado:
+Los tres menús propuestos deben cumplir las siguientes condiciones:
+- Todos los platos deben ser aptos para cualquier tipo de persona posible ya que cumplen con todas las restricciones dietéticas (platos base o comodín)
+- Las dos bebidas del menú deben ser diferentes
+
+Input de la ejecución:
+Alejandro
+10
+primavera
+1
+200
+otro
+clasico
+si
+no
+no
+no
+si
+si
+si
+si
+si
+si
+si
+si
+si
+musulmana
+blanda
+no
+no
+no
+no
+si
+indiferente
+no
+
+
+Output del modo debug:
+# Información del modo debug para ver qué platos y bebidas cumplen las restricciones y con las que se buscarán combinaciones inteligentes
+Plato aceptado: gelatina de frutas naturales
+Plato aceptado: albondigas veganas de lentejas
+Plato aceptado: Curry suave de garbanzos y calabacin
+Plato aceptado: sopa miso vegetal
+Plato aceptado: consome de verduras
+Bebida aceptada: agua de manantial
+Bebida aceptada: agua
+
+Output de la ejecución:
+🥇 Menú más barato: consome de verduras, albondigas veganas de lentejas, gelatina de frutas naturales, agua, agua de manantial, 19.7
+🥈 Menú promedio: consome de verduras, Curry suave de garbanzos y calabacin, gelatina de frutas naturales, agua, agua de manantial, 20.7
+🥉 Menú más caro: sopa miso vegetal, Curry suave de garbanzos y calabacin, gelatina de frutas naturales, agua, agua de manantial, 22.7
+
+Análisis del Output:

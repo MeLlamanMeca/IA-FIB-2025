@@ -1,0 +1,57 @@
+Test 1: Evento en verano de tipo formal sin alcohol
+
+Objetivo: 
+Este test pretende experimentar con las restricciones de temporada, presentación de los platos y con los tipos de bebidas
+
+Output esperado:
+Los tres menús propuestos deben cumplir las siguientes condiciones:
+- Todos los platos deben ser aptos para la temporada de verano.
+- La presentación de los platos debe ser formal.
+- Las bebidas asociadas no deben contener alcohol.
+
+Input de la ejecución:
+Alejandro
+10
+primavera
+1
+200
+otro
+moderno
+no
+no
+no
+no
+no
+indiferente
+no
+no
+
+Output del modo debug:
+# Información del modo debug para ver qué platos y bebidas cumplen las restricciones y con las que se buscarán combinaciones inteligentes
+Plato aceptado: compota de manzana y pera sin azucar
+Plato aceptado: brownie de chocolate con nueces y helado de vainilla
+Plato aceptado: fruta fresca laminada con sirope de maracuya
+Plato aceptado: tiramisu clasico
+Plato aceptado: rollitos de acelga rellenos de arroz y verduras
+Plato aceptado: salmon al horno con verduras asadas
+Plato aceptado: pollo teriyaki con arroz integral
+Plato aceptado: tempura de gambas y verduras
+Plato aceptado: sushi de atun
+Plato aceptado: lomo de cerdo a la barbacoa
+Plato aceptado: ensalada de quinoa con verduras al vapor
+Plato aceptado: ramen de pollo
+Plato aceptado: pasta fresca con pesto de albahaca y piñones
+Bebida aceptada: agua de manantial
+Bebida aceptada: agua
+Bebida aceptada: sprite
+Bebida aceptada: fanta
+Bebida aceptada: cocacola
+Bebida aceptada: zumo de manzana
+Bebida aceptada: zumo de naranja
+
+Output de la ejecución:
+🥇 Menú más barato: pasta fresca con pesto de albahaca y piñones, rollitos de acelga rellenos de arroz y verduras, compota de manzana y pera sin azucar, agua, agua, 23.0
+🥈 Menú promedio: ramen de pollo, tempura de gambas y verduras, tiramisu clasico, cocacola, cocacola, 30.0
+🥉 Menú más caro: ramen de pollo, salmon al horno con verduras asadas, brownie de chocolate con nueces y helado de vainilla, cocacola, cocacola, 39.0
+
+Análisis del Output:

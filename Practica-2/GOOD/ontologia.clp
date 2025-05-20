@@ -20,14 +20,15 @@
         (type STRING)
         (create-accessor read-write))
     (slot origen
-        (type STRING)
+        (type SYMBOL)
+        (allowed-values españa francia italia eeuu mexico japon argentina puerto-rico cuba internacional)
         (create-accessor read-write))
     (slot precio
         (type FLOAT)
         (create-accessor read-write))
     (multislot propiedades_dieteticas
         (type SYMBOL)
-        (allowed-values bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda liquida)
+        (allowed-values bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda)
         (create-accessor read-write))
     (multislot temporadas
         (type SYMBOL)
