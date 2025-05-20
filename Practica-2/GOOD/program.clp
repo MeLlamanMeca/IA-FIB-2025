@@ -478,7 +478,7 @@
    (if (bebidaCumpleCondiciones ?b ?x coctel) then (filtrarBebida ?b coctel))
 )
 
-(defrule FILTRADO::FiltrarRefresco
+    (defrule FILTRADO::FiltrarRefresco
    (endAsking)
    ?x <- (object (is-a Prefs))
    ?b <- (object (is-a Refresco))
@@ -489,7 +489,7 @@
 (defrule FILTRADO::FiltrarVinoblanco
    (endAsking)
    ?x <- (object (is-a Prefs))
-   ?b <- (object (is-a Vino))
+   ?b <- (object (is-a Vino_blanco))
    =>
    (if (bebidaCumpleCondiciones ?b ?x vino) then (filtrarBebida ?b vino_blanco))
 )
@@ -497,7 +497,7 @@
 (defrule FILTRADO::FiltrarVinotinto
    (endAsking)
    ?x <- (object (is-a Prefs))
-   ?b <- (object (is-a Vino))
+   ?b <- (object (is-a Vino_tinto))
    =>
    (if (bebidaCumpleCondiciones ?b ?x vino) then (filtrarBebida ?b vino_tinto))
 )
@@ -650,6 +650,37 @@
   )
 )
 
+(deffunction registrar-menuBasico
+  (?p1nombre ?p2nombre ?nombrepostre ?nombrebebida1 ?nombrebebida2 ?total)
+
+  (bind ?*precio-total* (+ ?*precio-total* ?total))
+  (bind ?*num-menus* (+ ?*num-menus* 1))
+
+  (bind ?menu-string (str-cat "P1: " ?p1nombre ", P2: " ?p2nombre ", P3: " ?nombrepostre ", B1: " ?nombrebebida1 ", B2: " ?nombrebebida2 ", precio: " ?total "$"))
+
+  ;; actualizar menú más barato
+  (if (and(< ?total ?*precio-barato*) (eq ?*menu-barato* NULL)) then
+    (bind ?*precio-barato* ?total)
+    (bind ?*menu-barato* ?menu-string)
+  )
+
+  ;; actualizar menú más caro
+  (if (and(> ?total ?*precio-caro*) (eq ?*menu-caro* NULL)) then
+    (bind ?*precio-caro* ?total)
+    (bind ?*menu-caro* ?menu-string)
+  )
+
+  ;; actualizar menú promedio
+  (bind ?promedio (/ ?*precio-total* ?*num-menus*))
+  (bind ?diferencia-promedio (abs (- ?total ?promedio)))
+  (bind ?diferencia-anterior (abs (- ?*precio-promedio* ?promedio)))
+
+  (if (and (eq ?*menu-promedio* NULL) (< ?diferencia-promedio ?diferencia-anterior)) then
+    (bind ?*precio-promedio* ?total)
+    (bind ?*menu-promedio* ?menu-string)
+  )
+)
+
 (defrule GENERATION::getCompatibleMenus
     (endFiltrado)
     ?x <- (object (is-a Prefs))
@@ -677,6 +708,28 @@
     )
 )
 
+(defrule GENERATION::getBasicMenus
+    (endFiltrado)
+    ?x <- (object (is-a Prefs))
+    ?p2 <- (plato_filtrado (nombre ?p2nombre) (precio ?p2precio) (tipo_plato $?p2tipo_plato) (propiedades_generales $?p2cualidades) (bebidas_recomendadas $?p2bebidas))
+    (test(member$ segundo ?p2tipo_plato))
+    ?p1 <- (plato_filtrado (nombre ?p1nombre) (precio ?p1precio) (tipo_plato $?p1tipo_plato) (propiedades_generales $?p1cualidades) (bebidas_recomendadas $?p1bebidas))
+    (test(member$ primero ?p1tipo_plato))
+    
+    ?postre <- (plato_filtrado (nombre ?nombrepostre) (precio ?preciopostre) (tipo_plato $?tipopostre))
+    (test(member$ postre ?tipopostre))
+
+    ?b1 <- (bebida_filtrada (nombre ?nombrebebida1 )(precio ?pb1) (tipo ?tipo1))
+    ?b2 <- (bebida_filtrada (nombre ?nombrebebida2 )(precio ?pb2) (tipo ?tipo2))
+    =>
+    (bind ?total (+ ?p1precio ?p2precio ?preciopostre ?pb1 ?pb2))
+    (if (and (<= (send ?x get-MinMoney) ?total) (>= (send ?x get-MaxMoney) ?total)) then
+        (registrar-menuBasico ?p1nombre ?p2nombre ?nombrepostre ?nombrebebida1 ?nombrebebida2 ?total)
+    )
+)
+
+
+
 (defrule mostrar-mejores-menus 
     (endFiltrado)
     =>
@@ -685,4 +738,3 @@
   (printout t "🥈 Menú promedio: " ?*menu-promedio* crlf)
   (printout t "🥉 Menú más caro: " ?*menu-caro* crlf)
 )
-

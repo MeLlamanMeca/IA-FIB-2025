@@ -1,0 +1,67 @@
+Test Invierno: Evento en invierno
+
+Objetivo: 
+Este test pretende experimentar con la restricción de temporada de invierno
+
+Output esperado:
+Los tres menús propuestos deben cumplir las siguientes condiciones:
+- Todos los platos deben poder prepararse en invierno
+
+Input de la ejecución:
+Alejandro
+10
+invierno
+1
+200
+boda
+no
+no
+no
+no
+no
+indiferente
+indiferente
+no
+
+Output del modo debug:
+# Información del modo debug para ver qué platos y bebidas cumplen las restricciones y con las que se buscarán combinaciones inteligentes
+Plato aceptado: compota de manzana y pera sin azucar, internacional, facil, 3.0, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), formal, (jugoso frio suave), (postre), (), (manzana pera canela limon)
+Plato aceptado: brownie de chocolate con nueces y helado de vainilla, eeuu, normal, 6.0, (vegetariano carne-free marisco-free pescado-free), (primavera verano otoño invierno), formal, (cremoso templado dulce fuerte horno), (postre), (), (chocolate-negro mantequilla azucar huevo nuez harina vainilla leche)
+Plato aceptado: tiramisu clasico, italia, normal, 5.0, (nut-free vegetariano carne-free marisco-free pescado-free), (primavera verano otoño invierno), formal, (cremoso frio dulce crudo), (postre), (), (queso huevo azucar cafe bizcocho-de-soletilla cacao)
+Plato aceptado: mousse de chocolate con frutos rojos, francia, normal, 5.5, (bajo-en-sodio halal nut-free sin-gluten vegetariano carne-free marisco-free pescado-free), (otoño invierno), formal, (cremoso frio dulce fuerte crudo), (postre), (), (chocolate-negro nata huevo azucar frambuesa mora)
+Plato aceptado: rollitos de acelga rellenos de arroz y verduras, internacional, facil, 8.0, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), formal, (jugoso caliente suave horno), (segundo), (vino_blanco agua refresco zumo), (acelga arroz zanahoria cebolla aceite-oliva sal pimienta)
+Plato aceptado: pollo teriyaki con arroz integral, japon, normal, 14.0, (marisco-free pescado-free dieta-saludable halal kosher nut-free sin-lactosa blanda), (primavera verano otoño invierno), formal, (jugoso caliente dulce salado plancha marinado), (segundo), (vino_blanco cerveza agua refresco), (pollo salsa-teriyaki arroz cebollino jengibre ajo aceite-oliva sal)
+Plato aceptado: tempura de gambas y verduras, japon, normal, 9.0, (bajo-en-sodio halal kosher nut-free carne-free pescado-free sin-lactosa), (primavera verano otoño invierno), formal, (crujiente caliente suave frito), (segundo), (vino_blanco cerveza agua refresco), (gambas harina huevo agua cebollino aceite-oliva)
+Plato aceptado: magret de pato con salsa de frutos rojos y pure de boniato, francia, normal, 16.0, (marisco-free pescado-free nut-free sin-gluten sin-lactosa blanda), (otoño invierno), formal, (jugoso caliente dulce fuerte plancha horno), (segundo), (vino_tinto agua cerveza refresco), (pato frutos-rojos boniato vino-tinto aceite-oliva sal pimienta)
+Plato aceptado: sushi de atun, japon, normal, 12.0, (dieta-saludable halal kosher nut-free carne-free marisco-free sin-lactosa), (primavera verano otoño invierno), formal, (firme jugoso frio suave salado picante crudo), (primero segundo), (vino_blanco agua cerveza zumo refresco), (arroz atun alga-nori aguacate vinagre-de-arroz salsa-de-soja wasabi)
+Plato aceptado: lomo de cerdo a la barbacoa, eeuu, normal, 20.0, (marisco-free pescado-free nut-free sin-gluten sin-lactosa blanda), (primavera verano otoño invierno), formal, (jugoso caliente salado fuerte barbacoa), (segundo), (vino_tinto cerveza agua refresco), (lomo-de-cerdo salsa-barbacoa ajo cebolla aceite-oliva sal pimienta)
+Plato aceptado: crema templada de coliflor y manzana, internacional, facil, 8.0, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), formal, (cremoso caliente suave dulce salado hervido), (primero), (vino_blanco agua refresco zumo), (coliflor manzana cebolla agua aceite-oliva sal)
+Plato aceptado: vieiras a la plancha con pure de coliflor, francia, dificil, 15.0, (bajo-en-sodio diabetico dieta-saludable carne-free pescado-free sin-gluten blanda), (invierno), formal, (cremoso caliente suave plancha), (primero), (vino_blanco agua cerveza refresco), (vieiras coliflor mantequilla aceite-oliva sal pimienta nuez-moscada leche)
+Plato aceptado: crema templada de calabaza y coco, internacional, facil, 7.0, (baja-en-sodio carne-free marisco-free pescado-free diabetico dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano blanda), (otoño invierno), formal, (cremoso templado suave dulce hervido), (primero), (vino_blanco agua refresco zumo), (calabaza leche-coco cebolla jengibre aceite-oliva curcuma sal)
+Plato aceptado: ramen de pollo, japon, normal, 11.0, (marisco-free pescado-free halal kosher nut-free sin-lactosa blanda), (primavera verano otoño invierno), formal, (suave caliente salado hervido), (primero), (agua vino_blanco cerveza refresco), (fideos caldo-de-pollo pollo cebollino huevo salsa-de-soja aceite-sesamo alga-nori)
+Plato aceptado: risotto de setas y parmesano, italia, dificil, 12.0, (halal carne-free marisco-free pescado-free nut-free sin-gluten vegetariano), (otoño invierno), formal, (cremoso caliente suave salado hervido), (primero), (vino_blanco agua vino_tinto refresco), (arroz setas cebolla caldo-de-verdura mantequilla parmesano sal)
+Bebida aceptada: agua de manantial, internacional, false, facil, 1.7, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno)
+Bebida aceptada: agua, internacional, false, facil, 1.5, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno)
+Bebida aceptada: cerveza stout, internacional, true, facil, 5.0, (bajo-en-sodio nut-free sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: cerveza ale, internacional, true, facil, 4.0, (bajo-en-sodio nut-free sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: cerveza lager, internacional, true, facil, 3.0, (bajo-en-sodio nut-free sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: sprite, internacional, false, facil, 2.0, (halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: fanta, internacional, false, facil, 2.5, (halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: cocacola, internacional, false, facil, 2.5, (halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: vino blanco verdejo, internacional, true, facil, 7.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: vino blanco albariño, internacional, true, facil, 5.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: vino tinto crianza, internacional, true, facil, 8.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: vino tinto ribera del duero, internacional, true, facil, 8.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: vino tinto rioja, internacional, true, facil, 6.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: zumo de manzana, internacional, false, facil, 2.5, (bajo-en-sodio dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: zumo de naranja, internacional, false, facil, 2.5, (bajo-en-sodio dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+
+Output de la ejecución:
+🥇 Menú más barato: P1: crema templada de calabaza y coco, P2: rollitos de acelga rellenos de arroz y verduras, P3: compota de manzana y pera sin azucar, B1: agua, B2: agua de manantial, precio: 21.2$
+🥈 Menú promedio: P1: vieiras a la plancha con pure de coliflor, P2: rollitos de acelga rellenos de arroz y verduras, P3: tiramisu clasico, B1: cerveza ale, B2: agua de manantial, precio: 33.7$
+🥉 Menú más caro: P1: vieiras a la plancha con pure de coliflor, P2: pollo teriyaki con arroz integral, P3: brownie de chocolate con nueces y helado de vainilla, B1: vino blanco albariño, B2: vino blanco verdejo, precio: 47.0$
+
+Análisis del Output:
+El Output del modo debug muestra que todos los platos y bebidas que se han podido utilizar para crear los menús son preparables en invierno.
+Observamos también que para obtener la diferencia de precios entre menús vuelve a usarse el recurso de recomendar un mismo plato pero mejorando una bebida, un segundo, un postre...
+igual que en el test de la estación de verano.
