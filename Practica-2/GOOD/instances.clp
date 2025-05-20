@@ -1174,7 +1174,7 @@
     )
 
     (b4 of Vino_blanco
-        (nombre "vino blanco")
+        (nombre "vino blanco albariño")
         (alcoholica true)
         (origen internacional)
         (dificultad_preparacion facil)
