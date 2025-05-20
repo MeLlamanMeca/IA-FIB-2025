@@ -51,8 +51,6 @@ Bebida aceptada: zumo de manzana, españa, false, facil, 2.5, (bajo-en-sodio die
 Bebida aceptada: zumo de naranja, españa, false, facil, 2.5, (bajo-en-sodio dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano), (primavera verano otoño invierno)
 
 Output de la ejecución:
-🥇 Menú más barato: consome de verduras, albondigas veganas de lentejas, gelatina de frutas naturales, agua, agua de manantial, 19.7
-🥈 Menú promedio: consome de verduras, Curry suave de garbanzos y calabacin, gelatina de frutas naturales, agua, agua de manantial, 20.7
-🥉 Menú más caro: sopa miso vegetal, Curry suave de garbanzos y calabacin, gelatina de frutas naturales, agua, agua de manantial, 22.7
+
 
 Análisis del Output:
