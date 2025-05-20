@@ -5,7 +5,7 @@ Este test pretende ver si se aplica correctamente la restriccion de precio maxim
 
 Output esperado:
 Los tres menús propuestos deben cumplir las siguientes condiciones:
-- Deben costar más de 50$.
+- Deben costar menos de 60$.
 
 Input de la ejecución:
 Alex
