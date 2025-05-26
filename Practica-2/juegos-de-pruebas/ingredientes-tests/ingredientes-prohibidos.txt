@@ -56,10 +56,9 @@ Bebida aceptada: vino tinto rioja, internacional, true, facil, 6.0, (bajo-en-sod
 Bebida aceptada: zumo de manzana, internacional, false, facil, 2.5, (bajo-en-sodio dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
 Bebida aceptada: zumo de naranja, internacional, false, facil, 2.5, (bajo-en-sodio dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
 
-
 Output de la ejecución:
 🥇 Menú más barato: P1: sopa miso vegetal, P2: pechuga de pollo al limon con arroz integral, P3: gelatina de frutas naturales, B1: agua, B2: agua, precio: 20.5$
-🥈 Menú promedio: P1: empanadas de carne, P2: pechuga de pollo al limon con arroz integral, P3: flan de huevo, B1: cerveza ale, B2: cerveza ale, precio: 28.0$
+🥈 Menú promedio: P1: berenjenas rellenas de bonito, P2: pechuga de pollo al limon con arroz integral, P3: flan de huevo, B1: zumo de naranja, B2: zumo de naranja, precio: 25.0$
 🥉 Menú más caro: P1: berenjenas rellenas de bonito, P2: pechuga de pollo al limon con arroz integral, P3: flan de huevo, B1: vino blanco verdejo, B2: vino blanco verdejo, precio: 34.0$
 
 Análisis del Output:

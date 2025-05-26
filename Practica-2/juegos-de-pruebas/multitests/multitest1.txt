@@ -53,10 +53,10 @@ Bebida aceptada: zumo de naranja, internacional, false, facil, 2.5, (bajo-en-sod
 
 Output de la ejecución:
 🥇 Menú más barato: P1: crema templada de coliflor y manzana, P2: rollitos de acelga rellenos de arroz y verduras, P3: compota de manzana y pera sin azucar, B1: agua, B2: agua, precio: 22.0$
-🥈 Menú promedio: P1: ramen de pollo, P2: tempura de gambas y verduras, P3: tiramisu clasico, B1: cocacola, B2: cocacola, precio: 30.0$
-🥉 Menú más caro: P1: ramen de pollo, P2: salmon al horno con verduras asadas, P3: brownie de chocolate con nueces y helado de vainilla, B1: cocacola, B2: cocacola, precio: 39.0$
+🥈 Menú promedio: P1: pasta fresca con pesto de albahaca y piñones, P2: salmon al horno con verduras asadas, P3: compota de manzana y pera sin azucar, B1: agua, B2: agua, precio: 32.0$
+🥉 Menú más caro: P1: sushi de atun, P2: lomo de cerdo a la barbacoa, P3: brownie de chocolate con nueces y helado de vainilla, B1: zumo de naranja, B2: zumo de naranja, precio: 43.0$
 
 Análisis del Output:
 Todas las bebidas filtradas son refrescos, zumos y aguas por lo que no contienen alcohol.
 En el modo debug observamos cómo todos los platos pueden prepararse en primavera y tienen una presentación formal.
-Se generan menús con precios variados y, en este caso, se utiliza la idea de fijar un plato y aumentar la calidad de otro para encarecer el precio.
+Se generan menús con precios variados.

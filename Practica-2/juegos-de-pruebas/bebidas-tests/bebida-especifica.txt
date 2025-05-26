@@ -46,7 +46,7 @@ Bebida aceptada: mojito, internacional, true, facil, 8.0, (bajo-en-sodio nut-fre
 
 Output de la ejecución:
 🥇 Menú más barato: P1: ensalada de quinoa con verduras al vapor, P2: rollitos de acelga rellenos de arroz y verduras, P3: compota de manzana y pera sin azucar, B1: mojito, B2: margarita, precio: 34.0$
-🥈 Menú promedio: P1: sushi de atun, P2: rollitos de acelga rellenos de arroz y verduras, P3: compota de manzana y pera sin azucar, B1: piña colada, B2: margarita, precio: 39.0$
+🥈 Menú promedio: P1: sushi de atun, P2: rollitos de acelga rellenos de arroz y verduras, P3: brownie de chocolate con nueces y helado de vainilla, B1: mojito, B2: piña colada, precio: 43.0$
 🥉 Menú más caro: P1: sushi de atun, P2: lomo de cerdo a la barbacoa, P3: brownie de chocolate con nueces y helado de vainilla, B1: mojito, B2: piña colada, precio: 55.0$
 
 Análisis del Output:

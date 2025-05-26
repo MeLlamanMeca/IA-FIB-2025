@@ -42,17 +42,19 @@ no
 
 Output del modo debug:
 # Información del modo debug para ver qué platos y bebidas cumplen las restricciones y con las que se buscarán combinaciones inteligentes
-Plato aceptado: gelatina de frutas naturales
-Plato aceptado: albondigas veganas de lentejas
-Plato aceptado: Curry suave de garbanzos y calabacin
-Plato aceptado: sopa miso vegetal
-Plato aceptado: consome de verduras
-Bebida aceptada: agua de manantial
-Bebida aceptada: agua
+Plato aceptado: gelatina de frutas naturales, internacional, facil, 2.5, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), informal, (jugoso frio suave), (postre), (), (zumo-de-fruta gelatina)
+Plato aceptado: albondigas veganas de lentejas, internacional, facil, 9.0, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), informal, (crujiente caliente suave salado plancha), (segundo), (vino_blanco agua refresco zumo), (lentejas cebolla ajo zanahoria pan-rallado aceite-oliva sal pimienta)
+Plato aceptado: Curry suave de garbanzos y calabacin, internacional, facil, 10.0, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), informal, (cremoso caliente suave salado hervido), (segundo), (vino_blanco agua refresco zumo), (garbanzos calabacin cebolla ajo jengibre curry leche-coco aceite-oliva sal)
+Plato aceptado: sopa miso vegetal, japon, facil, 7.0, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), informal, (caliente suave salado hervido), (primero), (agua vino_blanco refresco zumo), (caldo-de-verdura miso tofu alga-nori cebollino aceite-sesamo)
+Plato aceptado: consome de verduras, internacional, facil, 5.0, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), informal, (caliente suave salado hervido), (primero), (agua vino_blanco refresco), (caldo-de-verdura zanahoria cebolla apio puerro aceite-oliva sal)
+Bebida aceptada: agua de manantial, internacional, false, facil, 1.7, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno)
+Bebida aceptada: agua, internacional, false, facil, 1.5, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno)
 
 Output de la ejecución:
-🥇 Menú más barato: consome de verduras, albondigas veganas de lentejas, gelatina de frutas naturales, agua, agua de manantial, 19.7
-🥈 Menú promedio: consome de verduras, Curry suave de garbanzos y calabacin, gelatina de frutas naturales, agua, agua de manantial, 20.7
-🥉 Menú más caro: sopa miso vegetal, Curry suave de garbanzos y calabacin, gelatina de frutas naturales, agua, agua de manantial, 22.7
+🥇 Menú más barato: P1: consome de verduras, P2: albondigas veganas de lentejas, P3: gelatina de frutas naturales, B1: agua, B2: agua de manantial, precio: 19.7$
+🥈 Menú promedio: P1: sopa miso vegetal, P2: albondigas veganas de lentejas, P3: gelatina de frutas naturales, B1: agua, B2: agua de manantial, precio: 21.7$
+🥉 Menú más caro: P1: sopa miso vegetal, P2: Curry suave de garbanzos y calabacin, P3: gelatina de frutas naturales, B1: agua, B2: agua de manantial, precio: 22.7$
 
 Análisis del Output:
+Observamos cómo la base de datos contiene un número de platos pequeño aptos para todo tipo de restricciones.
+Gracias a esto se garantiza que puedan existir 3 menús distintos que juegan con combinaciones de estos platos para encarecer el precio.

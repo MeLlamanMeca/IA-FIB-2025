@@ -59,8 +59,8 @@ Bebida aceptada: zumo de naranja, internacional, false, facil, 2.5, (bajo-en-sod
 
 Output de la ejecución:
 🥇 Menú más barato: P1: crema templada de calabaza y coco, P2: rollitos de acelga rellenos de arroz y verduras, P3: compota de manzana y pera sin azucar, B1: agua, B2: agua, precio: 21.0$
-🥈 Menú promedio: P1: crema templada de coliflor y manzana, P2: rollitos de acelga rellenos de arroz y verduras, P3: mousse de chocolate con frutos rojos, B1: vino blanco albariño, B2: vino blanco albariño, precio: 31.5$
-🥉 Menú más caro: P1: risotto de setas y parmesano, P2: sushi de atun, P3: brownie de chocolate con nueces y helado de vainilla, B1: vino blanco verdejo, B2: vino blanco verdejo, precio: 44.0$
+🥈 Menú promedio: P1: risotto de setas y parmesano, P2: rollitos de acelga rellenos de arroz y verduras, P3: brownie de chocolate con nueces y helado de vainilla, B1: vino blanco albariño, B2: vino blanco albariño, precio: 36.0$
+🥉 Menú más caro: P1: risotto de setas y parmesano, P2: lomo de cerdo a la barbacoa, P3: brownie de chocolate con nueces y helado de vainilla, B1: vino tinto ribera del duero, B2: vino tinto ribera del duero, precio: 54.0$
 
 Análisis del Output:
 Se puede observar que en cada menú existe una bebida única que acompaña tanto al primer plato como al segundo.

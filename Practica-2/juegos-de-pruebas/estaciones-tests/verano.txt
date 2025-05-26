@@ -60,8 +60,8 @@ Bebida aceptada: zumo de naranja, internacional, false, facil, 2.5, (bajo-en-sod
 
 Output de la ejecución:
 🥇 Menú más barato: P1: crema templada de coliflor y manzana, P2: rollitos de acelga rellenos de arroz y verduras, P3: compota de manzana y pera sin azucar, B1: agua, B2: agua, precio: 22.0$
-🥈 Menú promedio: P1: crema templada de coliflor y manzana, P2: rollitos de acelga rellenos de arroz y verduras, P3: brownie de chocolate con nueces y helado de vainilla, B1: vino blanco albariño, B2: vino blanco albariño, precio: 32.0$
-🥉 Menú más caro: P1: ramen de pollo, P2: salmon al horno con verduras asadas, P3: brownie de chocolate con nueces y helado de vainilla, B1: vino blanco verdejo, B2: vino blanco verdejo, precio: 48.0$
+🥈 Menú promedio: P1: pasta fresca con pesto de albahaca y piñones, P2: rollitos de acelga rellenos de arroz y verduras, P3: brownie de chocolate con nueces y helado de vainilla, B1: vino blanco verdejo, B2: vino blanco verdejo, precio: 37.0$
+🥉 Menú más caro: P1: sushi de atun, P2: lomo de cerdo a la barbacoa, P3: brownie de chocolate con nueces y helado de vainilla, B1: piña colada, B2: piña colada, precio: 56.0$
 
 Análisis del Output:
 El Output del modo debug muestra que todos los platos y bebidas que se han podido utilizar para crear los menús son preparables en verano.
