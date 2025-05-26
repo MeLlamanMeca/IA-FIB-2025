@@ -1,0 +1,73 @@
+Test 3: Restriccion extrema de precios para comprobar el comportamiento del sistema, y otras restricciones variadas.
+
+Objetivo: 
+Este test pretende experimentar que pasaría en el caso de que no se pueda generar un menú con el precio requerido. Tambien añade varias otras restricciones para reducir el numero de filtrados.
+
+Output esperado:
+Los platos y las bebidas deben cumplir las siguientes condiciones:
+- Los platos y las bebidas deben tener una dificultad como mucho promedia.
+- Los platos y las bebidas deben estar disponibles en invierno.
+- Deben ser platos aceptables para boda (formales).
+- Los platos y las bebidas deben ser vegetarianos.
+Los menus deben cumplir las siguientes condiciones:
+- No deben haber menus generados, puesto que la base de instancias no puede generar una combinacion con estas especificaciones dentro del precio establecido.
+
+Input de la ejecución:
+Alex
+35
+invierno
+40
+50
+boda
+si
+si
+si
+si
+no
+no
+si
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no
+si
+indiferente
+no
+
+Output del modo debug:
+# Información del modo debug para ver qué platos y bebidas cumplen las restricciones y con las que se buscarán combinaciones inteligentes
+Plato aceptado: compota de manzana y pera sin azucar, internacional, facil, 3.0, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), formal, (jugoso frio suave), (postre), (), (manzana pera canela limon)
+Plato aceptado: rollitos de acelga rellenos de arroz y verduras, internacional, facil, 8.0, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), formal, (jugoso caliente suave horno), (segundo), (vino_blanco agua refresco zumo), (acelga arroz zanahoria cebolla aceite-oliva sal pimienta)
+Plato aceptado: crema templada de coliflor y manzana, internacional, facil, 8.0, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno), formal, (cremoso caliente suave dulce salado hervido), (primero), (vino_blanco agua refresco zumo), (coliflor manzana cebolla agua aceite-oliva sal)
+Plato aceptado: crema templada de calabaza y coco, internacional, facil, 7.0, (baja-en-sodio carne-free marisco-free pescado-free diabetico dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano blanda), (otoño invierno), formal, (cremoso templado suave dulce hervido), (primero), (vino_blanco agua refresco zumo), (calabaza leche-coco cebolla jengibre aceite-oliva curcuma sal)
+Bebida aceptada: agua de manantial, internacional, false, facil, 1.7, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno)
+Bebida aceptada: agua, internacional, false, facil, 1.5, (bajo-en-sodio carne-free diabetico dieta-saludable halal kosher nut-free marisco-free pescado-free sin-gluten sin-lactosa vegano vegetariano blanda), (primavera verano otoño invierno)
+Bebida aceptada: cerveza stout, internacional, true, facil, 5.0, (bajo-en-sodio nut-free sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: cerveza ale, internacional, true, facil, 4.0, (bajo-en-sodio nut-free sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: cerveza lager, internacional, true, facil, 3.0, (bajo-en-sodio nut-free sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: sprite, internacional, false, facil, 2.0, (halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: fanta, internacional, false, facil, 2.5, (halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: cocacola, internacional, false, facil, 2.5, (halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: vino blanco verdejo, internacional, true, facil, 7.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: vino blanco albariño, internacional, true, facil, 5.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: vino tinto crianza, internacional, true, facil, 8.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: vino tinto ribera del duero, internacional, true, facil, 8.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: vino tinto rioja, internacional, true, facil, 6.0, (bajo-en-sodio nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: zumo de manzana, internacional, false, facil, 2.5, (bajo-en-sodio dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+Bebida aceptada: zumo de naranja, internacional, false, facil, 2.5, (bajo-en-sodio dieta-saludable halal kosher nut-free sin-gluten sin-lactosa vegano vegetariano carne-free marisco-free pescado-free blanda), (primavera verano otoño invierno)
+
+Output de la ejecución:
+🥇 Menú más barato: NULL
+🥈 Menú promedio: NULL
+🥉 Menú más caro: NULL
+
+Análisis del Output:
+Observamos como el sistema ha sido capaz de filtrar los platos y las bebidas con las condiciones mencionadas, pero no se ha generado ningún menú debido a que no existe combinacion entre los platos filtrados y las bebidas filtradas que entren en el rango de precio requerido.
