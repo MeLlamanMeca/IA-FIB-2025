@@ -1,7 +1,7 @@
-Test 2: Boda con muchos asistentes, precio muy acotado (20-30), apto para diabéticos y para practicantes de la religión judía y, a poder ser, comida española (Test con muchas restricciones de distinto tipo)
+Test 3: Restriccion extrema de precios para comprobar el comportamiento del sistema, y otras restricciones variadas.
 
 Objetivo: 
-Este test pretende experimentar con distintas condiciones muy restricctivas para ver si el sistema es capaz de encontrar alguna solución.
+Este test pretende experimentar que pasaría en el caso de que no se pueda generar un menú con el precio requerido. Tambien añade varias otras restricciones para reducir el numero de filtrados.
 
 Output esperado:
 Los platos y las bebidas deben cumplir las siguientes condiciones:
