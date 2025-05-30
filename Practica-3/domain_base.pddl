@@ -1,6 +1,6 @@
 (define (domain generador)
     (:requirements :adl :typing :equality :strips)
-    (:types plato dia tipo)
+    (:types plato dia)
 
     (:predicates
         ;; Estos predicados modelan las caracteristicas de un plato

@@ -2,10 +2,13 @@ Para el que vaya a redactar el documento:
 
 
 He comenzado haciendo una primera version que trataba de asignar el primero y el segundo sin ir iterando por los dias.
-El problema es que usaba muchisima memoria, porque tenia tantas acciones disponibles a cada dia que el arbol se bifurcaba demasiado.
+El problema es que usaba muchisima memoria, porque tenia tantas acciones disponibles a cada dia que el arbol se bifurcaba demasiado. (Demasiadas unificaciones posibles)
 
 
-Solución -> ir viajando de lunes a martes, de martes a miercoles, etc. (Obligar al FF a que siga un orden)
+Soluciones ->
+1- Dia actual (ir iterando por dias), porque nos quitamos un monton de unificaciones en cada paso.
+2- Plato que toca asignar actual (predicados filtro: (primero-asignado), (segundo-asignado), (dia-completado))
+
 Esto evita tanta bifurcacion, actualmente el programa empieza y dice:
 - Estamos a lunes, vamos a montar un menú:
 Como? 

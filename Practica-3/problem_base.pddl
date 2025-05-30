@@ -4,7 +4,6 @@
     (:objects
         sopa ensalada arroz pasta gazpacho tortilla crepes pescado carne pollo ternera cerdo salmon merluza atun - plato
         lunes martes miercoles jueves viernes end - dia
-        tipo1 tipo2 - tipo
     )
 
     (:init
@@ -16,7 +15,7 @@
         (not (segundo-asignado))
         (dia-completado)
 
-        ;; Ningún dia está completado
+        ;; Ningún dia está completado (realmente no hace falta ya que por defecto es falso)
         (not (completado lunes))
         (not (completado martes))
         (not (completado miercoles))
