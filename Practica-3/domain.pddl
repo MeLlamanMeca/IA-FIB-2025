@@ -55,7 +55,10 @@
 
             ; Son compatibles el primero y el segundo
             (asignado-primero ?primero ?dia)
-            (not (incompatible ?primero ?segundo))
+            (and
+                (not (incompatible ?primero ?segundo))
+                (not (incompatible ?segundo ?primero))
+            )
         )
         :effect (and
             (not (primero-asignado))

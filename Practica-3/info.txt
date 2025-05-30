@@ -1,0 +1,14 @@
+Para el que vaya a redactar el documento:
+
+
+He comenzado haciendo una primera version que trataba de asignar el primero y el segundo sin ir iterando por los dias.
+El problema es que usaba muchisima memoria, porque tenia tantas acciones disponibles a cada dia que el arbol se bifurcaba demasiado.
+
+
+Solución -> ir viajando de lunes a martes, de martes a miercoles, etc. (Obligar al FF a que siga un orden)
+Esto evita tanta bifurcacion, actualmente el programa empieza y dice:
+- Estamos a lunes, vamos a montar un menú:
+Como? 
+- Elijo un primero (con todas las restricciones)
+- Elijo un segundo (con todas las restricciones)
+- Cambio a martes
