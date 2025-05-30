@@ -1,0 +1,213 @@
+(define (problem planificador-comidas)
+    (:domain generador)
+
+    (:objects
+        sopa ensalada arroz pasta gazpacho tortilla crepes crema macarrones hummus cus_cus brocoli 
+        pescado carne pollo ternera cerdo salmon merluza atun tofu hamburguesa huevo_frito gambas cordero - plato
+        lunes martes miercoles jueves viernes sabado domingo end - dia
+        tipo1 tipo2 tipo3 - tipo
+    )
+
+    (:init
+        ;;;;;;;; DÍAS ;;;;;;;;
+
+        ;; Comenzamos a lunes
+        (dia-actual lunes)
+
+        ;; Toca asignar el primer plato
+        (not (primero-asignado))
+        (not (segundo-asignado))
+        (dia-completado)
+
+        ;; Ningún dia está completado
+        (not (completado lunes))
+        (not (completado martes))
+        (not (completado miercoles))
+        (not (completado jueves))
+        (not (completado viernes))
+        (not (completado sabado))
+        (not (completado domingo))
+
+        ;; Relación de días consecutivos
+        (dia-siguiente lunes martes)
+        (dia-siguiente martes miercoles)
+        (dia-siguiente miercoles jueves)
+        (dia-siguiente jueves viernes)
+        (dia-siguiente viernes sabado)
+        (dia-siguiente sabado domingo)
+        (dia-siguiente domingo end)
+
+
+
+        ;;;;;;;; PRIMEROS/SEGUNDOS ;;;;;;;;
+
+        ;; Primeros
+        (es-primero sopa)
+        (es-primero ensalada)
+        (es-primero arroz)
+        (es-primero pasta)
+        (es-primero gazpacho)
+        (es-primero tortilla)
+        (es-primero crepes)
+        (es-primero crema)
+        (es-primero macarrones)
+        (es-primero hummus)
+        (es-primero cus_cus)
+        (es-primero brocoli)
+
+        ;; Segundos
+        (es-segundo pescado)
+        (es-segundo carne)
+        (es-segundo pollo)
+        (es-segundo ternera)
+        (es-segundo cerdo)
+        (es-segundo salmon)
+        (es-segundo merluza)
+        (es-segundo atun)
+        (es-segundo tofu)
+        (es-segundo hamburguesa)
+        (es-segundo huevo_frito)
+        (es-segundo gambas)
+        (es-segundo cordero)
+
+
+
+        ;;;;;;;; TIPOS DE PLATOS ;;;;;;;;
+
+        ;; Tipos de los primeros
+        (tiene-tipo sopa tipo1)
+        (tiene-tipo ensalada tipo1)
+        (tiene-tipo arroz tipo2)
+        (tiene-tipo pasta tipo2)
+        (tiene-tipo gazpacho tipo1)
+        (tiene-tipo tortilla tipo1)
+        (tiene-tipo crepes tipo2)        
+        (tiene-tipo crema tipo3)
+        (tiene-tipo macarrones tipo3)
+        (tiene-tipo hummus tipo3)
+        (tiene-tipo cus_cus tipo2)
+        (tiene-tipo brocoli tipo1)
+
+        ;; Tipos de los segundos
+        (tiene-tipo pescado tipo2)
+        (tiene-tipo carne tipo1)
+        (tiene-tipo pollo tipo2)
+        (tiene-tipo ternera tipo1)
+        (tiene-tipo cerdo tipo1)
+        (tiene-tipo salmon tipo2)
+        (tiene-tipo merluza tipo2)
+        (tiene-tipo atun tipo3)
+        (tiene-tipo tofu tipo3)
+        (tiene-tipo hamburguesa tipo3)
+        (tiene-tipo huevo_frito tipo2)
+        (tiene-tipo gambas tipo3)
+        (tiene-tipo cordero tipo1)
+
+
+
+        ;;;;;;;; PLATOS YA ASIGNADOS ;;;;;;;;
+        ;; Platos pre asignados (para el correcto funcionamiento se asume que la asignación es válida, respetando el número de calorías y los tipos)
+        (asignado-segundo pollo martes)
+
+
+
+        ;;;;;;;; INCOMPATIBILIDADES ENTRE PLATOS ;;;;;;;;
+
+        (incompatible sopa pollo)
+        (incompatible arroz carne)
+        (incompatible tortilla salmon)
+
+
+
+        ;;;;;;;; CALORÍAS ;;;;;;;;
+
+        ;; Calorías de primeros
+        (= (calorias sopa) 200)
+        (= (calorias ensalada) 150)
+        (= (calorias arroz) 300)
+        (= (calorias pasta) 350)
+        (= (calorias gazpacho) 180)
+        (= (calorias tortilla) 250)
+        (= (calorias crepes) 300)
+        (= (calorias crema) 220)
+        (= (calorias macarrones) 320)
+        (= (calorias hummus) 210)
+        (= (calorias cus_cus) 300)
+        (= (calorias brocoli) 180)
+
+        ;; Calorías de segundos
+        (= (calorias pescado) 700)
+        (= (calorias carne) 800)
+        (= (calorias pollo) 1200)
+        (= (calorias ternera) 750)
+        (= (calorias cerdo) 1050)
+        (= (calorias salmon) 1250)
+        (= (calorias merluza) 1000)
+        (= (calorias atun) 1020)
+        (= (calorias tofu) 900)
+        (= (calorias hamburguesa) 1100)
+        (= (calorias huevo_frito) 980)
+        (= (calorias gambas) 950)
+        (= (calorias cordero) 1150)
+
+        ;; Inicializar total-calorias de cada día a 0
+        (= (total-calorias lunes) 0)
+        (= (total-calorias martes) 0)
+        (= (total-calorias miercoles) 0)
+        (= (total-calorias jueves) 0)
+        (= (total-calorias viernes) 0)
+
+
+
+        ;;;;;;;; PRECIOS ;;;;;;;;
+
+        ;; Precios primeros
+        (= (precio sopa) 2.0)
+        (= (precio ensalada) 1.5)
+        (= (precio arroz) 2.5)
+        (= (precio pasta) 2.0)
+        (= (precio gazpacho) 1.8)
+        (= (precio tortilla) 2.2)
+        (= (precio crepes) 2.8)
+        (= (precio crema) 5.6)
+        (= (precio macarrones) 3.2)
+        (= (precio hummus) 1.1)
+        (= (precio cus_cus) 2.1)
+        (= (precio brocoli) 0.2)
+
+        ;; Precios segundos
+        (= (precio pescado) 4.0)
+        (= (precio carne) 5.0)
+        (= (precio pollo) 3.5)
+        (= (precio ternera) 5.5)
+        (= (precio cerdo) 4.5)
+        (= (precio salmon) 4.8)
+        (= (precio merluza) 4.0)
+        (= (precio atun) 4.2)
+        (= (calorias tofu) 5.7)
+        (= (calorias hamburguesa) 3.2)
+        (= (calorias huevo_frito) 1.1)
+        (= (calorias gambas) 10.11)
+        (= (calorias cordero) 7.8)
+
+        ;; Coste total
+        (= (coste-total) 0)
+    )
+
+    (:goal
+        (and
+            ;; El objetivo es completar todos los dias
+            (completado lunes)
+            (completado martes)
+            (completado miercoles)
+            (completado jueves)
+            (completado viernes)
+            (completado sabado)
+            (completado domingo)
+            ;; Acabamos el dia end
+            (dia-actual end)
+        )
+    )
+
+    (:metric minimize (coste-total))
+)

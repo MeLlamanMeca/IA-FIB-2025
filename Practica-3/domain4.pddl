@@ -1,5 +1,5 @@
 (define (domain generador)
-    (:requirements :adl :typing :equality :strips)
+    (:requirements :adl :typing :equality :strips :fluents)
     (:types plato dia tipo)
 
     (:predicates
@@ -25,6 +25,35 @@
         (completado ?d - dia)                               ; El dia d se ha completado
     )
 
+    (:functions
+        (calorias ?p - plato)       ; número de calorías de un plato
+        (total-calorias ?d - dia)   ; suma de calorías del día
+    )
+
+
+
+    ;; Esta acción se encarga de saltar la asignación de segundo en caso de que ya se haya asignado desde un inicio
+    (:action saltar-primero
+        :parameters (?plato - plato ?dia - dia)
+        :precondition (and
+            (dia-completado)   
+
+            ; El plato ya está asignado
+            (dia-actual ?dia)
+            (asignado-primero ?plato ?dia)
+
+            ; Es un primer plato
+            (es-primero ?plato)
+        )
+        :effect (and
+            (not (dia-completado))
+            (primero-asignado)
+
+            ; Añadir el número de calorias del plato al día
+            (assign (total-calorias ?dia) (calorias ?plato))
+        )
+    )
+
     ;; Esta acción asigna el primer plato
     (:action asignar-primero
         :parameters (?primero - plato ?dia - dia)
@@ -39,17 +68,26 @@
             ; No se reutiliza un plato mas de una vez por semana
             (not (utilizado ?primero))
 
-            ; No se utiliza el mismo tipo de plato que ayer
+            ; No se utiliza el mismo tipo de plato que ayer o mañana
             (not
-                (exists (?ayer - dia ?plato - plato ?tipo - tipo)
+                (exists (?otrodia - dia ?plato - plato ?tipo - tipo)
                     (and
-                        (dia-siguiente ?ayer ?dia)       ; ?d es el día anterior a ?dia
-                        (asignado-primero ?plato ?ayer)                  ; El plato fue asignado ayer
-                        (tiene-tipo ?plato ?tipo)         ; El tipo usado ayer fue ?tipo
-                        (tiene-tipo ?primero ?tipo)      ; El plato actual tiene ese mismo tipo
+                        (or 
+                            (dia-siguiente ?otrodia ?dia)
+                            (dia-siguiente ?dia ?otrodia)
+                        )
+                        (or 
+                            (asignado-primero ?plato ?otrodia)
+                            (asignado-segundo ?plato ?otrodia)
+                        )
+                        (tiene-tipo ?plato ?tipo)
+                        (tiene-tipo ?primero ?tipo)
                     )
                 )
             )
+
+            ; No hay ningún plato asignado ya para este día
+            (not (exists (?p - plato) (asignado-primero ?p ?dia)))
         )
         :effect (and
             (not (dia-completado))
@@ -57,6 +95,32 @@
 
             (asignado-primero ?primero ?dia)
             (utilizado ?primero)
+
+            ; Añadir el número de calorias del plato al día
+            (assign (total-calorias ?dia) (calorias ?primero))
+        )
+    )
+
+
+    ;; Esta acción se encarga de saltar la asignación de segundo en caso de que ya se haya asignado desde un inicio
+    (:action saltar-segundo
+        :parameters (?plato - plato ?dia - dia)
+        :precondition (and
+            (primero-asignado)   
+
+            ; El plato ya está asignado
+            (dia-actual ?dia)
+            (asignado-segundo ?plato ?dia)
+
+            ; El plato es segundo
+            (es-segundo ?plato)
+        )
+        :effect (and
+            (not (primero-asignado))
+            (segundo-asignado)
+
+            ; Añadir el número de calorias del plato al día  
+            (increase (total-calorias ?dia) (calorias ?plato))
         )
     )
 
@@ -81,17 +145,26 @@
             ; No se reutiliza un plato mas de una vez por semana
             (not (utilizado ?segundo))
 
-            ; No se utiliza el mismo tipo de plato que ayer
+            ; No se utiliza el mismo tipo de plato que ayer o mañana
             (not
-                (exists (?ayer - dia ?plato - plato ?tipo - tipo)
+                (exists (?otrodia - dia ?plato - plato ?tipo - tipo)
                     (and
-                        (dia-siguiente ?ayer ?dia)       ; ?d es el día anterior a ?dia
-                        (asignado-primero ?plato ?ayer)                  ; El plato fue asignado ayer
-                        (tiene-tipo ?plato ?tipo)         ; El tipo usado ayer fue ?tipo
-                        (tiene-tipo ?segundo ?tipo)      ; El plato actual tiene ese mismo tipo
+                        (or 
+                            (dia-siguiente ?otrodia ?dia)
+                            (dia-siguiente ?dia ?otrodia)
+                        )
+                        (or 
+                            (asignado-primero ?plato ?otrodia)
+                            (asignado-segundo ?plato ?otrodia)
+                        )
+                        (tiene-tipo ?plato ?tipo)
+                        (tiene-tipo ?primero ?tipo)
                     )
                 )
             )
+
+            ; No hay ningún plato asignado ya para este día
+            (not (exists (?p - plato) (asignado-segundo ?p ?dia)))
         )
         :effect (and
             (not (primero-asignado))
@@ -99,6 +172,9 @@
 
             (asignado-segundo ?segundo ?dia)
             (utilizado ?segundo)
+
+            ; Añadir el número de calorias del plato al día
+            (increase (total-calorias ?dia) (calorias ?segundo))
         )
     )
 
@@ -109,6 +185,10 @@
             (dia-actual ?d1)
             (segundo-asignado)
             (dia-siguiente ?d1 ?d2)
+
+            ; Se ha cumplido el número de calorías
+            (>= (total-calorias ?d1) 1000)
+            (<= (total-calorias ?d1) 1500)
         )
         :effect (and
             (not (segundo-asignado))

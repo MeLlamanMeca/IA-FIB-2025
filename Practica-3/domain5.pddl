@@ -1,5 +1,5 @@
 (define (domain generador)
-    (:requirements :adl :typing :equality :strips)
+    (:requirements :adl :typing :equality :strips :fluents)
     (:types plato dia tipo)
 
     (:predicates
@@ -25,6 +25,13 @@
         (completado ?d - dia)                               ; El dia d se ha completado
     )
 
+    (:functions
+        (calorias ?p - plato)       ; número de calorías de un plato
+        (total-calorias ?d - dia)   ; suma de calorías del día
+        (precio ?p - plato)         ; precio individual de un plato
+        (coste-total)               ; coste total acumulado del plan
+    )
+
 
 
     ;; Esta acción se encarga de saltar la asignación de segundo en caso de que ya se haya asignado desde un inicio
@@ -43,6 +50,12 @@
         :effect (and
             (not (dia-completado))
             (primero-asignado)
+
+            ; Añadir el número de calorias del plato al día
+            (assign (total-calorias ?dia) (calorias ?plato))
+
+            ; Añadir el precio al coste total
+            (increase (coste-total) (precio ?plato))
         )
     )
 
@@ -87,6 +100,12 @@
 
             (asignado-primero ?primero ?dia)
             (utilizado ?primero)
+
+            ; Añadir el número de calorias del plato al día
+            (assign (total-calorias ?dia) (calorias ?primero))
+
+            ; Añadir el precio al coste total
+            (increase (coste-total) (precio ?primero))
         )
     )
 
@@ -107,6 +126,12 @@
         :effect (and
             (not (primero-asignado))
             (segundo-asignado)
+
+            ; Añadir el número de calorias del plato al día  
+            (increase (total-calorias ?dia) (calorias ?plato))
+
+            ; Añadir el precio al coste total
+            (increase (coste-total) (precio ?plato))
         )
     )
 
@@ -158,6 +183,12 @@
 
             (asignado-segundo ?segundo ?dia)
             (utilizado ?segundo)
+
+            ; Añadir el número de calorias del plato al día
+            (increase (total-calorias ?dia) (calorias ?segundo))
+
+            ; Añadir el precio al coste total
+            (increase (coste-total) (precio ?segundo))
         )
     )
 
@@ -168,6 +199,10 @@
             (dia-actual ?d1)
             (segundo-asignado)
             (dia-siguiente ?d1 ?d2)
+
+            ; Se ha cumplido el número de calorías
+            (>= (total-calorias ?d1) 1000)
+            (<= (total-calorias ?d1) 1500)
         )
         :effect (and
             (not (segundo-asignado))

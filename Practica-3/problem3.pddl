@@ -2,8 +2,9 @@
     (:domain generador)
 
     (:objects
-        sopa ensalada arroz pasta gazpacho tortilla crepes pescado carne pollo ternera cerdo salmon merluza atun - plato
-        lunes martes miercoles jueves viernes end - dia
+        sopa ensalada arroz pasta gazpacho tortilla crepes crema macarrones hummus cus_cus brocoli 
+        pescado carne pollo ternera cerdo salmon merluza atun tofu hamburguesa huevo_frito gambas cordero - plato
+        lunes martes miercoles jueves viernes sabado domingo end - dia
         tipo1 tipo2 - tipo
     )
 
@@ -22,6 +23,8 @@
         (not (completado miercoles))
         (not (completado jueves))
         (not (completado viernes))
+        (not (completado sabado))
+        (not (completado domingo))
 
         ;; Primeros
         (es-primero sopa)
@@ -31,6 +34,11 @@
         (es-primero gazpacho)
         (es-primero tortilla)
         (es-primero crepes)
+        (es-primero crema)
+        (es-primero macarrones)
+        (es-primero hummus)
+        (es-primero cus_cus)
+        (es-primero brocoli)
 
         ;; Segundos
         (es-segundo pescado)
@@ -41,6 +49,11 @@
         (es-segundo salmon)
         (es-segundo merluza)
         (es-segundo atun)
+        (es-segundo tofu)
+        (es-segundo hamburguesa)
+        (es-segundo huevo_frito)
+        (es-segundo gambas)
+        (es-segundo cordero)
 
         ;; Tipos
         (tiene-tipo sopa tipo1)
@@ -49,7 +62,12 @@
         (tiene-tipo pasta tipo2)
         (tiene-tipo gazpacho tipo1)
         (tiene-tipo tortilla tipo1)
-        (tiene-tipo crepes tipo2)
+        (tiene-tipo crepes tipo2)        
+        (tiene-tipo crema tipo1)
+        (tiene-tipo macarrones tipo2)
+        (tiene-tipo hummus tipo1)
+        (tiene-tipo cus_cus tipo2)
+        (tiene-tipo brocoli tipo1)
 
         (tiene-tipo pescado tipo2)
         (tiene-tipo carne tipo1)
@@ -59,22 +77,30 @@
         (tiene-tipo salmon tipo2)
         (tiene-tipo merluza tipo2)
         (tiene-tipo atun tipo2)
+        (tiene-tipo tofu tipo2)
+        (tiene-tipo hamburguesa tipo1)
+        (tiene-tipo huevo_frito tipo2)
+        (tiene-tipo gambas tipo2)
+        (tiene-tipo cordero tipo1)
 
-        ;; Platos pre asignados (se asume que la asignación es válida)
-        (asignado-primero sopa martes)
-        (asignado-segundo cerdo martes)
+        ;; Platos pre asignados (para el correcto funcionamiento se asume que la asignación es válida, respetando el número de calorías y los tipos)
+        (asignado-segundo pollo martes)
+        (asignado-primero hummus jueves)
 
         ;; Incompatibilidades
         (incompatible sopa pollo)
         (incompatible arroz carne)
         (incompatible tortilla salmon)
 
+
         ;; Relación de días consecutivos
         (dia-siguiente lunes martes)
         (dia-siguiente martes miercoles)
         (dia-siguiente miercoles jueves)
         (dia-siguiente jueves viernes)
-        (dia-siguiente viernes end)
+        (dia-siguiente viernes sabado)
+        (dia-siguiente sabado domingo)
+        (dia-siguiente domingo end)
     )
 
     (:goal
@@ -85,7 +111,8 @@
             (completado miercoles)
             (completado jueves)
             (completado viernes)
-
+            (completado sabado)
+            (completado domingo)
             ;; Acabamos el dia end
             (dia-actual end)
         )
