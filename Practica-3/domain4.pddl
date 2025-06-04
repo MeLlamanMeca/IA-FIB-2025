@@ -76,9 +76,7 @@
                             (dia-siguiente ?otrodia ?dia)
                             (dia-siguiente ?dia ?otrodia)
                         )
-                        (or 
-                            (asignado-primero ?plato ?otrodia)
-                        )
+                        (asignado-primero ?plato ?otrodia)
                         (tiene-tipo ?plato ?tipo)
                         (tiene-tipo ?primero ?tipo)
                     )
@@ -152,12 +150,9 @@
                             (dia-siguiente ?otrodia ?dia)
                             (dia-siguiente ?dia ?otrodia)
                         )
-                        (or 
-                            (asignado-primero ?plato ?otrodia)
-                            (asignado-segundo ?plato ?otrodia)
-                        )
+                        (asignado-segundo ?plato ?otrodia) ; No hace falta comprobar el primero porque ya está verificado por el paso anterior.
                         (tiene-tipo ?plato ?tipo)
-                        (tiene-tipo ?primero ?tipo)
+                        (tiene-tipo ?segundo ?tipo)
                     )
                 )
             )
