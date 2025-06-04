@@ -84,6 +84,8 @@
         ;; Platos pre asignados (para el correcto funcionamiento se asume que la asignación es válida, respetando el número de calorías y los tipos)
         (asignado-segundo pollo martes)
         (asignado-primero hummus jueves)
+        (utilizado pollo)
+        (utilizado hummus)
 
         ;; Incompatibilidades
         (incompatible sopa pollo)
