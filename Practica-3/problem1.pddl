@@ -3,7 +3,7 @@
 
     (:objects
         sopa ensalada arroz pasta gazpacho tortilla crepes pescado carne pollo ternera cerdo salmon merluza atun - plato
-        lunes martes miercoles jueves viernes sabado domingo end - dia
+        lunes martes miercoles jueves viernes end - dia
     )
 
     (:init
@@ -21,8 +21,6 @@
         (not (completado miercoles))
         (not (completado jueves))
         (not (completado viernes))
-        (not (completado sabado))
-        (not (completado domingo))
 
         ;; Primeros
         (es-primero sopa)
@@ -53,9 +51,7 @@
         (dia-siguiente martes miercoles)
         (dia-siguiente miercoles jueves)
         (dia-siguiente jueves viernes)
-        (dia-siguiente viernes sabado)
-        (dia-siguiente sabado domingo)
-        (dia-siguiente domingo end)
+        (dia-siguiente viernes end)
     )
 
     (:goal
@@ -66,8 +62,6 @@
             (completado miercoles)
             (completado jueves)
             (completado viernes)
-            (completado sabado)
-            (completado domingo)
 
             ;; Acabamos el dia end
             (dia-actual end)

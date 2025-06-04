@@ -4,7 +4,7 @@
     (:objects
         sopa ensalada arroz pasta gazpacho tortilla crepes crema macarrones hummus cus_cus brocoli 
         pescado carne pollo ternera cerdo salmon merluza atun tofu hamburguesa huevo_frito gambas cordero - plato
-        lunes martes miercoles jueves viernes sabado domingo end - dia
+        lunes martes miercoles jueves viernes end - dia
         tipo1 tipo2 tipo3 - tipo
     )
 
@@ -25,17 +25,13 @@
         (not (completado miercoles))
         (not (completado jueves))
         (not (completado viernes))
-        (not (completado sabado))
-        (not (completado domingo))
 
         ;; Relación de días consecutivos
         (dia-siguiente lunes martes)
         (dia-siguiente martes miercoles)
         (dia-siguiente miercoles jueves)
         (dia-siguiente jueves viernes)
-        (dia-siguiente viernes sabado)
-        (dia-siguiente sabado domingo)
-        (dia-siguiente domingo end)
+        (dia-siguiente viernes end)
 
 
 
@@ -107,7 +103,8 @@
 
         ;;;;;;;; PLATOS YA ASIGNADOS ;;;;;;;;
         ;; Platos pre asignados (para el correcto funcionamiento se asume que la asignación es válida, respetando el número de calorías y los tipos)
-        (asignado-segundo pollo martes)
+        (asignado-segundo merluza martes)
+        (utilizado merluza)
 
 
 
@@ -202,8 +199,6 @@
             (completado miercoles)
             (completado jueves)
             (completado viernes)
-            (completado sabado)
-            (completado domingo)
             ;; Acabamos el dia end
             (dia-actual end)
         )

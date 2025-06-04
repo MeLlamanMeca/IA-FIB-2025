@@ -70,7 +70,6 @@
                         )
                         (or 
                             (asignado-primero ?plato ?otrodia)
-                            (asignado-segundo ?plato ?otrodia)
                         )
                         (tiene-tipo ?plato ?tipo)
                         (tiene-tipo ?primero ?tipo)
@@ -140,7 +139,6 @@
                             (dia-siguiente ?dia ?otrodia)
                         )
                         (or 
-                            (asignado-primero ?plato ?otrodia)
                             (asignado-segundo ?plato ?otrodia)
                         )
                         (tiene-tipo ?plato ?tipo)

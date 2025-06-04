@@ -86,7 +86,7 @@
                 (exists (?ayer - dia ?plato - plato ?tipo - tipo)
                     (and
                         (dia-siguiente ?ayer ?dia)       ; ?d es el día anterior a ?dia
-                        (asignado-primero ?plato ?ayer)                  ; El plato fue asignado ayer
+                        (asignado-segundo ?plato ?ayer)                  ; El plato fue asignado ayer
                         (tiene-tipo ?plato ?tipo)         ; El tipo usado ayer fue ?tipo
                         (tiene-tipo ?segundo ?tipo)      ; El plato actual tiene ese mismo tipo
                     )

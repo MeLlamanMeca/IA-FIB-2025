@@ -9,8 +9,8 @@
         (incompatible ?p1 - plato ?p2 - plato)          ; p1 y p2 son incompatibles
 
 
-        (utilizado ?p - plato)                      ; p ha sido utilizado esta semana (Restricción extenson 2)
-        (tiene-tipo ?p - plato ?t - tipo)                   ; p es del tipo t (Restricción extenson 2)
+        (utilizado ?p - plato)                      ; p ha sido utilizado esta semana (Restricción extension 2)
+        (tiene-tipo ?p - plato ?t - tipo)                   ; p es del tipo t (Restricción extension 2)
 
         ;; Estos predicados se utilizan para que el planificador este forzado a seguir las 3 acciones de forma ordenada y reducir la memoria utilizada.
         (primero-asignado)                       ; Se ha asignado el primer plato (toca asignar el segundo)
@@ -83,7 +83,6 @@
                         )
                         (or 
                             (asignado-primero ?plato ?otrodia)
-                            (asignado-segundo ?plato ?otrodia)
                         )
                         (tiene-tipo ?plato ?tipo)
                         (tiene-tipo ?primero ?tipo)
